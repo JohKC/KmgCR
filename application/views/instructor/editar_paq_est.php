@@ -1,10 +1,5 @@
 <?php include_once('header.php') ?>
 <div class="container">
-	<?php if ($mensaje = $this->session->flashdata('mensaje')): ?>
-		<div class="alert alert-dismissible alert-danger">
-			<?=$mensaje; ?>
-		</div>
-	<?php endif; ?>
 	<h1>Editar paquete de estudiante</h1>
 	<?=form_open(base_url()."instructor/editarPaqueteEstudiante/{$infoActual->id_paquete}/{$infoActual->id_sede}/{$infoActual->id_estudiante}/{$infoActual->id_instructor}", ['class'=>'form-horizontal']); ?>
 	  <fieldset>
@@ -61,7 +56,7 @@
 	    </div>
 	    <div class="form-group">
 	    	<label for="">Paquete activo</label>
-	    	<select name="activo" class="form-control custom-select">
+	    	<select name="es_activo" class="form-control custom-select">
 	    		<option value="1">Sí</option>
 	    		<option value="0">No</option>
 	    	</select>

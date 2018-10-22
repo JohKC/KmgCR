@@ -44,9 +44,10 @@ class Instructor extends CI_Controller {
 		$individuo = $this->individuoModel->obtenerInfo($this->session->userdata('id_usuario'));
 		$instructor = $this->instructorModel->obtenerInfo($individuo->id_individuo);
 		$listaEstudiantes = $this->instructorModel->obtenerListaEstudiantes($instructor->id_instructor);
+		$listaEstudiantesGeneral = $this->instructorModel->obtenerListaEstudiantesTotal();
 
 		if ($individuo != FALSE) {
-			$this->load->view('instructor/lista_estudiantes', ['individuo'=>$individuo, 'listaEstudiantes'=>$listaEstudiantes]);
+			$this->load->view('instructor/lista_estudiantes', ['individuo'=>$individuo, 'listaEstudiantes'=>$listaEstudiantes, 'listaEstudiantesGeneral'=>$listaEstudiantesGeneral]);
 		} else {
 			echo "No hay nada";
 		}
@@ -112,6 +113,7 @@ class Instructor extends CI_Controller {
 		$individuo = $this->individuoModel->obtenerInfo($idUsuario);
 		$estudiante = $this->estudianteModel->obtenerInfo($idUsuario);
 
+
 		if ($this->input->post()) {
 			$this->form_validation->set_rules('correo_electronico', 'correo electronico', 'required');
 			$this->form_validation->set_rules('id_individuo', 'identificacion', 'required');
@@ -146,6 +148,8 @@ class Instructor extends CI_Controller {
 					} else {
 						$this->session->set_flashdata('mensaje', 'No es posible editar datos de individuo');
 					}
+				} else {
+					$this->session->set_flashdata('mensaje', 'No es posible editar datos de individuo');
 				}
 				return redirect('instructor/estudiantes');
 			} else {
@@ -202,7 +206,38 @@ class Instructor extends CI_Controller {
 		$sedes = $this->sedeModel->seleccionar();
 		$infoActual = $this->instructorModel->obtenerPaqEstudiante($idPaquete, $idSede, $idEstudiante, $idInstructor);
 
-		$this->load->view('instructor/editar_paq_est', ['estudiantes'=>$estudiantes, 'paquetes'=>$paquetes, 'instructores'=>$instructores, 'sedes'=>$sedes, 'infoActual'=>$infoActual]);
+		
+		if ($this->input->post()) {
+			$this->form_validation->set_rules('fecha_inicio', 'fecha de inicio', 'required');
+			$this->form_validation->set_rules('dias_restantes', 'días restantes', 'required');
+			$this->form_validation->set_rules('asistencias', 'asistencias', 'required');
+			$this->form_validation->set_message('required', 'El campo {field} es obligatorio.');
+
+			if ($this->form_validation->run()) {
+				$idPaqNuevo = $this->input->post('id_paquete');
+				$idSedeNuevo = $this->input->post('id_sede');
+				$idEstNuevo = $this->input->post('id_estudiante');
+				$idInstNuevo = $this->input->post('id_instructor');
+				$fechaInicio = $this->input->post('fecha_inicio');
+				$diasRestantes = $this->input->post('dias_restantes');
+				$asistencias = $this->input->post('asistencias');
+				$esActivo = $this->input->post('es_activo'); 
+
+				if ($this->instructorModel->editarPaqueteEstudiante($idPaqNuevo, $idSedeNuevo, $idEstNuevo, $idInstNuevo, $fechaInicio, $diasRestantes, $asistencias, $esActivo, $idPaquete, $idSede, $idEstudiante, $idInstructor)) {
+					$this->session->set_flashdata('mensaje', 'Paquete de estudiante editado correctamente');
+				} else {
+					$this->session->set_flashdata('mensaje', 'No se pudo editar paquete de estudiante');
+				}
+
+				return redirect('instructor/asistencias');
+
+			} else {
+				$this->load->view('instructor/editar_paq_est', ['estudiantes'=>$estudiantes, 'paquetes'=>$paquetes, 'instructores'=>$instructores, 'sedes'=>$sedes, 'infoActual'=>$infoActual]);
+			}
+
+		} else {
+			$this->load->view('instructor/editar_paq_est', ['estudiantes'=>$estudiantes, 'paquetes'=>$paquetes, 'instructores'=>$instructores, 'sedes'=>$sedes, 'infoActual'=>$infoActual]);
+		}
 
 	}
 

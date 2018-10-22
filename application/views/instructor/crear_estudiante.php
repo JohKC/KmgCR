@@ -1,10 +1,5 @@
 <?php include_once('header.php') ?>
 <div class="container">
-	<?php if ($mensaje = $this->session->flashdata('mensaje')): ?>
-		<div class="alert alert-dismissible alert-danger">
-			<?=$mensaje; ?>
-		</div>
-	<?php endif; ?>
 	<h1>Nuevo estudiante</h1>
 	<?=form_open(base_url().'instructor/nuevoEstudiante', ['class'=>'form-horizontal']); ?>
 	  <fieldset>

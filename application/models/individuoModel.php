@@ -34,7 +34,15 @@ class IndividuoModel extends CI_Model {
 
 	public function editar($id, $nombre, $apellido1, $apellido2, $nacionalidad, $condicion, $fechaNac)
 	{
-		return $this->db->query("UPDATE T_INDIVIDUO SET nombre = '$nombre', apellido1 = '$apellido1', apellido2 = '$apellido2', nacionalidad = '$nacionalidad', condicion_medica = '$condicion', fecha_nacimiento = '$fechaNac' WHERE id_individuo = '$id';");
+		$this->db->query("UPDATE T_INDIVIDUO SET nombre = '$nombre', apellido1 = '$apellido1', apellido2 = '$apellido2', nacionalidad = '$nacionalidad', condicion_medica = '$condicion', fecha_nacimiento = '$fechaNac' WHERE id_individuo = '$id';");
+
+		$error = $this->db->error();
+
+		if ($error['message'] == '') {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 }

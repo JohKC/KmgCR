@@ -21,6 +21,21 @@ class InstructorModel extends CI_Model {
 		}
 	}
 
+	public function obtenerListaEstudiantesTotal()
+	{
+		$query = $this->db->query("SELECT E.id_estudiante, I.id_individuo, CONCAT(I.nombre, ' ', I.apellido1, ' ', I.apellido2) AS Estudiante, E.fecha_inscripcion, E.nivel_kmg, E.es_activo, I.fecha_nacimiento, I.nacionalidad, I.condicion_medica, U.id_usuario, U.correo_electronico
+			FROM t_estudiante E
+			INNER JOIN t_individuo I ON E.id_individuo = I.id_individuo
+			INNER JOIN t_usuario U ON I.id_usuario = U.id_usuario
+            GROUP BY E.id_estudiante;");
+
+		if ($query->num_rows() > 0) {
+			return $query->result();
+		} else {
+			return false;
+		}
+	}
+
 	public function obtenerInfo($idIndividuo)
 	{
 		$query = $this->db->query("SELECT * FROM T_INSTRUCTOR WHERE id_individuo = $idIndividuo;");
@@ -56,9 +71,17 @@ class InstructorModel extends CI_Model {
 	}
 
 	// Actualizar los nuevos datos WHERE datos sean los antiguos (se pueden usar los input hidden)
-	public function editarPaqueteEstudiante($idPaquete, $idSede, $idEstudiante, $idInstructor, $fechaInicio, $dias_restantes, $asistencias, $esActivo)
+	public function editarPaqueteEstudiante($idPaquete, $idSede, $idEstudiante, $idInstructor, $fechaInicio, $diasRestantes, $asistencias, $esActivo, $idPaqAntiguo, $idSedeAntiguo, $idEstAntiguo, $idInstAntiguo)
 	{
-		return $query = $this->db->query("UPDATE T_ESTUDIANTE_PAQUETE SET asistencias = (asistencias + 1) WHERE id_paquete = $idPaquete AND id_sede = $idSede AND id_estudiante = $idEstudiante AND id_instructor = $idInstructor; ");
+		$this->db->query("UPDATE T_ESTUDIANTE_PAQUETE SET id_paquete = $idPaquete, id_sede = $idSede, id_estudiante = $idEstudiante, id_instructor = $idInstructor, fecha_inicio = '$fechaInicio', dias_restantes = $diasRestantes, asistencias = $asistencias, es_activo = $esActivo WHERE id_paquete = $idPaqAntiguo AND id_sede = $idSedeAntiguo AND id_estudiante = $idEstAntiguo AND id_instructor = $idInstAntiguo; ");
+
+		$error = $this->db->error();
+
+		if ($error['message'] == '') {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	public function obtenerPaqEstudiante($idPaquete, $idSede, $idEstudiante, $idInstructor)

@@ -1,10 +1,5 @@
 <?php include_once('header.php') ?>
 <div class="container">
-	<?php if ($mensaje = $this->session->flashdata('mensaje')): ?>
-		<div class="alert alert-dismissible alert-danger">
-			<?=$mensaje; ?>
-		</div>
-	<?php endif; ?>
 	<h1>Editar estudiante</h1>
 	<?=form_open(base_url()."instructor/editarEstudiante/{$usuario->id_usuario}", ['class'=>'form-horizontal']); ?>
 	  <fieldset>
@@ -17,8 +12,8 @@
 	    <legend>Información personal</legend>
 	    <div class="form-group">
 	    	<label for="">Identificación *</label>
-	    	<?=form_input(['name'=>'id_individuo', 'class'=>'form-control', 'value'=>$individuo->id_individuo]); ?>
-	    	<?=form_error('id_individuo', '<div class="text-danger">','</div>'); ?>
+	    	<p><?=$individuo->id_individuo ?></p>
+	    	<?=form_input(['name'=>'id_individuo', 'class'=>'form-control', 'value'=>$individuo->id_individuo, 'type'=>'hidden']); ?>
 	    </div>
 		<div class="form-group">
 	    	<label for="">Nombre *</label>

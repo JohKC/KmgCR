@@ -2,14 +2,23 @@
 <div class="container">
 	<hr>
 	<?php if ($mensaje = $this->session->flashdata('mensaje')): ?>
-		<div class="alert alert-dismissible alert-success">
-			<?=$mensaje; ?>
-		</div>
+		<?php if ($mensaje == 'Paquete de estudiante editado correctamente'): ?>
+			<div class="alert alert-dismissible alert-success">
+				<?=$this->session->flashdata('mensaje') ?>
+			</div>
+		<?php elseif ($mensaje == 'No se pudo editar paquete de estudiante'): ?>
+			<div class="alert alert-dismissible alert-danger">
+				<?=$this->session->flashdata('mensaje') ?>
+			</div>
+		<?php else: ?>
+			<div class="alert alert-dismissible alert-success">
+				<?=$this->session->flashdata('mensaje') ?>
+			</div>
+		<?php endif; ?>
 	<?php endif; ?>
 	<h3>Gestor de asistencias</h3>
 
-	<?php echo anchor('instructor/nuevoEstudiante', 'Agregar nuevo estudiante', ['class'=>'btn btn-primary']); ?>
-	<?php echo anchor('instructor/asistencias', 'Paquetes y asistencias', ['class'=>'btn btn-primary']); ?>
+	<?php echo anchor('instructor/asignarPaquete', 'Asignar nuevo paquete', ['class'=>'btn btn-primary']); ?>
 	<hr>
 
 	<!-- Tabla  -->
