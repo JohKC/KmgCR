@@ -3,6 +3,19 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class InstructorModel extends CI_Model {
 
+	public function existeEstudiante($correo, $id)
+	{
+		$query1 = $this->db->query("SELECT * FROM T_USUARIO WHERE correo_electronico = '$correo';");
+		$query2 = $this->db->query("SELECT * FROM T_INDIVIDUO WHERE id_individuo = '$id';");
+
+		if (($query1->num_rows() > 0) || ($query2->num_rows() > 0)) {
+			return true;
+		} else {
+			return false;
+		}
+
+	}
+
 	public function obtenerListaEstudiantes($idInstructor)
 	{
 		$query = $this->db->query("SELECT EP.id_estudiante, I.id_individuo, CONCAT(I.nombre, ' ', I.apellido1, ' ', I.apellido2) AS Estudiante, E.fecha_inscripcion, E.nivel_kmg, E.es_activo, I.fecha_nacimiento, I.nacionalidad, I.condicion_medica, U.id_usuario, U.correo_electronico, COUNT(EP.id_paquete) as 'paquetes'
@@ -14,11 +27,7 @@ class InstructorModel extends CI_Model {
 			WHERE EP.id_instructor = $idInstructor AND EP.es_activo = 1 AND S.es_activo = 1
             GROUP BY EP.id_estudiante;");
 
-		if ($query->num_rows() > 0) {
-			return $query->result();
-		} else {
-			return false;
-		}
+		return $query->result();
 	}
 
 	public function obtenerListaEstudiantesTotal()
@@ -29,11 +38,18 @@ class InstructorModel extends CI_Model {
 			INNER JOIN t_usuario U ON I.id_usuario = U.id_usuario
             GROUP BY E.id_estudiante;");
 
-		if ($query->num_rows() > 0) {
-			return $query->result();
-		} else {
-			return false;
-		}
+		return $query->result();
+	}
+
+	public function obtenerListaInstructores()
+	{
+		$query = $this->db->query("SELECT Ins.id_instructor, I.id_individuo, I.nombre, I.apellido1, I.apellido2, Ins.fecha_inicio, Ins.es_activo, I.fecha_nacimiento, I.nacionalidad, I.condicion_medica, U.id_usuario, U.correo_electronico
+			FROM t_instructor Ins
+			INNER JOIN t_individuo I ON Ins.id_individuo = I.id_individuo
+			INNER JOIN t_usuario U ON I.id_usuario = U.id_usuario
+            GROUP BY Ins.id_instructor;");
+
+		return $query->result();
 	}
 
 	public function obtenerInfo($idIndividuo)
@@ -58,11 +74,7 @@ class InstructorModel extends CI_Model {
 			INNER JOIN t_usuario U ON I.id_usuario = U.id_usuario
 			WHERE EP.id_instructor = $idInstructor AND EP.es_activo = $esActivo AND S.es_activo = 1;");
 
-		if ($query->num_rows() > 0) {
-			return $query->result();
-		} else {
-			return false;
-		}
+		return $query->result();
 	}
 
 	public function sumarAsistencia($idPaquete, $idSede, $idEstudiante, $idInstructor, $fechaInicio)
@@ -109,27 +121,12 @@ class InstructorModel extends CI_Model {
 		}
 	}
 
-	public function obtenerListaInstructores()
-	{
-		$query = $this->db->query("SELECT I.nombre, I.apellido1, I.apellido2, I.id_individuo, Ins.id_instructor FROM T_INSTRUCTOR Ins INNER JOIN T_INDIVIDUO I ON Ins.id_individuo = I.id_individuo;");
+	// public function obtenerListaInstructores()
+	// {
+	// 	$query = $this->db->query("SELECT I.nombre, I.apellido1, I.apellido2, I.id_individuo, Ins.id_instructor FROM T_INSTRUCTOR Ins INNER JOIN T_INDIVIDUO I ON Ins.id_individuo = I.id_individuo;");
 
-		if ($query->num_rows() > 0) {
-			return $query->result();
-		} else {
-			return false;
-		}
-	}
-
-	public function seleccionar()
-	{
-		$query = $this->db->query("SELECT * FROM T_INSTRUCTOR;");
-
-		if ($query->num_rows() > 0) {
-			return $query->result();
-		} else {
-			return false;
-		}
-	}
+	// 	return $query->result();
+	// }
 }
 
 /* End of file instructorModel.php */

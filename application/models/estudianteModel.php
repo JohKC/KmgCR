@@ -56,7 +56,17 @@ class EstudianteModel extends CI_Model {
 
 	public function insertar($idIndividuo)
 	{
-		return $this->db->query("INSERT INTO T_ESTUDIANTE VALUES (null, NOW(), 'P0', 1, '$idIndividuo');");
+		$this->db->query("INSERT INTO T_ESTUDIANTE VALUES (null, NOW(), 'Aspirante', 1, '$idIndividuo');");
+
+		$error = $this->db->error();
+
+		// return $error['message'] . ' ' . $this->db->last_query() . '<br>';
+
+		if ($error['message'] == '') {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	public function editar($idIndividuo, $fechaInsc, $nivelKmg, $activo)

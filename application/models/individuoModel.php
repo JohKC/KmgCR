@@ -29,7 +29,16 @@ class IndividuoModel extends CI_Model {
 
 	public function insertar($id, $nombre, $apellido1, $apellido2, $nacionalidad, $condicion, $fechaNac, $idUsuario)
 	{
-		return $this->db->query("INSERT INTO T_INDIVIDUO VALUES ('$id','$nombre','$apellido1','$apellido2','$nacionalidad','$condicion','$fechaNac', $idUsuario);");
+		$this->db->query("INSERT INTO T_INDIVIDUO VALUES ('$id','$nombre','$apellido1','$apellido2','$nacionalidad','$condicion','$fechaNac', $idUsuario);");
+
+		$error = $this->db->error();
+		// return $error['message'] . ' ' . $this->db->last_query() . '<br>';
+
+		if ($error['message'] == '') {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	public function editar($id, $nombre, $apellido1, $apellido2, $nacionalidad, $condicion, $fechaNac)

@@ -78,20 +78,41 @@ class Instructor extends CI_Controller {
 				$nacionalidad = $this->input->post('nacionalidad');
 				$condicion = $this->input->post('condicion_medica');
 
-				if ($this->usuarioModel->insertar($correo)) {
-					$idUsuario = $this->usuarioModel->obtenerEspecifico($correo)->id_usuario;
+				$existe = $this->instructorModel->existeEstudiante($correo, $id);
 
-					if ($this->individuoModel->insertar($id, $nombre, $apellido1, $apellido2, $nacionalidad, $condicion, $fechaNac, $idUsuario)) {
-						if ($this->estudianteModel->insertar($id)) {
-							$this->session->set_flashdata('mensaje', 'Estudiante añadido correctamente');
-						} else {
-							$this->session->set_flashdata('mensaje', 'No es posible añadir datos de estudiante');
-						}
-					} else {
-						$this->session->set_flashdata('mensaje', 'No es posible añadir datos de individuo');
-					}
+				if ($existe == FALSE) {
+					$this->usuarioModel->insertar($correo);
+					$idUsuario = $this->usuarioModel->obtenerEspecifico($correo)->id_usuario;
+					$this->individuoModel->insertar($id, $nombre, $apellido1, $apellido2, $nacionalidad, $condicion, $fechaNac, $idUsuario);
+					$this->estudianteModel->insertar($id);
+
+					$this->session->set_flashdata('mensaje', 'Estudiante añadido correctamente');
+				} else {
+					$this->session->set_flashdata('mensaje', 'No es posible añadir datos de estudiante');
 				}
-				return redirect('instructor');
+
+				// if ($this->usuarioModel->insertar($correo) != false &&  != false &&  != false) {
+				// 	$this->session->set_flashdata('mensaje', 'Estudiante añadido correctamente');
+				// } else {
+				// 	$this->session->set_flashdata('mensaje', 'No es posible añadir datos de estudiante');
+				// }
+
+				// if ($this->usuarioModel->insertar($correo)) {
+				// 	$idUsuario = $this->usuarioModel->obtenerEspecifico($correo)->id_usuario;
+
+				// 	if ($this->individuoModel->insertar($id, $nombre, $apellido1, $apellido2, $nacionalidad, $condicion, $fechaNac, $idUsuario)) {
+				// 		if ($this->estudianteModel->insertar($id)) {
+				// 			$this->session->set_flashdata('mensaje', 'Estudiante añadido correctamente');
+				// 		} else {
+				// 			$this->session->set_flashdata('mensaje', 'No es posible añadir datos de estudiante');
+				// 		}
+				// 	} else {
+				// 		$this->session->set_flashdata('mensaje', 'No es posible añadir datos de estudiante');
+				// 	}
+				// 	$this->session->set_flashdata('mensaje', 'No es posible añadir datos de estudiante');
+
+				// }
+				return redirect('instructor/estudiantes');
 			} else {
 				$this->load->view('instructor/crear_estudiante');
 			}
@@ -146,10 +167,10 @@ class Instructor extends CI_Controller {
 							$this->session->set_flashdata('mensaje', 'No es posible editar datos de estudiante');
 						}
 					} else {
-						$this->session->set_flashdata('mensaje', 'No es posible editar datos de individuo');
+						$this->session->set_flashdata('mensaje', 'No es posible editar datos de estudiante');
 					}
 				} else {
-					$this->session->set_flashdata('mensaje', 'No es posible editar datos de individuo');
+					$this->session->set_flashdata('mensaje', 'No es posible editar datos de estudiante');
 				}
 				return redirect('instructor/estudiantes');
 			} else {
@@ -274,6 +295,23 @@ class Instructor extends CI_Controller {
 		}
 
 		$this->load->view('instructor/crear_paq_est', ['estudiantes'=>$estudiantes, 'paquetes'=>$paquetes, 'instructores'=>$instructores, 'sedes'=>$sedes]);
+	}
+
+	public function instructores()
+	{
+		if ($this->session->userdata('id_rol') == FALSE || $this->session->userdata('id_rol') != 1) {
+			redirect(base_url().'login');
+		}
+
+		$individuo = $this->individuoModel->obtenerInfo($this->session->userdata('id_usuario'));
+		$instructor = $this->instructorModel->obtenerInfo($individuo->id_individuo);
+		$listaInstructores = $this->instructorModel->obtenerListaInstructores();
+
+		if ($individuo != FALSE) {
+			$this->load->view('instructor/lista_instructores', ['individuo'=>$individuo, 'listaInstructores'=>$listaInstructores]);
+		} else {
+			echo "No hay nada";
+		}
 	}
 
 }

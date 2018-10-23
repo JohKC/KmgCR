@@ -60,8 +60,6 @@
 
 		    </tr>
 		<?php endforeach; ?>
-	    <?php else: ?>
-	    	<tr>No se encontraron resultados.</tr>
 	    <?php endif; ?>
 	  </tbody>
 	</table> 
@@ -130,8 +128,6 @@
 
 		    </tr>
 		<?php endforeach; ?>
-	    <?php else: ?>
-	    	<tr>No se encontraron resultados.</tr>
 	    <?php endif; ?>
 	  </tbody>
 	</table> 

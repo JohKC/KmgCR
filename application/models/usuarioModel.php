@@ -41,7 +41,17 @@ class UsuarioModel extends CI_Model {
 
 	public function insertar($correo)
 	{
-		return $this->db->query("INSERT INTO T_USUARIO VALUES (null, '$correo', '1234', 2);");
+		$this->db->query("INSERT INTO T_USUARIO VALUES (null, '$correo', '1234', 2);");
+
+		$error = $this->db->error();
+
+		// return $error['message'] . ' ' . $this->db->last_query() . '<br>';
+
+		if ($error['message'] == '') {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	public function editar($idUsuario, $correo)
