@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1:3306
--- Tiempo de generación: 23-10-2018 a las 01:14:34
+-- Tiempo de generación: 23-10-2018 a las 17:45:35
 -- Versión del servidor: 5.7.21
 -- Versión de PHP: 5.6.35
 
@@ -37,7 +37,7 @@ CREATE TABLE IF NOT EXISTS `t_estudiante` (
   `id_individuo` varchar(20) COLLATE utf8_spanish_ci NOT NULL,
   PRIMARY KEY (`id_estudiante`),
   KEY `FK_EST_INDIVIDUO` (`id_individuo`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
 -- Volcado de datos para la tabla `t_estudiante`
@@ -47,8 +47,7 @@ INSERT INTO `t_estudiante` (`id_estudiante`, `fecha_inscripcion`, `nivel_kmg`, `
 (2, '2018-10-12', 'Aspirante', b'1', '113243021'),
 (5, '2018-10-20', 'Aspirante', b'1', '12353322'),
 (6, '2018-10-20', 'P1', b'1', '12340122'),
-(7, '2018-10-20', 'P2', b'1', '12430103'),
-(8, '2018-10-21', 'G1', b'1', '115530864');
+(8, '2018-10-21', 'G1', b'0', '115530864');
 
 -- --------------------------------------------------------
 
@@ -77,11 +76,12 @@ CREATE TABLE IF NOT EXISTS `t_estudiante_paquete` (
 --
 
 INSERT INTO `t_estudiante_paquete` (`id_estudiante`, `id_paquete`, `id_sede`, `id_instructor`, `fecha_inicio`, `dias_restantes`, `asistencias`, `es_activo`) VALUES
-(2, 1, 1, 1, '2018-10-17', 45, 5, b'0'),
-(2, 2, 1, 1, '2018-10-10', 45, 21, b'1'),
-(2, 2, 1, 1, '2018-10-27', 45, 0, b'1'),
-(2, 2, 2, 1, '2018-10-11', 45, 8, b'1'),
+(2, 1, 1, 1, '2018-10-17', 45, 12, b'1'),
+(2, 2, 1, 1, '2018-10-06', 45, 30, b'0'),
+(2, 2, 1, 1, '2018-10-10', 45, 17, b'0'),
+(2, 2, 2, 1, '2018-10-27', 45, 15, b'1'),
 (5, 1, 2, 2, '2018-10-18', 45, 0, b'1'),
+(6, 2, 1, 1, '2018-10-22', 45, 3, b'1'),
 (8, 1, 1, 2, '2018-10-21', 45, 6, b'1');
 
 -- --------------------------------------------------------
@@ -112,7 +112,7 @@ INSERT INTO `t_individuo` (`id_individuo`, `nombre`, `apellido1`, `apellido2`, `
 ('113243021', 'Marcos', 'Santos', 'Santos', 'Costa Rica', '', '1992-10-18', 2),
 ('115530864', 'Johan', 'Karlson', 'Carrillo', 'Costa Rica', 'Miope', '1993-10-27', 1),
 ('12340122', 'Valeria', 'Gonzalez', '', 'Costa Rica', 'Miope', '1993-03-12', 10),
-('12353322', 'Enriques', 'Gomez', 'Santos', 'Costa Rica', '', '1991-02-10', 9),
+('12353322', 'Enrique', 'Gomez', 'Santos', 'Costa Rica', '', '1991-02-10', 9),
 ('12430103', 'Veronica', 'Ramirez', '', 'Costa Rica', '', '1994-06-01', 11);
 
 -- --------------------------------------------------------
@@ -129,7 +129,7 @@ CREATE TABLE IF NOT EXISTS `t_instructor` (
   `id_individuo` varchar(20) COLLATE utf8_spanish_ci NOT NULL,
   PRIMARY KEY (`id_instructor`),
   KEY `FK_INS_INDIVIDUO` (`id_individuo`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
 -- Volcado de datos para la tabla `t_instructor`
@@ -222,7 +222,7 @@ CREATE TABLE IF NOT EXISTS `t_usuario` (
   PRIMARY KEY (`id_usuario`),
   UNIQUE KEY `correo_electronico` (`correo_electronico`),
   KEY `FK_ROL` (`id_rol`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
 -- Volcado de datos para la tabla `t_usuario`
@@ -233,7 +233,16 @@ INSERT INTO `t_usuario` (`id_usuario`, `correo_electronico`, `contrasena`, `id_r
 (2, 'marcos@marcos.com', '123', 2),
 (9, 'enrique@msn.com', '1234', 2),
 (10, 'vale@hotmail.com', '1234', 2),
-(11, 'vero@msn.com', '1234', 1);
+(11, 'vero@msn.com', '1234', 1),
+(16, 'ana@ana.com', '1234', 2),
+(21, 'eliecer@eliecer.com', '1234', 2),
+(26, 'ser@ser.com', '1234', 2),
+(29, 'allan@allan.com', '1234', 2),
+(30, 'adrian@adrian.com', '1234', 2),
+(31, 'alberto@alberto.com', '1234', 2),
+(32, 'ricardo@ricard.com', '1234', 2),
+(33, 'pablo@pablo.com', '1234', 2),
+(34, 'paola@paola.com', '1234', 2);
 
 --
 -- Restricciones para tablas volcadas

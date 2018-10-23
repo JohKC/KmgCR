@@ -3,6 +3,22 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class EstudianteModel extends CI_Model {
 
+	public function existeEstudiante($idIndividuo)
+	{
+		$query = $this->db->query("SELECT * FROM T_ESTUDIANTE WHERE id_individuo = '$idIndividuo';");
+
+		$log1 = fopen("logExiste.txt", "w") or die("Unable to open file!");
+		$txt = $this->db->last_query();
+		fwrite($log1, $txt);
+		fclose($log1);
+
+		if (($query->num_rows() > 0)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
 	public function obtenerInfo($idUsuario)
 	{
 		$query = $this->db->query("SELECT E.id_estudiante, E.fecha_inscripcion, E.nivel_kmg, E.es_activo FROM t_usuario U 
@@ -54,9 +70,9 @@ class EstudianteModel extends CI_Model {
 		}
 	}
 
-	public function insertar($idIndividuo)
+	public function insertar($idIndividuo, $esActivo)
 	{
-		$this->db->query("INSERT INTO T_ESTUDIANTE VALUES (null, NOW(), 'Aspirante', 1, '$idIndividuo');");
+		$this->db->query("INSERT INTO T_ESTUDIANTE VALUES (null, NOW(), 'Aspirante', $esActivo, '$idIndividuo');");
 
 		$error = $this->db->error();
 
@@ -71,7 +87,44 @@ class EstudianteModel extends CI_Model {
 
 	public function editar($idIndividuo, $fechaInsc, $nivelKmg, $activo)
 	{
-		return $this->db->query("UPDATE T_ESTUDIANTE SET fecha_inscripcion = '$fechaInsc', nivel_kmg = '$nivelKmg', es_activo = $activo WHERE id_individuo = '$idIndividuo';");
+		$this->db->query("UPDATE T_ESTUDIANTE SET fecha_inscripcion = '$fechaInsc', nivel_kmg = '$nivelKmg', es_activo = $activo WHERE id_individuo = '$idIndividuo';");
+
+		$error = $this->db->error();
+
+		// $log = fopen("logEstudiante.txt", "w") or die("Unable to open file!");
+		// $txt = $error['message'] . '<br>' . $this->db->last_query() . '<br>';
+		// fwrite($log, $txt);
+		// fclose($log);
+
+		// return $error['message'] . ' ' . $this->db->last_query() . '<br>';
+
+		if ($error['message'] == '') {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	public function editarEstudianteInstructor($idIndividuo, $esActivo)
+	{
+		$this->db->query("UPDATE T_ESTUDIANTE SET es_activo = $esActivo WHERE id_individuo = '$idIndividuo';");
+
+		$error = $this->db->error();
+
+		// return $error['message'] . ' ' . $this->db->last_query() . '<br>';
+
+		$error = $this->db->error();
+
+		// $log1 = fopen("log.txt", "w") or die("Unable to open file!");
+		// $txt = $this->db->last_query() . '<br>';
+		// fwrite($log1, $txt);
+		// fclose($log1);
+
+		if ($error['message'] == '') {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 }

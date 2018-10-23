@@ -47,6 +47,11 @@ class IndividuoModel extends CI_Model {
 
 		$error = $this->db->error();
 
+		// $log = fopen("logIndividuo.txt", "w") or die("Unable to open file!");
+		// $txt = $error['message'] . '<br>' . $this->db->last_query() . '<br>';
+		// fwrite($log, $txt);
+		// fclose($log);
+
 		if ($error['message'] == '') {
 			return true;
 		} else {

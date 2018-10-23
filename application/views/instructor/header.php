@@ -23,16 +23,16 @@
 	        <a class="nav-link" href="<?=base_url().'instructor/estudiantes' ?>">Estudiantes</a>
 	      </li>
 	      <li class="nav-item">
-	        <a class="nav-link" href="">Instructores</a>
+	        <a class="nav-link" href="<?=base_url().'instructor/instructores' ?>">Instructores</a>
 	      </li>
 	      <li class="nav-item">
-	        <a class="nav-link" href="">Sedes</a>
+	        <a class="nav-link" href="<?=base_url().'instructor/sedes' ?>">Sedes</a>
 	      </li>
 	      <li class="nav-item">
-	        <a class="nav-link" href="">Paquetes</a>
+	        <a class="nav-link" href="<?=base_url().'instructor/paquetes' ?>">Paquetes</a>
 	      </li>
 	      <li class="nav-item">
-	        <a class="nav-link" href="">Cambiar contraseña</a>
+	        <a class="nav-link" href="<?=base_url().'instructor/configuracion' ?>">Cambiar contraseña</a>
 	      </li>
 
 	    </ul>

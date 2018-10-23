@@ -17,6 +17,8 @@ class Instructor extends CI_Controller {
 		$this->load->database('default');
 	}
 
+
+	// Interfaz de instructor
 	public function index()
 	{
 		if ($this->session->userdata('id_rol') == FALSE || $this->session->userdata('id_rol') != 1) {
@@ -35,6 +37,7 @@ class Instructor extends CI_Controller {
 		}
 	}
 
+	// Interfaz de estudiantes
 	public function estudiantes()
 	{
 		if ($this->session->userdata('id_rol') == FALSE || $this->session->userdata('id_rol') != 1) {
@@ -42,7 +45,7 @@ class Instructor extends CI_Controller {
 		}
 
 		$individuo = $this->individuoModel->obtenerInfo($this->session->userdata('id_usuario'));
-		$instructor = $this->instructorModel->obtenerInfo($individuo->id_individuo);
+		$instructor = $this->instructorModel->obtenerInfo($this->session->userdata('id_usuario'));
 		$listaEstudiantes = $this->instructorModel->obtenerListaEstudiantes($instructor->id_instructor);
 		$listaEstudiantesGeneral = $this->instructorModel->obtenerListaEstudiantesTotal();
 
@@ -53,6 +56,8 @@ class Instructor extends CI_Controller {
 		}
 	}
 
+
+	// Crear nuevo estudiante (usuario, individuo y estudiante)
 	public function nuevoEstudiante()
 	{
 		if ($this->session->userdata('id_rol') == FALSE || $this->session->userdata('id_rol') != 1) {
@@ -78,40 +83,19 @@ class Instructor extends CI_Controller {
 				$nacionalidad = $this->input->post('nacionalidad');
 				$condicion = $this->input->post('condicion_medica');
 
-				$existe = $this->instructorModel->existeEstudiante($correo, $id);
+				$existe = $this->instructorModel->existe($correo, $id);
 
 				if ($existe == FALSE) {
 					$this->usuarioModel->insertar($correo);
 					$idUsuario = $this->usuarioModel->obtenerEspecifico($correo)->id_usuario;
 					$this->individuoModel->insertar($id, $nombre, $apellido1, $apellido2, $nacionalidad, $condicion, $fechaNac, $idUsuario);
-					$this->estudianteModel->insertar($id);
+					$this->estudianteModel->insertar($id, 1);
 
 					$this->session->set_flashdata('mensaje', 'Estudiante añadido correctamente');
 				} else {
 					$this->session->set_flashdata('mensaje', 'No es posible añadir datos de estudiante');
 				}
 
-				// if ($this->usuarioModel->insertar($correo) != false &&  != false &&  != false) {
-				// 	$this->session->set_flashdata('mensaje', 'Estudiante añadido correctamente');
-				// } else {
-				// 	$this->session->set_flashdata('mensaje', 'No es posible añadir datos de estudiante');
-				// }
-
-				// if ($this->usuarioModel->insertar($correo)) {
-				// 	$idUsuario = $this->usuarioModel->obtenerEspecifico($correo)->id_usuario;
-
-				// 	if ($this->individuoModel->insertar($id, $nombre, $apellido1, $apellido2, $nacionalidad, $condicion, $fechaNac, $idUsuario)) {
-				// 		if ($this->estudianteModel->insertar($id)) {
-				// 			$this->session->set_flashdata('mensaje', 'Estudiante añadido correctamente');
-				// 		} else {
-				// 			$this->session->set_flashdata('mensaje', 'No es posible añadir datos de estudiante');
-				// 		}
-				// 	} else {
-				// 		$this->session->set_flashdata('mensaje', 'No es posible añadir datos de estudiante');
-				// 	}
-				// 	$this->session->set_flashdata('mensaje', 'No es posible añadir datos de estudiante');
-
-				// }
 				return redirect('instructor/estudiantes');
 			} else {
 				$this->load->view('instructor/crear_estudiante');
@@ -124,6 +108,8 @@ class Instructor extends CI_Controller {
 		}
 	}
 
+
+	// Editar informacion de estudiante, usuario e individuo
 	public function editarEstudiante($idUsuario)
 	{
 		if ($this->session->userdata('id_rol') == FALSE || $this->session->userdata('id_rol') != 1) {
@@ -182,6 +168,8 @@ class Instructor extends CI_Controller {
 		}
 	}
 
+
+	// Interfaz de paquetes y asisterncias
 	public function asistencias()
 	{
 		if ($this->session->userdata('id_rol') == FALSE || $this->session->userdata('id_rol') != 1) {
@@ -189,12 +177,13 @@ class Instructor extends CI_Controller {
 		}
 
 		$individuo = $this->individuoModel->obtenerInfo($this->session->userdata('id_usuario'));
-		$instructor = $this->instructorModel->obtenerInfo($individuo->id_individuo);
+		$instructor = $this->instructorModel->obtenerInfo($this->session->userdata('id_usuario'));
 		$infoPaquetesActivos = $this->instructorModel->obtenerInfoAsistencias($instructor->id_instructor, 1);
 		$infoPaquetesInactivos = $this->instructorModel->obtenerInfoAsistencias($instructor->id_instructor, 0);
 		$this->load->view('instructor/gestor_asistencias', ['infoPaquetesActivos'=>$infoPaquetesActivos, 'infoPaquetesInactivos'=>$infoPaquetesInactivos]);
 	}
 
+	// Asigna rapidamente una asistencia a un estudiante
 	public function asignarAsistencia($idPaquete, $idSede, $idEstudiante, $idInstructor, $fechaInicio)
 	{
 		if ($this->session->userdata('id_rol') == FALSE || $this->session->userdata('id_rol') != 1) {
@@ -202,7 +191,7 @@ class Instructor extends CI_Controller {
 		}
 
 		$individuo = $this->individuoModel->obtenerInfo($this->session->userdata('id_usuario'));
-		$instructor = $this->instructorModel->obtenerInfo($individuo->id_individuo);
+		$instructor = $this->instructorModel->obtenerInfo($this->session->userdata('id_usuario'));
 		$infoAsistencias = $this->instructorModel->obtenerInfoAsistencias($instructor->id_instructor, 1);
 
 		$suma = $this->instructorModel->sumarAsistencia($idPaquete, $idSede, $idEstudiante, $idInstructor, $fechaInicio);
@@ -297,6 +286,7 @@ class Instructor extends CI_Controller {
 		$this->load->view('instructor/crear_paq_est', ['estudiantes'=>$estudiantes, 'paquetes'=>$paquetes, 'instructores'=>$instructores, 'sedes'=>$sedes]);
 	}
 
+	// Pagina de gestion de informacion de instructores
 	public function instructores()
 	{
 		if ($this->session->userdata('id_rol') == FALSE || $this->session->userdata('id_rol') != 1) {
@@ -304,13 +294,135 @@ class Instructor extends CI_Controller {
 		}
 
 		$individuo = $this->individuoModel->obtenerInfo($this->session->userdata('id_usuario'));
-		$instructor = $this->instructorModel->obtenerInfo($individuo->id_individuo);
+		$instructor = $this->instructorModel->obtenerInfo($this->session->userdata('id_usuario'));
 		$listaInstructores = $this->instructorModel->obtenerListaInstructores();
 
 		if ($individuo != FALSE) {
 			$this->load->view('instructor/lista_instructores', ['individuo'=>$individuo, 'listaInstructores'=>$listaInstructores]);
 		} else {
 			echo "No hay nada";
+		}
+	}
+
+	// Añadir nuevo instructor
+	public function nuevoInstructor()
+	{
+		if ($this->session->userdata('id_rol') == FALSE || $this->session->userdata('id_rol') != 1) {
+			redirect(base_url().'login');
+		}
+
+		if ($this->input->post()) {
+			$this->form_validation->set_rules('correo_electronico', 'correo electronico', 'required');
+			$this->form_validation->set_rules('id_individuo', 'identificacion', 'required');
+			$this->form_validation->set_rules('nombre', 'nombre', 'required');
+			$this->form_validation->set_rules('apellido1', 'primer apellido', 'required');
+			$this->form_validation->set_rules('nacionalidad', 'nacionalidad', 'required');
+			$this->form_validation->set_rules('fecha_nacimiento', 'fecha de nacimiento', 'required');
+			$this->form_validation->set_message('required', 'El campo {field} es obligatorio.');
+
+			if ($this->form_validation->run()) {
+				$correo = $this->input->post('correo_electronico');
+				$id = $this->input->post('id_individuo');
+				$nombre = $this->input->post('nombre');
+				$apellido1 = $this->input->post('apellido1');
+				$apellido2 = $this->input->post('apellido2');
+				$fechaNac = $this->input->post('fecha_nacimiento');
+				$nacionalidad = $this->input->post('nacionalidad');
+				$condicion = $this->input->post('condicion_medica');
+				$esEstudiante = $this->input->post('es_estudiante');
+
+				$existe = $this->instructorModel->existe($correo, $id);
+
+				if ($existe == FALSE) {
+					$this->usuarioModel->insertar($correo);
+					$idUsuario = $this->usuarioModel->obtenerEspecifico($correo)->id_usuario;
+					$this->individuoModel->insertar($id, $nombre, $apellido1, $apellido2, $nacionalidad, $condicion, $fechaNac, $idUsuario);
+					$this->instructorModel->insertar($id);
+
+					if ($esEstudiante == 1) {
+						$this->estudianteModel->insertar($id, 1);
+					}
+
+					$this->session->set_flashdata('mensaje', 'Instructor añadido correctamente');
+				} else {
+					$this->session->set_flashdata('mensaje', 'No es posible añadir datos de instructor');
+				}
+
+				return redirect('instructor/instructores');
+			} else {
+				$this->load->view('instructor/crear_instructor');
+			}
+		} else {
+			$this->load->view('instructor/crear_instructor');
+		}
+	}
+
+	public function editarInstructor($idUsuario)
+	{
+		if ($this->session->userdata('id_rol') == FALSE || $this->session->userdata('id_rol') != 1) {
+			redirect(base_url().'login');
+		}
+
+		$usuario = $this->usuarioModel->obtenerInfo($idUsuario);
+		$individuo = $this->individuoModel->obtenerInfo($idUsuario);
+		$instructor = $this->instructorModel->obtenerInfo($idUsuario);
+
+
+		if ($this->input->post()) {
+			$this->form_validation->set_rules('correo_electronico', 'correo electronico', 'required');
+			$this->form_validation->set_rules('id_individuo', 'identificacion', 'required');
+			$this->form_validation->set_rules('nombre', 'nombre', 'required');
+			$this->form_validation->set_rules('apellido1', 'primer apellido', 'required');
+			$this->form_validation->set_rules('nacionalidad', 'nacionalidad', 'required');
+			$this->form_validation->set_rules('fecha_nacimiento', 'fecha de nacimiento', 'required');
+			$this->form_validation->set_rules('fecha_inicio', 'fecha de inicio', 'required');
+			$this->form_validation->set_message('required', 'El campo {field} es obligatorio.');
+
+			if ($this->form_validation->run()) {
+				$correo = $this->input->post('correo_electronico');
+				$id = $this->input->post('id_individuo');
+				$nombre = $this->input->post('nombre');
+				$apellido1 = $this->input->post('apellido1');
+				$apellido2 = $this->input->post('apellido2');
+				$fechaNac = $this->input->post('fecha_nacimiento');
+				$nacionalidad = $this->input->post('nacionalidad');
+				$condicion = $this->input->post('condicion_medica');
+				$fechaInicio = $this->input->post('fecha_inicio');
+				$activo = $this->input->post('es_activo');
+				$esEstudiante = $this->input->post('es_estudiante');
+
+				if ($this->usuarioModel->editar($idUsuario, $correo)) {
+
+					if ($this->individuoModel->editar($id, $nombre, $apellido1, $apellido2, $nacionalidad, $condicion, $fechaNac)) {
+						if ($this->instructorModel->editar($id, $fechaInicio, $activo)) {
+							if ($esEstudiante == 1) { // Si es estudiante, verificar si existe, y sino, crear nuevo estudiante
+								if ($this->estudianteModel->existeEstudiante($id)) {
+									$this->estudianteModel->editarEstudianteInstructor($id, 1);
+								} else {
+									$this->estudianteModel->insertar($id, 1);
+								}
+							} elseif ($esEstudiante == 0) {
+								if ($this->estudianteModel->existeEstudiante($id)) {
+									$this->estudianteModel->editarEstudianteInstructor($id, 0);
+								}
+							}
+							$this->session->set_flashdata('mensaje', 'Instructor editado correctamente');
+						} else {
+							$this->session->set_flashdata('mensaje', 'No es posible editar datos de instructor');
+						}
+					} else {
+						$this->session->set_flashdata('mensaje', 'No es posible editar datos de instructor');
+					}
+				} else {
+					$this->session->set_flashdata('mensaje', 'No es posible editar datos de instructor');
+				}
+				return redirect('instructor/instructores');
+			} else {
+				$this->load->view('instructor/editar_instructor', ['usuario'=>$usuario, 'individuo'=>$individuo, 'instructor'=>$instructor]);
+			}
+
+		} else {
+			$this->load->view('instructor/editar_instructor', ['usuario'=>$usuario, 'individuo'=>$individuo, 'instructor'=>$instructor]);
 		}
 	}
 
