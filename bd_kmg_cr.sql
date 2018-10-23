@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1:3306
--- Tiempo de generación: 22-10-2018 a las 20:04:14
+-- Tiempo de generación: 23-10-2018 a las 01:14:34
 -- Versión del servidor: 5.7.21
 -- Versión de PHP: 5.6.35
 
@@ -44,10 +44,10 @@ CREATE TABLE IF NOT EXISTS `t_estudiante` (
 --
 
 INSERT INTO `t_estudiante` (`id_estudiante`, `fecha_inscripcion`, `nivel_kmg`, `es_activo`, `id_individuo`) VALUES
-(2, '2018-10-12', 'P3', b'1', '113243021'),
-(5, '2018-10-20', '', b'1', '12353322'),
-(6, '2018-10-20', 'P0', b'1', '12340122'),
-(7, '2018-10-20', 'P0', b'1', '12430103'),
+(2, '2018-10-12', 'Aspirante', b'1', '113243021'),
+(5, '2018-10-20', 'Aspirante', b'1', '12353322'),
+(6, '2018-10-20', 'P1', b'1', '12340122'),
+(7, '2018-10-20', 'P2', b'1', '12430103'),
 (8, '2018-10-21', 'G1', b'1', '115530864');
 
 -- --------------------------------------------------------
@@ -66,7 +66,7 @@ CREATE TABLE IF NOT EXISTS `t_estudiante_paquete` (
   `dias_restantes` int(11) NOT NULL,
   `asistencias` int(11) NOT NULL,
   `es_activo` bit(1) NOT NULL,
-  PRIMARY KEY (`id_estudiante`,`id_paquete`,`id_sede`,`id_instructor`),
+  PRIMARY KEY (`id_estudiante`,`id_paquete`,`id_sede`,`id_instructor`,`fecha_inicio`) USING BTREE,
   KEY `FK_PE_PAQUETE` (`id_paquete`),
   KEY `FK_PE_SEDE` (`id_sede`),
   KEY `FK_PE_INSTRUCTOR` (`id_instructor`)
@@ -77,9 +77,12 @@ CREATE TABLE IF NOT EXISTS `t_estudiante_paquete` (
 --
 
 INSERT INTO `t_estudiante_paquete` (`id_estudiante`, `id_paquete`, `id_sede`, `id_instructor`, `fecha_inicio`, `dias_restantes`, `asistencias`, `es_activo`) VALUES
+(2, 1, 1, 1, '2018-10-17', 45, 5, b'0'),
 (2, 2, 1, 1, '2018-10-10', 45, 21, b'1'),
-(2, 2, 2, 1, '2018-10-11', 45, 6, b'1'),
-(8, 1, 1, 1, '2018-10-21', 45, 6, b'1');
+(2, 2, 1, 1, '2018-10-27', 45, 0, b'1'),
+(2, 2, 2, 1, '2018-10-11', 45, 8, b'1'),
+(5, 1, 2, 2, '2018-10-18', 45, 0, b'1'),
+(8, 1, 1, 2, '2018-10-21', 45, 6, b'1');
 
 -- --------------------------------------------------------
 
@@ -126,14 +129,15 @@ CREATE TABLE IF NOT EXISTS `t_instructor` (
   `id_individuo` varchar(20) COLLATE utf8_spanish_ci NOT NULL,
   PRIMARY KEY (`id_instructor`),
   KEY `FK_INS_INDIVIDUO` (`id_individuo`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
 -- Volcado de datos para la tabla `t_instructor`
 --
 
 INSERT INTO `t_instructor` (`id_instructor`, `fecha_inicio`, `es_activo`, `id_individuo`) VALUES
-(1, '2018-10-11', b'1', '115530864');
+(1, '2018-10-11', b'1', '115530864'),
+(2, '2018-10-01', b'1', '12430103');
 
 -- --------------------------------------------------------
 
@@ -229,7 +233,7 @@ INSERT INTO `t_usuario` (`id_usuario`, `correo_electronico`, `contrasena`, `id_r
 (2, 'marcos@marcos.com', '123', 2),
 (9, 'enrique@msn.com', '1234', 2),
 (10, 'vale@hotmail.com', '1234', 2),
-(11, 'vero@msn.com', '1234', 2);
+(11, 'vero@msn.com', '1234', 1);
 
 --
 -- Restricciones para tablas volcadas

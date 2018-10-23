@@ -169,8 +169,9 @@ class Instructor extends CI_Controller {
 
 		$individuo = $this->individuoModel->obtenerInfo($this->session->userdata('id_usuario'));
 		$instructor = $this->instructorModel->obtenerInfo($individuo->id_individuo);
-		$infoAsistencias = $this->instructorModel->obtenerInfoAsistencias($instructor->id_instructor);
-		$this->load->view('instructor/gestor_asistencias', ['infoAsistencias'=>$infoAsistencias]);
+		$infoPaquetesActivos = $this->instructorModel->obtenerInfoAsistencias($instructor->id_instructor, 1);
+		$infoPaquetesInactivos = $this->instructorModel->obtenerInfoAsistencias($instructor->id_instructor, 0);
+		$this->load->view('instructor/gestor_asistencias', ['infoPaquetesActivos'=>$infoPaquetesActivos, 'infoPaquetesInactivos'=>$infoPaquetesInactivos]);
 	}
 
 	public function asignarAsistencia($idPaquete, $idSede, $idEstudiante, $idInstructor)
@@ -239,6 +240,40 @@ class Instructor extends CI_Controller {
 			$this->load->view('instructor/editar_paq_est', ['estudiantes'=>$estudiantes, 'paquetes'=>$paquetes, 'instructores'=>$instructores, 'sedes'=>$sedes, 'infoActual'=>$infoActual]);
 		}
 
+	}
+
+	// Considerar usar un ID unico para la relacion de muchos a muchos, ya que 
+	public function asignarPaquete()
+	{
+		$estudiantes = $this->estudianteModel->obtenerListaEstudiantes();
+		$paquetes = $this->paqueteModel->seleccionar();
+		$instructores = $this->instructorModel->obtenerListaInstructores();
+		$sedes = $this->sedeModel->seleccionar();
+
+		if ($this->input->post()) {
+			$idEstudiante = $this->input->post('id_estudiante');
+			$idPaquete = $this->input->post('id_paquete');
+			$idSede = $this->input->post('id_sede');
+			$idInstructor = $this->input->post('id_instructor');
+			$fechaInicio = $this->input->post('fecha_inicio');
+
+			$this->form_validation->set_rules('fecha_inicio', 'fecha de inicio', 'required');
+			$this->form_validation->set_message('required', 'El campo {field} es obligatorio.');
+
+			if ($this->form_validation->run()) {
+				if ($this->instructorModel->crearPaqueteEstudiante($idPaquete, $idSede, $idEstudiante, $idInstructor, $fechaInicio)) {
+					$this->session->set_flashdata('mensaje', 'Paquete asignado correctamente');
+				} else {
+					$this->session->set_flashdata('mensaje', 'No se pudo asignar el paquete');
+				}
+
+				return redirect('instructor/asistencias');
+			} else {
+				$this->load->view('instructor/crear_paq_est', ['estudiantes'=>$estudiantes, 'paquetes'=>$paquetes, 'instructores'=>$instructores, 'sedes'=>$sedes]);
+			}
+		}
+
+		$this->load->view('instructor/crear_paq_est', ['estudiantes'=>$estudiantes, 'paquetes'=>$paquetes, 'instructores'=>$instructores, 'sedes'=>$sedes]);
 	}
 
 }
