@@ -54,8 +54,8 @@
 		        	 }
 
 		        	?>
-		      	<?php echo anchor("instructor/editarPaqueteEstudiante/{$item->id_paquete}/{$item->id_sede}/{$item->id_estudiante}/{$item->id_instructor}", 'Editar', ['class'=>"btn btn-success"]); ?>
-		      	<?php echo anchor("instructor/asignarAsistencia/{$item->id_paquete}/{$item->id_sede}/{$item->id_estudiante}/{$item->id_instructor}", 'Asignar asistencia', ['class'=>"btn btn-warning $clase"]); ?>
+		      	<?php echo anchor("instructor/editarPaqueteEstudiante/{$item->id_paquete}/{$item->id_sede}/{$item->id_estudiante}/{$item->id_instructor}/{$item->fecha_inicio}", 'Editar', ['class'=>"btn btn-success"]); ?>
+		      	<?php echo anchor("instructor/asignarAsistencia/{$item->id_paquete}/{$item->id_sede}/{$item->id_estudiante}/{$item->id_instructor}/{$item->fecha_inicio}", 'Asignar asistencia', ['class'=>"btn btn-warning $clase"]); ?>
 		      </td>
 
 		    </tr>
@@ -71,8 +71,8 @@
 		<?php foreach ($infoPaquetesActivos as $item): ?>
 			<div class="card border-secondary mb-3 info_estudiantes">
 			  <div class="card-header">Identificación: <?=$item->id_individuo ?>
-			  	<?php echo anchor("instructor/editarPaqueteEstudiante/{$item->id_paquete}/{$item->id_sede}/{$item->id_estudiante}/{$item->id_instructor}", 'Editar', ['class'=>'btn-sm btn-success', 'style'=>'float:right;']); ?>
-			  	<?php echo anchor("instructor/asignarAsistencia/{$item->id_paquete}/{$item->id_sede}/{$item->id_estudiante}/{$item->id_instructor}", 'Asignar asistencia', ['class'=>'btn-sm btn-warning', 'style'=>'float:right; margin-right: 5px;']); ?>
+			  	<?php echo anchor("instructor/editarPaqueteEstudiante/{$item->id_paquete}/{$item->id_sede}/{$item->id_estudiante}/{$item->id_instructor}/{$item->fecha_inicio}", 'Editar', ['class'=>'btn-sm btn-success', 'style'=>'float:right;']); ?>
+			  	<?php echo anchor("instructor/asignarAsistencia/{$item->id_paquete}/{$item->id_sede}/{$item->id_estudiante}/{$item->id_instructor}/{$item->fecha_inicio}", 'Asignar asistencia', ['class'=>'btn-sm btn-warning', 'style'=>'float:right; margin-right: 5px;']); ?>
 			  </div>
 			  <div class="card-body">
 			    <h4 class="card-title"><?=$item->nombre . ' ' . $item->apellido1 . ' ' . $item->apellido2 ?></h4>
@@ -125,7 +125,7 @@
 		        	 }
 
 		        	?>
-		      	<?php echo anchor("instructor/editarPaqueteEstudiante/{$item->id_paquete}/{$item->id_sede}/{$item->id_estudiante}/{$item->id_instructor}", 'Editar', ['class'=>"btn btn-success"]); ?>
+		      	<?php echo anchor("instructor/editarPaqueteEstudiante/{$item->id_paquete}/{$item->id_sede}/{$item->id_estudiante}/{$item->id_instructor}/{$item->fecha_inicio}", 'Editar', ['class'=>"btn btn-success"]); ?>
 		      </td>
 
 		    </tr>
@@ -141,7 +141,7 @@
 		<?php foreach ($infoPaquetesInactivos as $item): ?>
 			<div class="card border-secondary mb-3 info_estudiantes">
 			  <div class="card-header">Identificación: <?=$item->id_individuo ?>
-			  	<?php echo anchor("instructor/editarPaqueteEstudiante/{$item->id_paquete}/{$item->id_sede}/{$item->id_estudiante}/{$item->id_instructor}", 'Editar', ['class'=>'btn-sm btn-success', 'style'=>'float:right;']); ?>
+			  	<?php echo anchor("instructor/editarPaqueteEstudiante/{$item->id_paquete}/{$item->id_sede}/{$item->id_estudiante}/{$item->id_instructor}/{$item->fecha_inicio}", 'Editar', ['class'=>'btn-sm btn-success', 'style'=>'float:right;']); ?>
 			  </div>
 			  <div class="card-body">
 			    <h4 class="card-title"><?=$item->nombre . ' ' . $item->apellido1 . ' ' . $item->apellido2 ?></h4>

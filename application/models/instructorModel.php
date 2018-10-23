@@ -65,9 +65,9 @@ class InstructorModel extends CI_Model {
 		}
 	}
 
-	public function sumarAsistencia($idPaquete, $idSede, $idEstudiante, $idInstructor)
+	public function sumarAsistencia($idPaquete, $idSede, $idEstudiante, $idInstructor, $fechaInicio)
 	{
-		return $query = $this->db->query("UPDATE T_ESTUDIANTE_PAQUETE SET asistencias = (asistencias + 1) WHERE id_paquete = $idPaquete AND id_sede = $idSede AND id_estudiante = $idEstudiante AND id_instructor = $idInstructor; ");
+		return $query = $this->db->query("UPDATE T_ESTUDIANTE_PAQUETE SET asistencias = (asistencias + 1) WHERE id_paquete = $idPaquete AND id_sede = $idSede AND id_estudiante = $idEstudiante AND id_instructor = $idInstructor AND fecha_inicio = '$fechaInicio'; ");
 	}
 
 	// Asignar un nuevo paquete a un estudiante
@@ -85,9 +85,9 @@ class InstructorModel extends CI_Model {
 	}
 
 	// Actualizar los nuevos datos WHERE datos sean los antiguos
-	public function editarPaqueteEstudiante($idPaquete, $idSede, $idEstudiante, $idInstructor, $fechaInicio, $diasRestantes, $asistencias, $esActivo, $idPaqAntiguo, $idSedeAntiguo, $idEstAntiguo, $idInstAntiguo)
+	public function editarPaqueteEstudiante($idPaquete, $idSede, $idEstudiante, $idInstructor, $fechaInicio, $diasRestantes, $asistencias, $esActivo, $idPaqAntiguo, $idSedeAntiguo, $idEstAntiguo, $idInstAntiguo, $fechaIniAntiguo)
 	{
-		$this->db->query("UPDATE T_ESTUDIANTE_PAQUETE SET id_paquete = $idPaquete, id_sede = $idSede, id_estudiante = $idEstudiante, id_instructor = $idInstructor, fecha_inicio = '$fechaInicio', dias_restantes = $diasRestantes, asistencias = $asistencias, es_activo = $esActivo WHERE id_paquete = $idPaqAntiguo AND id_sede = $idSedeAntiguo AND id_estudiante = $idEstAntiguo AND id_instructor = $idInstAntiguo; ");
+		$this->db->query("UPDATE T_ESTUDIANTE_PAQUETE SET id_paquete = $idPaquete, id_sede = $idSede, id_estudiante = $idEstudiante, id_instructor = $idInstructor, fecha_inicio = '$fechaInicio', dias_restantes = $diasRestantes, asistencias = $asistencias, es_activo = $esActivo WHERE id_paquete = $idPaqAntiguo AND id_sede = $idSedeAntiguo AND id_estudiante = $idEstAntiguo AND id_instructor = $idInstAntiguo AND fecha_inicio = '$fechaIniAntiguo'; ");
 
 		$error = $this->db->error();
 
@@ -98,9 +98,9 @@ class InstructorModel extends CI_Model {
 		}
 	}
 
-	public function obtenerPaqEstudiante($idPaquete, $idSede, $idEstudiante, $idInstructor)
+	public function obtenerPaqEstudiante($idPaquete, $idSede, $idEstudiante, $idInstructor, $fechaInicio)
 	{
-		$query = $this->db->query("SELECT * FROM T_ESTUDIANTE_PAQUETE WHERE id_paquete = $idPaquete AND id_sede = $idSede AND id_estudiante = $idEstudiante AND id_instructor = $idInstructor; ");
+		$query = $this->db->query("SELECT * FROM T_ESTUDIANTE_PAQUETE WHERE id_paquete = $idPaquete AND id_sede = $idSede AND id_estudiante = $idEstudiante AND id_instructor = $idInstructor AND fecha_inicio = '$fechaInicio'; ");
 
 		if ($query->num_rows() > 0) {
 			return $query->row();
