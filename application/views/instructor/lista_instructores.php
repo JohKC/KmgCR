@@ -13,9 +13,10 @@
 		<?php endif; ?>
 	<?php endif; ?>
 	<h3>Lista de instructores</h3>
+	<input type="text" id="busqueda" placeholder="Buscar..." class="form-control">
 
 	<hr>
-		<table class="table table-hover tabla_estudiantes">
+		<table class="table table-hover tabla_estudiantes" id="tabla">
 		  <thead>
 		    <tr>
 		      <th scope="col">Identificación</th>
@@ -52,16 +53,18 @@
 		<!-- Tarjetas responsive -->
 		<?php if (count($listaInstructores)): ?>
 			<?php foreach ($listaInstructores as $item): ?>
-				<div class="card border-secondary mb-3 info_estudiantes">
-				  <div class="card-header">Identificación: <?=$item->id_individuo ?>
-				  	<?php echo anchor("instructor/editarInstructor/{$item->id_usuario}", 'Editar', ['class'=>'btn-sm btn-success', 'style'=>'float:right;']); ?>
-				  </div>
-				  <div class="card-body">
-				    <h4 class="card-title"><?=$item->nombre . ' ' . $item->apellido1 . ' ' . $item->apellido2 ?></h4>
-				    Correo electrónico: <?=$item->correo_electronico ?><br>
-				    Fecha de inicio: <?=$item->fecha_inicio ?><br>
-				    Activo: <?=$item->es_activo ?><br>
-				    Nacionalidad: <?=$item->nacionalidad ?><br>
+				<div style="border: none;" class="card border-secondary mb-3 info_estudiantes" id="contenido">
+				  <div id="contenido">
+					  <div class="card-header">Identificación: <?=$item->id_individuo ?>
+					  <?php echo anchor("instructor/editarInstructor/{$item->id_usuario}", 'Editar', ['class'=>'btn-sm btn-success', 'style'=>'float:right;']); ?>
+					  </div>
+					  <div class="card-body">
+					    <h4 class="card-title"><?=$item->nombre . ' ' . $item->apellido1 . ' ' . $item->apellido2 ?></h4>
+					    Correo electrónico: <?=$item->correo_electronico ?><br>
+					    Fecha de inicio: <?=$item->fecha_inicio ?><br>
+					    Activo: <?=$item->es_activo ?><br>
+					    Nacionalidad: <?=$item->nacionalidad ?><br>
+					  </div>
 				  </div>
 				</div>
 			<?php endforeach; ?>
@@ -69,4 +72,14 @@
 				<h3>No se encontraron resultados.</h3>
 			<?php endif; ?>
 </div>
+<script>
+$(document).ready(function(){
+  $("#busqueda").on("keyup", function() {
+    var value = $(this).val().toLowerCase();
+    $("#tabla tbody tr, #contenido #contenido").filter(function() {
+      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
+    });
+  });
+});
+</script>
 <?php include_once('footer.php') ?>

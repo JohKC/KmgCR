@@ -21,8 +21,9 @@
 	<?php echo anchor('instructor/asignarPaquete', 'Asignar nuevo paquete', ['class'=>'btn btn-primary']); ?>
 	<hr>
 	<legend>Paquetes activos</legend>
+	<input type="text" id="busqueda" placeholder="Buscar..." class="form-control">
 	<!-- Tabla  -->
-	<table class="table table-hover tabla_estudiantes">
+	<table class="table table-hover tabla_estudiantes" id="tabla">
 	  <thead>
 	    <tr>
 	      <th scope="col">Identificación</th>
@@ -66,20 +67,23 @@
 
 	<!-- Tarjetas responsive -->
 	<?php if (count($infoPaquetesActivos)): ?>
+		<br>
 		<?php foreach ($infoPaquetesActivos as $item): ?>
-			<div class="card border-secondary mb-3 info_estudiantes">
-			  <div class="card-header">Identificación: <?=$item->id_individuo ?>
-			  	<?php echo anchor("instructor/editarPaqueteEstudiante/{$item->id_paquete}/{$item->id_sede}/{$item->id_estudiante}/{$item->id_instructor}/{$item->fecha_inicio}", 'Editar', ['class'=>'btn-sm btn-success', 'style'=>'float:right;']); ?>
-			  	<?php echo anchor("instructor/asignarAsistencia/{$item->id_paquete}/{$item->id_sede}/{$item->id_estudiante}/{$item->id_instructor}/{$item->fecha_inicio}", 'Asignar asistencia', ['class'=>'btn-sm btn-warning', 'style'=>'float:right; margin-right: 5px;']); ?>
-			  </div>
-			  <div class="card-body">
-			    <h4 class="card-title"><?=$item->nombre . ' ' . $item->apellido1 . ' ' . $item->apellido2 ?></h4>
-			    Identificación: <?=$item->id_individuo ?><br>
-			    Paquete: <?=$item->nombre_paquete ?><br>
-			    Sede: <?=$item->nombre_sede ?><br>
-			    Asistencias: <?=$item->asistencias ?> de <?=$item->cantidad_clases ?><br>
-			    Días restantes: <?=$item->dias_restantes ?><br>
-			    Fecha de inicio: <?=$item->fecha_inicio ?><br>
+			<div style="border: none;" class="card border-secondary mb-3 info_estudiantes" id="contenido">
+			  <div id="contenido">
+				  <div class="card-header">Identificación: <?=$item->id_individuo ?>
+				  <?php echo anchor("instructor/editarPaqueteEstudiante/{$item->id_paquete}/{$item->id_sede}/{$item->id_estudiante}/{$item->id_instructor}/{$item->fecha_inicio}", 'Editar', ['class'=>'btn-sm btn-success', 'style'=>'float:right;']); ?>
+				  <?php echo anchor("instructor/asignarAsistencia/{$item->id_paquete}/{$item->id_sede}/{$item->id_estudiante}/{$item->id_instructor}/{$item->fecha_inicio}", 'Asignar asistencia', ['class'=>'btn-sm btn-warning', 'style'=>'float:right; margin-right: 5px;']); ?>
+				  </div>
+				  <div class="card-body">
+				    <h4 class="card-title"><?=$item->nombre . ' ' . $item->apellido1 . ' ' . $item->apellido2 ?></h4>
+				    Identificación: <?=$item->id_individuo ?><br>
+				    Paquete: <?=$item->nombre_paquete ?><br>
+				    Sede: <?=$item->nombre_sede ?><br>
+				    Asistencias: <?=$item->asistencias ?> de <?=$item->cantidad_clases ?><br>
+				    Días restantes: <?=$item->dias_restantes ?><br>
+				    Fecha de inicio: <?=$item->fecha_inicio ?><br>
+				  </div>
 			  </div>
 			</div>
 		<?php endforeach; ?>
@@ -90,8 +94,9 @@
 	<hr>
 	<!-- Paquetes inactivos -->
 	<legend>Paquetes inactivos</legend>
+	<input type="text" id="busqueda2" placeholder="Buscar..." class="form-control">
 	<!-- Tabla  -->
-	<table class="table table-hover tabla_estudiantes">
+	<table class="table table-hover tabla_estudiantes" id="tabla2">
 	  <thead>
 	    <tr>
 	      <th scope="col">Identificación</th>
@@ -106,6 +111,7 @@
 	  </thead>
 	  <tbody>
 	  	<?php if (count($infoPaquetesInactivos)): ?>
+	  		<br>
 	  		<?php foreach ($infoPaquetesInactivos as $item): ?>
 		    <tr class="table-light">
 		    	<td><?=$item->id_individuo ?></td>
@@ -135,18 +141,20 @@
 	<!-- Tarjetas responsive -->
 	<?php if (count($infoPaquetesInactivos)): ?>
 		<?php foreach ($infoPaquetesInactivos as $item): ?>
-			<div class="card border-secondary mb-3 info_estudiantes">
-			  <div class="card-header">Identificación: <?=$item->id_individuo ?>
-			  	<?php echo anchor("instructor/editarPaqueteEstudiante/{$item->id_paquete}/{$item->id_sede}/{$item->id_estudiante}/{$item->id_instructor}/{$item->fecha_inicio}", 'Editar', ['class'=>'btn-sm btn-success', 'style'=>'float:right;']); ?>
-			  </div>
-			  <div class="card-body">
-			    <h4 class="card-title"><?=$item->nombre . ' ' . $item->apellido1 . ' ' . $item->apellido2 ?></h4>
-			    Identificación: <?=$item->id_individuo ?><br>
-			    Paquete: <?=$item->nombre_paquete ?><br>
-			    Sede: <?=$item->nombre_sede ?><br>
-			    Asistencias: <?=$item->asistencias ?> de <?=$item->cantidad_clases ?><br>
-			    Días restantes: <?=$item->dias_restantes ?><br>
-			    Fecha de inicio: <?=$item->fecha_inicio ?><br>
+			<div style="border: none;" class="card border-secondary mb-3 info_estudiantes" id="contenido2">
+			  <div id="contenido2">
+				  <div class="card-header">Identificación: <?=$item->id_individuo ?>
+				  <?php echo anchor("instructor/editarPaqueteEstudiante/{$item->id_paquete}/{$item->id_sede}/{$item->id_estudiante}/{$item->id_instructor}/{$item->fecha_inicio}", 'Editar', ['class'=>'btn-sm btn-success', 'style'=>'float:right;']); ?>
+				  </div>
+				  <div class="card-body">
+				    <h4 class="card-title"><?=$item->nombre . ' ' . $item->apellido1 . ' ' . $item->apellido2 ?></h4>
+				    Identificación: <?=$item->id_individuo ?><br>
+				    Paquete: <?=$item->nombre_paquete ?><br>
+				    Sede: <?=$item->nombre_sede ?><br>
+				    Asistencias: <?=$item->asistencias ?> de <?=$item->cantidad_clases ?><br>
+				    Días restantes: <?=$item->dias_restantes ?><br>
+				    Fecha de inicio: <?=$item->fecha_inicio ?><br>
+				  </div>
 			  </div>
 			</div>
 		<?php endforeach; ?>
@@ -154,4 +162,21 @@
 			<h3>No se encontraron resultados.</h3>
 		<?php endif; ?>
 </div>
+<script>
+$(document).ready(function(){
+  $("#busqueda").on("keyup", function() {
+    var value = $(this).val().toLowerCase();
+    $("#tabla tbody tr, #contenido #contenido").filter(function() {
+      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
+  });
+
+  $("#busqueda2").on("keyup", function() {
+    var value = $(this).val().toLowerCase();
+    $("#tabla2 tbody tr, #contenido2 #contenido2").filter(function() {
+      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
+  });
+});
+</script>
 <?php include_once('footer.php') ?>
