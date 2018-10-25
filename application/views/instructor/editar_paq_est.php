@@ -55,6 +55,13 @@
 	    	<?=form_error('asistencias', '<div class="text-danger">','</div>'); ?>
 	    </div>
 	    <div class="form-group">
+	    	<label for="">Paquete pagado</label>
+	    	<select name="es_pagado" class="form-control custom-select">
+	    		<option value="1">Sí</option>
+	    		<option value="0">No</option>
+	    	</select>
+	    </div>
+	    <div class="form-group">
 	    	<label for="">Paquete activo</label>
 	    	<select name="es_activo" class="form-control custom-select">
 	    		<option value="1">Sí</option>

@@ -17,7 +17,7 @@
 	<?php echo anchor('instructor/nuevoUsuario', 'Agregar nuevo usuario', ['class'=>'btn btn-primary']); ?>
 	<hr>
 		<input type="text" id="busqueda" placeholder="Buscar..." class="form-control">
-		<table class="table table-hover tabla_estudiantes" id="tabla">
+		<table class="table table-hover tabla_estudiantes small" id="tabla">
 		  <thead>
 		    <tr>
 		      <th scope="col">Identificación</th>

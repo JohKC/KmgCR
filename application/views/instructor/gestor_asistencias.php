@@ -20,10 +20,11 @@
 
 	<?php echo anchor('instructor/asignarPaquete', 'Asignar nuevo paquete', ['class'=>'btn btn-primary']); ?>
 	<hr>
+	<!-- TODO: Mostrar los paquetes activos e inactivos en tabs individuales -->
 	<legend>Paquetes activos</legend>
 	<input type="text" id="busqueda" placeholder="Buscar..." class="form-control">
 	<!-- Tabla  -->
-	<table class="table table-hover tabla_estudiantes" id="tabla">
+	<table class="table table-hover tabla_estudiantes small" id="tabla">
 	  <thead>
 	    <tr>
 	      <th scope="col">Identificación</th>
@@ -32,7 +33,9 @@
 	      <th scope="col">Sede</th>
 	      <th scope="col">Asistencias</th>
 	      <th scope="col">Días restantes</th>
-	      <th scope="col">Fecha de inicio</th>
+	      <th scope="col">Inicio</th>
+	      <th scope="col">Vencimiento</th>
+	      <th scope="col">Pagado</th>
 	      <th scope="col">Opciones</th>
 	    </tr>
 	  </thead>
@@ -47,7 +50,9 @@
 		      	<td><?=$item->asistencias ?> de <?=$item->cantidad_clases ?></td>
 		      	<td><?=$item->dias_restantes ?></td>
 		      	<td><?=$item->fecha_inicio ?></td>
-		        <td>
+		      	<td><?=$item->fecha_venc ?></td>
+		      	<td><?=$item->es_pagado ?></td>
+		        <td class="text-center">
 		        	<?php
 		        	 $clase = '';
 		        	 if ($item->asistencias == $item->cantidad_clases) {
@@ -56,7 +61,7 @@
 
 		        	?>
 		      	<?php echo anchor("instructor/editarPaqueteEstudiante/{$item->id_paquete}/{$item->id_sede}/{$item->id_estudiante}/{$item->id_instructor}/{$item->fecha_inicio}", 'Editar', ['class'=>"btn btn-success"]); ?>
-		      	<?php echo anchor("instructor/asignarAsistencia/{$item->id_paquete}/{$item->id_sede}/{$item->id_estudiante}/{$item->id_instructor}/{$item->fecha_inicio}", 'Asignar asistencia', ['class'=>"btn btn-warning $clase"]); ?>
+		      	<?php echo anchor("instructor/asignarAsistencia/{$item->id_paquete}/{$item->id_sede}/{$item->id_estudiante}/{$item->id_instructor}/{$item->fecha_inicio}", 'Asistencia', ['class'=>"btn btn-warning $clase"]); ?>
 		      </td>
 
 		    </tr>
@@ -82,7 +87,9 @@
 				    Sede: <?=$item->nombre_sede ?><br>
 				    Asistencias: <?=$item->asistencias ?> de <?=$item->cantidad_clases ?><br>
 				    Días restantes: <?=$item->dias_restantes ?><br>
-				    Fecha de inicio: <?=$item->fecha_inicio ?><br>
+				    Inicio: <?=$item->fecha_inicio ?><br>
+				    Vencimiento: <?=$item->fecha_venc ?><br>
+				    Pagado: <?=$item->es_pagado ?><br>
 				  </div>
 			  </div>
 			</div>
@@ -96,7 +103,7 @@
 	<legend>Paquetes inactivos</legend>
 	<input type="text" id="busqueda2" placeholder="Buscar..." class="form-control">
 	<!-- Tabla  -->
-	<table class="table table-hover tabla_estudiantes" id="tabla2">
+	<table class="table table-hover tabla_estudiantes small" id="tabla2">
 	  <thead>
 	    <tr>
 	      <th scope="col">Identificación</th>
@@ -105,7 +112,9 @@
 	      <th scope="col">Sede</th>
 	      <th scope="col">Asistencias</th>
 	      <th scope="col">Días restantes</th>
-	      <th scope="col">Fecha de inicio</th>
+	      <th scope="col">Inicio</th>
+	      <th scope="col">Vencimiento</th>
+	      <th scope="col">Pagado</th>
 	      <th scope="col">Opciones</th>
 	    </tr>
 	  </thead>
@@ -121,6 +130,8 @@
 		      	<td><?=$item->asistencias ?> de <?=$item->cantidad_clases ?></td>
 		      	<td><?=$item->dias_restantes ?></td>
 		      	<td><?=$item->fecha_inicio ?></td>
+		      	<td><?=$item->fecha_venc ?></td>
+		      	<td><?=$item->es_pagado ?></td>
 		        <td>
 		        	<?php
 		        	 $clase = '';
@@ -153,7 +164,9 @@
 				    Sede: <?=$item->nombre_sede ?><br>
 				    Asistencias: <?=$item->asistencias ?> de <?=$item->cantidad_clases ?><br>
 				    Días restantes: <?=$item->dias_restantes ?><br>
-				    Fecha de inicio: <?=$item->fecha_inicio ?><br>
+				    Inicio: <?=$item->fecha_inicio ?><br>
+				    Vencimiento: <?=$item->fecha_venc ?><br>
+				    Pagado: <?=$item->es_pagado ?><br>
 				  </div>
 			  </div>
 			</div>

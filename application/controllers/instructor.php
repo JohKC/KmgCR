@@ -324,8 +324,9 @@ class Instructor extends CI_Controller {
 				$diasRestantes = $this->input->post('dias_restantes');
 				$asistencias = $this->input->post('asistencias');
 				$esActivo = $this->input->post('es_activo'); 
+				$esPagado = $this->input->post('es_pagado'); 
 
-				if ($mensaje = $this->instructorModel->editarPaqueteEstudiante($idPaqNuevo, $idSedeNuevo, $idEstNuevo, $idInstNuevo, $fechaInicioNuevo, $diasRestantes, $asistencias, $esActivo, $idPaquete, $idSede, $idEstudiante, $idInstructor, $fechaInicio)) {
+				if ($mensaje = $this->instructorModel->editarPaqueteEstudiante($idPaqNuevo, $idSedeNuevo, $idEstNuevo, $idInstNuevo, $fechaInicioNuevo, $diasRestantes, $asistencias, $esActivo, $idPaquete, $idSede, $idEstudiante, $idInstructor, $fechaInicio, $esPagado)) {
 					$this->session->set_flashdata('mensaje', 'Paquete de estudiante editado correctamente');
 				} else {
 					$this->session->set_flashdata('mensaje', 'No se pudo editar paquete de estudiante');
@@ -357,12 +358,13 @@ class Instructor extends CI_Controller {
 			$idSede = $this->input->post('id_sede');
 			$idInstructor = $this->input->post('id_instructor');
 			$fechaInicio = $this->input->post('fecha_inicio');
+			$esPagado = $this->input->post('es_pagado'); 
 
 			$this->form_validation->set_rules('fecha_inicio', 'fecha de inicio', 'required');
 			$this->form_validation->set_message('required', 'El campo {field} es obligatorio.');
 
 			if ($this->form_validation->run()) {
-				if ($this->instructorModel->crearPaqueteEstudiante($idPaquete, $idSede, $idEstudiante, $idInstructor, $fechaInicio)) {
+				if ($this->instructorModel->crearPaqueteEstudiante($idPaquete, $idSede, $idEstudiante, $idInstructor, $fechaInicio, $esPagado)) {
 					$this->session->set_flashdata('mensaje', 'Paquete asignado correctamente');
 				} else {
 					$this->session->set_flashdata('mensaje', 'No se pudo asignar el paquete');

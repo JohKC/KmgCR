@@ -97,7 +97,7 @@ class InstructorModel extends CI_Model {
 	// Obtener informacion de paquetes y asistencias
 	public function obtenerInfoAsistencias($idInstructor, $esActivo)
 	{
-		$query = $this->db->query("SELECT U.id_usuario, I.id_individuo, EP.id_estudiante, EP.id_instructor, EP.id_sede, EP.id_paquete, I.nombre, I.apellido1, I.apellido2, EP.fecha_inicio, EP.es_activo, P.cantidad_clases, EP.dias_restantes, EP.asistencias, S.nombre_sede, P.nombre_paquete
+		$query = $this->db->query("SELECT U.id_usuario, I.id_individuo, EP.id_estudiante, EP.id_instructor, EP.id_sede, EP.id_paquete, I.nombre, I.apellido1, I.apellido2, EP.fecha_inicio, DATE_ADD(EP.fecha_inicio, INTERVAL EP.dias_restantes DAY) as fecha_venc, EP.es_activo, P.cantidad_clases, EP.dias_restantes, EP.asistencias, S.nombre_sede, P.nombre_paquete, EP.es_pagado
 			FROM t_estudiante_paquete EP
 			INNER JOIN t_estudiante E ON EP.id_estudiante = E.id_estudiante
 			INNER JOIN t_individuo I ON E.id_individuo = I.id_individuo
@@ -116,9 +116,9 @@ class InstructorModel extends CI_Model {
 	}
 
 	// Asignar un nuevo paquete a un estudiante
-	public function crearPaqueteEstudiante($idPaquete, $idSede, $idEstudiante, $idInstructor, $fechaInicio)
+	public function crearPaqueteEstudiante($idPaquete, $idSede, $idEstudiante, $idInstructor, $fechaInicio, $esPagado)
 	{
-		$this->db->query("INSERT INTO T_ESTUDIANTE_PAQUETE VALUES ($idEstudiante, $idPaquete, $idSede, $idInstructor, '$fechaInicio', 45, 0, 1);");
+		$this->db->query("INSERT INTO T_ESTUDIANTE_PAQUETE VALUES ($idEstudiante, $idPaquete, $idSede, $idInstructor, '$fechaInicio', 45, 0, 1, $esPagado);");
 
 		$error = $this->db->error();
 
@@ -130,9 +130,9 @@ class InstructorModel extends CI_Model {
 	}
 
 	// Actualizar los nuevos datos WHERE datos sean los antiguos
-	public function editarPaqueteEstudiante($idPaquete, $idSede, $idEstudiante, $idInstructor, $fechaInicio, $diasRestantes, $asistencias, $esActivo, $idPaqAntiguo, $idSedeAntiguo, $idEstAntiguo, $idInstAntiguo, $fechaIniAntiguo)
+	public function editarPaqueteEstudiante($idPaquete, $idSede, $idEstudiante, $idInstructor, $fechaInicio, $diasRestantes, $asistencias, $esActivo, $idPaqAntiguo, $idSedeAntiguo, $idEstAntiguo, $idInstAntiguo, $fechaIniAntiguo, $esPagado)
 	{
-		$this->db->query("UPDATE T_ESTUDIANTE_PAQUETE SET id_paquete = $idPaquete, id_sede = $idSede, id_estudiante = $idEstudiante, id_instructor = $idInstructor, fecha_inicio = '$fechaInicio', dias_restantes = $diasRestantes, asistencias = $asistencias, es_activo = $esActivo WHERE id_paquete = $idPaqAntiguo AND id_sede = $idSedeAntiguo AND id_estudiante = $idEstAntiguo AND id_instructor = $idInstAntiguo AND fecha_inicio = '$fechaIniAntiguo'; ");
+		$this->db->query("UPDATE T_ESTUDIANTE_PAQUETE SET id_paquete = $idPaquete, id_sede = $idSede, id_estudiante = $idEstudiante, id_instructor = $idInstructor, fecha_inicio = '$fechaInicio', dias_restantes = $diasRestantes, asistencias = $asistencias, es_activo = $esActivo, es_pagado = $esPagado WHERE id_paquete = $idPaqAntiguo AND id_sede = $idSedeAntiguo AND id_estudiante = $idEstAntiguo AND id_instructor = $idInstAntiguo AND fecha_inicio = '$fechaIniAntiguo'; ");
 
 		$error = $this->db->error();
 

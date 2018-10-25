@@ -33,7 +33,7 @@
 	  <div class="tab-pane fade active show" id="mis_estudiantes">
 	<!-- Tabla  -->
 		<hr>
-		<table class="table table-hover tabla_estudiantes" id="tabla">
+		<table class="table table-hover tabla_estudiantes small" id="tabla">
 		  <thead>
 		    <tr>
 		      <th scope="col">Identificación</th>
@@ -97,7 +97,7 @@
 	  </div>
 	  	<div class="tab-pane fade" id="estudiantes_general">
 	  		<hr>
-			<table class="table table-hover tabla_estudiantes" id="tabla">
+			<table class="table table-hover tabla_estudiantes small" id="tabla">
 			  <thead>
 			    <tr>
 			      <th scope="col">Identificación</th>

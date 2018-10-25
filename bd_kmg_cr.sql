@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1:3306
--- Tiempo de generación: 25-10-2018 a las 04:18:16
+-- Tiempo de generación: 25-10-2018 a las 20:38:16
 -- Versión del servidor: 5.7.21
 -- Versión de PHP: 5.6.35
 
@@ -50,7 +50,7 @@ INSERT INTO `t_estudiante` (`id_estudiante`, `fecha_inscripcion`, `nivel_kmg`, `
 (8, '2018-10-21', 'G1', b'0', '115530864'),
 (11, '2018-10-24', 'Aspirante', b'1', '23123421'),
 (12, '2018-10-24', 'Aspirante', b'1', '12331341'),
-(13, '2018-10-24', 'P2', b'1', '32432487');
+(13, '2018-10-24', 'G1', b'1', '32432487');
 
 -- --------------------------------------------------------
 
@@ -68,6 +68,7 @@ CREATE TABLE IF NOT EXISTS `t_estudiante_paquete` (
   `dias_restantes` int(11) NOT NULL,
   `asistencias` int(11) NOT NULL,
   `es_activo` bit(1) NOT NULL,
+  `es_pagado` bit(1) DEFAULT NULL,
   PRIMARY KEY (`id_estudiante`,`id_paquete`,`id_sede`,`id_instructor`,`fecha_inicio`) USING BTREE,
   KEY `FK_PE_PAQUETE` (`id_paquete`),
   KEY `FK_PE_SEDE` (`id_sede`),
@@ -78,15 +79,15 @@ CREATE TABLE IF NOT EXISTS `t_estudiante_paquete` (
 -- Volcado de datos para la tabla `t_estudiante_paquete`
 --
 
-INSERT INTO `t_estudiante_paquete` (`id_estudiante`, `id_paquete`, `id_sede`, `id_instructor`, `fecha_inicio`, `dias_restantes`, `asistencias`, `es_activo`) VALUES
-(2, 1, 1, 1, '2018-10-17', 45, 15, b'1'),
-(2, 2, 1, 1, '2018-10-06', 45, 30, b'0'),
-(2, 2, 1, 1, '2018-10-10', 45, 17, b'0'),
-(2, 2, 2, 1, '2018-10-27', 45, 17, b'1'),
-(5, 1, 2, 2, '2018-10-18', 45, 0, b'1'),
-(6, 2, 1, 1, '2018-10-22', 45, 4, b'1'),
-(8, 1, 1, 2, '2018-10-21', 45, 6, b'1'),
-(13, 2, 2, 1, '2018-01-04', 45, 2, b'1');
+INSERT INTO `t_estudiante_paquete` (`id_estudiante`, `id_paquete`, `id_sede`, `id_instructor`, `fecha_inicio`, `dias_restantes`, `asistencias`, `es_activo`, `es_pagado`) VALUES
+(2, 1, 1, 1, '2018-10-17', 2, 15, b'1', b'1'),
+(2, 2, 1, 1, '2018-10-06', 45, 30, b'0', b'1'),
+(2, 2, 1, 1, '2018-10-10', 45, 17, b'0', b'1'),
+(2, 2, 2, 1, '2018-10-27', 45, 31, b'1', b'1'),
+(5, 1, 2, 2, '2018-10-18', 45, 0, b'1', b'1'),
+(6, 2, 1, 1, '2018-10-22', 45, 9, b'1', b'1'),
+(8, 1, 1, 2, '2018-10-21', 45, 6, b'1', b'1'),
+(13, 2, 2, 1, '2018-01-04', 45, 2, b'1', b'1');
 
 -- --------------------------------------------------------
 
@@ -115,12 +116,12 @@ CREATE TABLE IF NOT EXISTS `t_individuo` (
 INSERT INTO `t_individuo` (`id_individuo`, `nombre`, `apellido1`, `apellido2`, `nacionalidad`, `condicion_medica`, `fecha_nacimiento`, `id_usuario`) VALUES
 ('113243021', 'Marcos', 'Santos', 'Santos', 'Costa Rica', '', '1992-10-18', 2),
 ('115530864', 'Johan', 'Karlson', 'Carrillo', 'Costa Rica', 'Miope', '1993-10-27', 1),
-('12331341', 'Edgar', 'Morales', '', 'Costa Rica', '', '1982-02-01', 38),
+('12331341', 'Edgar', 'Morales', '', 'Costa Rica', 'Imbecil', '1982-02-01', 38),
 ('12340122', 'Valeria', 'Gonzalez', '', 'Costa Rica', 'Miope', '1993-03-12', 10),
 ('12353322', 'Enrique', 'Gomez', 'Santos', 'Costa Rica', '', '1991-02-10', 9),
 ('12430103', 'Veronica', 'Ramirez', '', 'Costa Rica', '', '1994-06-01', 11),
 ('23123421', 'Maria', 'Morelos', 'Pereira', 'Costa Rica', '', '1992-03-01', 37),
-('32432487', 'Luva', 'Luva', '', 'Costa Rica', 'Imbecil', '1990-01-01', 39);
+('32432487', 'Luva', 'Luva', 'Luva', 'Costa Rica', 'Imbecil', '1990-01-01', 39);
 
 -- --------------------------------------------------------
 
@@ -245,8 +246,8 @@ INSERT INTO `t_usuario` (`id_usuario`, `correo_electronico`, `contrasena`, `id_r
 (10, 'vale@hotmail.com', '1234', 2),
 (11, 'vero@msn.com', '1234', 1),
 (37, 'maria@maria.com', '1234', 1),
-(38, 'edgar@edgar.com', '1234', 2),
-(39, 'luva@luva.com', '1234', 2);
+(38, 'edgar@edgar.com', '1234', 3),
+(39, 'luva@luva.com', '1234', 3);
 
 --
 -- Restricciones para tablas volcadas
