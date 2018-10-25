@@ -39,9 +39,9 @@ class UsuarioModel extends CI_Model {
 		}
 	}
 
-	public function insertar($correo)
+	public function insertar($correo, $idRol)
 	{
-		$this->db->query("INSERT INTO T_USUARIO VALUES (null, '$correo', '1234', 2);");
+		$this->db->query("INSERT INTO T_USUARIO VALUES (null, '$correo', '1234', $idRol);");
 
 		$error = $this->db->error();
 
@@ -54,9 +54,9 @@ class UsuarioModel extends CI_Model {
 		}
 	}
 
-	public function editar($idUsuario, $correo)
+	public function editar($idUsuario, $correo, $idRol)
 	{
-		return $this->db->query("UPDATE T_USUARIO SET correo_electronico = '$correo' WHERE id_usuario = $idUsuario;");
+		return $this->db->query("UPDATE T_USUARIO SET correo_electronico = '$correo', id_rol = $idRol WHERE id_usuario = $idUsuario;");
 	}
 
 	public function seleccionar()

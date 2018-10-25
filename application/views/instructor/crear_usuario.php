@@ -1,7 +1,7 @@
 <?php include_once('header.php') ?>
 <div class="container">
-	<h1>Nuevo estudiante</h1>
-	<?=form_open(base_url().'instructor/nuevoEstudiante', ['class'=>'form-horizontal']); ?>
+	<h1>Nuevo usuario</h1>
+	<?=form_open(base_url().'instructor/nuevoUsuario', ['class'=>'form-horizontal']); ?>
 	  <fieldset>
 	    <legend>Información de usuario</legend>
 	    <div class="form-group">

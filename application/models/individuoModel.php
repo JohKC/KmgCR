@@ -3,6 +3,24 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class IndividuoModel extends CI_Model {
 
+	public function existe($correo, $id)
+	{
+		$query1 = $this->db->query("SELECT * FROM T_USUARIO WHERE correo_electronico = '$correo';");
+		$query2 = $this->db->query("SELECT * FROM T_INDIVIDUO WHERE id_individuo = '$id';");
+
+		// $log = fopen("logEstudiante.txt", "w") or die("Unable to open file!");
+		// $txt = $error['message'] . '<br>' . $this->db->last_query() . '<br>';
+		// fwrite($log, $txt);
+		// fclose($log);
+
+		if (($query1->num_rows() > 0) || ($query2->num_rows() > 0)) {
+			return true;
+		} else {
+			return false;
+		}
+
+	}
+
 	public function obtenerInfo($idUsuario)
 	{
 		$query = $this->db->query("SELECT I.id_individuo, I.nombre, I.apellido1, I.apellido2, I.nacionalidad, I.condicion_medica, I.fecha_nacimiento FROM t_usuario U 
@@ -16,9 +34,10 @@ class IndividuoModel extends CI_Model {
 		}
 	}
 
-	public function seleccionar()
+	public function obtenerListaIndividuos()
 	{
-		$query = $this->db->query("SELECT * FROM T_INDIVIDUO;");
+		$query = $this->db->query("SELECT U.id_usuario, I.id_individuo, I.nombre, I.apellido1, I.apellido2, U.correo_electronico, I.nacionalidad, I.condicion_medica, I.fecha_nacimiento FROM t_usuario U 
+			INNER JOIN t_individuo I ON U.id_usuario = I.id_usuario;");
 
 		if ($query->num_rows() > 0) {
 			return $query->result();
@@ -33,6 +52,11 @@ class IndividuoModel extends CI_Model {
 
 		$error = $this->db->error();
 		// return $error['message'] . ' ' . $this->db->last_query() . '<br>';
+
+		// $log = fopen("logIndividuo.txt", "w") or die("Unable to open file!");
+		// $txt = $error['message'] . '<br>' . $this->db->last_query() . '<br>';
+		// fwrite($log, $txt);
+		// fclose($log);
 
 		if ($error['message'] == '') {
 			return true;

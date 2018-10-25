@@ -4,17 +4,33 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class InstructorModel extends CI_Model {
 
 	// Verifica si existe el individuo que se pretende insertar
-	public function existe($correo, $id)
-	{
-		$query1 = $this->db->query("SELECT * FROM T_USUARIO WHERE correo_electronico = '$correo';");
-		$query2 = $this->db->query("SELECT * FROM T_INDIVIDUO WHERE id_individuo = '$id';");
+	// public function existe($correo, $id)
+	// {
+	// 	$query1 = $this->db->query("SELECT * FROM T_USUARIO WHERE correo_electronico = '$correo';");
+	// 	$query2 = $this->db->query("SELECT * FROM T_INDIVIDUO WHERE id_individuo = '$id';");
 
-		if (($query1->num_rows() > 0) || ($query2->num_rows() > 0)) {
+	// 	if (($query1->num_rows() > 0) || ($query2->num_rows() > 0)) {
+	// 		return true;
+	// 	} else {
+	// 		return false;
+	// 	}
+
+	// }
+
+	public function existeInstructor($idIndividuo)
+	{
+		$query = $this->db->query("SELECT * FROM T_INSTRUCTOR WHERE id_individuo = '$idIndividuo';");
+
+		// $log1 = fopen("logExiste.txt", "w") or die("Unable to open file!");
+		// $txt = $this->db->last_query();
+		// fwrite($log1, $txt);
+		// fclose($log1);
+
+		if (($query->num_rows() > 0)) {
 			return true;
 		} else {
 			return false;
 		}
-
 	}
 
 	// Obtener lista de estudiantes que tienen un paquete con el instructor que esta logueado
@@ -139,9 +155,9 @@ class InstructorModel extends CI_Model {
 		}
 	}
 
-	public function insertar($idIndividuo)
+	public function insertar($idIndividuo, $esActivo)
 	{
-		$this->db->query("INSERT INTO T_INSTRUCTOR VALUES (null, NOW(), 1, '$idIndividuo');");
+		$this->db->query("INSERT INTO T_INSTRUCTOR VALUES (null, NOW(), $esActivo, '$idIndividuo');");
 
 		$error = $this->db->error();
 

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>Perfil de instructor</title>
+	<title><?=$logueado->nombre . ' ' . $logueado->apellido1 ?> - Instructor</title>
 	<link rel="stylesheet" href="<?=base_url('assets/css/bootstrap.css');?>">
 	<link rel="stylesheet" href="<?=base_url('assets/css/instructor/estilos.css');?>">
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
@@ -20,6 +20,9 @@
 	  <div class="collapse navbar-collapse" id="navbarColor03">
 	    <ul class="navbar-nav mr-auto">
 	      <li class="nav-item">
+	        <a class="nav-link" href="<?=base_url().'instructor/usuarios' ?>">Usuarios</a>
+	      </li>
+	      <li class="nav-item">
 	        <a class="nav-link" href="<?=base_url().'instructor/estudiantes' ?>">Estudiantes</a>
 	      </li>
 	      <li class="nav-item">
@@ -36,6 +39,10 @@
 	      </li>
 
 	    </ul>
+	    <form class="form-inline my-2 my-lg-0" style="padding-right: 20px;">
+	    	<?=$logueado->nombre . ' ' . $logueado->apellido1 ?>
+	      
+	    </form>
 	    <form class="form-inline my-2 my-lg-0">
 	      <?=anchor(base_url().'login/cerrarSesion', 'Cerrar sesión', ['class'=>'btn btn-secondary my-2 my-sm-0']); ?>
 	    </form>

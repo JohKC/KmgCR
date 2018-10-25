@@ -26,6 +26,11 @@ class Login extends CI_Controller {
 			case 2:
 				redirect(base_url().'estudiante');
 				break;
+			case 3: // si el rol es 3, devolverse a login, pues no se ha asignado un rol de estudiante o instructor
+				$data['token'] = $this->token();
+				$data['titulo'] = 'Inicio de sesion';
+				$this->load->view('loginView', $data);
+				break;
 			default:
 				$data['titulo'] = 'Inicio de sesion';
 				$this->load->view('loginView', $data);

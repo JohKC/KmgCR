@@ -5,9 +5,11 @@
 	  <li class="nav-item">
 	    <a class="nav-link active show" data-toggle="tab" href="#instructor">Perfil de instructor</a>
 	  </li>
+	  <?php if ($existeEstudiante): ?>
 	  <li class="nav-item">
 	    <a class="nav-link" data-toggle="tab" href="#estudiante">Perfil de estudiante</a>
 	  </li>
+	<?php endif; ?>
 	</ul>
 	<div id="myTabContent" class="tab-content">
 	  <div class="tab-pane fade active show" id="instructor">
@@ -51,9 +53,10 @@
 		    </div>
 	    </div>
 	  </div>
+	  <?php if ($existeEstudiante): ?>
 	  <div class="tab-pane fade" id="estudiante">
 		<div class="jumbotron">
-		  <h1 class="display-3"><?=$individuo->nombre . ' ' . $individuo->apellido1 ?></h1>
+		  <h1 class="display-3"><?=$logueado->nombre . ' ' . $logueado->apellido1 ?></h1>
 	  		<h1>Nivel: <?=$estudiante->nivel_kmg ?></h1>
 		</div>
 		
@@ -119,6 +122,7 @@
 		</div>
 		<br>
 	  </div>
+	<?php endif; ?>
 	</div>
 	<hr>
 </div>

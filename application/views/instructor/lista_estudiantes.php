@@ -14,7 +14,6 @@
 	<?php endif; ?>
 	<h3>Lista de estudiantes</h3>
 
-	<?php echo anchor('instructor/nuevoEstudiante', 'Agregar nuevo estudiante', ['class'=>'btn btn-primary']); ?>
 	<?php echo anchor('instructor/asistencias', 'Paquetes y asistencias', ['class'=>'btn btn-primary']); ?>
 	<hr>
 

@@ -7,10 +7,10 @@ class EstudianteModel extends CI_Model {
 	{
 		$query = $this->db->query("SELECT * FROM T_ESTUDIANTE WHERE id_individuo = '$idIndividuo';");
 
-		$log1 = fopen("logExiste.txt", "w") or die("Unable to open file!");
-		$txt = $this->db->last_query();
-		fwrite($log1, $txt);
-		fclose($log1);
+		// $log1 = fopen("logExiste.txt", "w") or die("Unable to open file!");
+		// $txt = $this->db->last_query();
+		// fwrite($log1, $txt);
+		// fclose($log1);
 
 		if (($query->num_rows() > 0)) {
 			return true;
