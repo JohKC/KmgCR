@@ -115,10 +115,23 @@ class InstructorModel extends CI_Model {
 		return $query = $this->db->query("UPDATE T_ESTUDIANTE_PAQUETE SET asistencias = (asistencias + 1) WHERE id_paquete = $idPaquete AND id_sede = $idSede AND id_estudiante = $idEstudiante AND id_instructor = $idInstructor AND fecha_inicio = '$fechaInicio'; ");
 	}
 
-	// Asignar un nuevo paquete a un estudiante
-	public function crearPaqueteEstudiante($idPaquete, $idSede, $idEstudiante, $idInstructor, $fechaInicio, $esPagado)
+
+	// Averigua si existe un paquete activo, y en caso de no haber, se puede activar un paquete nuevo e inactivo
+	public function verificarPaqueteActivo($idInstructor, $idEstudiante, $idSede)
 	{
-		$this->db->query("INSERT INTO T_ESTUDIANTE_PAQUETE VALUES ($idEstudiante, $idPaquete, $idSede, $idInstructor, '$fechaInicio', 45, 0, 1, $esPagado);");
+		$query = $this->db->query("SELECT id_estudiante, id_sede, id_instructor FROM t_estudiante_paquete WHERE id_estudiante = $idEstudiante AND id_sede = $idSede AND id_instructor = $idInstructor AND es_activo = 1;");
+
+		if ($query->num_rows() > 0) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	// Asignar un nuevo paquete a un estudiante
+	public function crearPaqueteEstudiante($idPaquete, $idSede, $idEstudiante, $idInstructor, $fechaInicio, $esActivo, $esPagado)
+	{
+		$this->db->query("INSERT INTO T_ESTUDIANTE_PAQUETE VALUES ($idEstudiante, $idPaquete, $idSede, $idInstructor, '$fechaInicio', 45, 0, $esActivo, $esPagado);");
 
 		$error = $this->db->error();
 

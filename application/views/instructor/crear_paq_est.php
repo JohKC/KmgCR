@@ -40,6 +40,20 @@
 	    	<?=form_input(['name'=>'fecha_inicio', 'class'=>'form-control', 'type'=>'date']); ?>
 	    	<?=form_error('fecha_inicio', '<div class="text-danger">','</div>'); ?>
 	    </div>
+	    <div class="form-group">
+	    	<label for="">Paquete pagado</label>
+	    	<select name="es_pagado" class="form-control custom-select">
+	    		<option value="1">Sí</option>
+	    		<option value="0">No</option>
+	    	</select>
+	    </div>
+	    <div class="form-group">
+	    	<label for="">Paquete activo</label>
+	    	<select name="es_activo" class="form-control custom-select">
+	    		<option value="1">Sí</option>
+	    		<option value="0">No</option>
+	    	</select>
+	    </div>
 	    </fieldset>
 	    <?=form_submit(['name'=>'submit', 'value'=>'Guardar', 'class'=>'btn btn-primary']); ?>
 	  </fieldset>

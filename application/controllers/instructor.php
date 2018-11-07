@@ -270,6 +270,8 @@ class Instructor extends CI_Controller {
 		$instructor = $this->instructorModel->obtenerInfo($this->session->userdata('id_usuario'));
 		$infoPaquetesActivos = $this->instructorModel->obtenerInfoAsistencias($instructor->id_instructor, 1);
 		$infoPaquetesInactivos = $this->instructorModel->obtenerInfoAsistencias($instructor->id_instructor, 0);
+
+
 		$this->load->view('instructor/gestor_asistencias', ['logueado'=>$logueado, 'infoPaquetesActivos'=>$infoPaquetesActivos, 'infoPaquetesInactivos'=>$infoPaquetesInactivos]);
 	}
 
@@ -295,7 +297,7 @@ class Instructor extends CI_Controller {
 		$this->asistencias();
 	}
 
-	public function editarPaqueteEstudiante($idPaquete, $idSede, $idEstudiante, $idInstructor, $fechaInicio)
+	public function editarPaqueteEstudiante($idPaquete, $idSede, $idEstudiante, $idInstructor, $fechaInicio, $esActivo)
 	{
 		if ($this->session->userdata('id_rol') == FALSE || $this->session->userdata('id_rol') != 1) {
 			redirect(base_url().'login');
@@ -323,15 +325,31 @@ class Instructor extends CI_Controller {
 				$fechaInicioNuevo = $this->input->post('fecha_inicio');
 				$diasRestantes = $this->input->post('dias_restantes');
 				$asistencias = $this->input->post('asistencias');
-				$esActivo = $this->input->post('es_activo'); 
+				$esActivoNuevo = $this->input->post('es_activo'); 
 				$esPagado = $this->input->post('es_pagado'); 
 
-				if ($mensaje = $this->instructorModel->editarPaqueteEstudiante($idPaqNuevo, $idSedeNuevo, $idEstNuevo, $idInstNuevo, $fechaInicioNuevo, $diasRestantes, $asistencias, $esActivo, $idPaquete, $idSede, $idEstudiante, $idInstructor, $fechaInicio, $esPagado)) {
-					$this->session->set_flashdata('mensaje', 'Paquete de estudiante editado correctamente');
+				// Si el paquete cambiará a activo, verificar que no exista ya un paquete activo con las mismas condiciones (sede, estudiante e instructor)
+				if ($esActivoNuevo == 1 && $esActivo == 0) {
+					if ($this->instructorModel->verificarPaqueteActivo($idInstructor, $idEstudiante, $idSede) == FALSE) {
+						if ($this->instructorModel->editarPaqueteEstudiante($idPaqNuevo, $idSedeNuevo, $idEstNuevo, $idInstNuevo, $fechaInicioNuevo, $diasRestantes, $asistencias, $esActivoNuevo, $idPaquete, $idSede, $idEstudiante, $idInstructor, $fechaInicio, $esPagado)) {
+							$this->session->set_flashdata('mensaje', 'Paquete de estudiante editado correctamente');
+						} else {
+							$this->session->set_flashdata('mensaje', 'No se pudo editar paquete de estudiante');
+						}
+					} else {
+						$this->session->set_flashdata('mensaje', 'Ya existe un paquete activo con el mismo estudiante, sede e instructor');
+					}
+
 				} else {
-					$this->session->set_flashdata('mensaje', 'No se pudo editar paquete de estudiante');
+					if ($this->instructorModel->editarPaqueteEstudiante($idPaqNuevo, $idSedeNuevo, $idEstNuevo, $idInstNuevo, $fechaInicioNuevo, $diasRestantes, $asistencias, $esActivoNuevo, $idPaquete, $idSede, $idEstudiante, $idInstructor, $fechaInicio, $esPagado)) {
+						$this->session->set_flashdata('mensaje', 'Paquete de estudiante editado correctamente');
+					} else {
+						$this->session->set_flashdata('mensaje', 'No se pudo editar paquete de estudiante');
+					}
 				}
 
+
+				
 				return redirect('instructor/asistencias');
 
 			} else {
@@ -358,13 +376,14 @@ class Instructor extends CI_Controller {
 			$idSede = $this->input->post('id_sede');
 			$idInstructor = $this->input->post('id_instructor');
 			$fechaInicio = $this->input->post('fecha_inicio');
+			$esActivo = $this->input->post('es_activo'); 
 			$esPagado = $this->input->post('es_pagado'); 
 
 			$this->form_validation->set_rules('fecha_inicio', 'fecha de inicio', 'required');
 			$this->form_validation->set_message('required', 'El campo {field} es obligatorio.');
 
 			if ($this->form_validation->run()) {
-				if ($this->instructorModel->crearPaqueteEstudiante($idPaquete, $idSede, $idEstudiante, $idInstructor, $fechaInicio, $esPagado)) {
+				if ($this->instructorModel->crearPaqueteEstudiante($idPaquete, $idSede, $idEstudiante, $idInstructor, $fechaInicio, $esActivo, $esPagado)) {
 					$this->session->set_flashdata('mensaje', 'Paquete asignado correctamente');
 				} else {
 					$this->session->set_flashdata('mensaje', 'No se pudo asignar el paquete');
@@ -372,11 +391,13 @@ class Instructor extends CI_Controller {
 
 				return redirect('instructor/asistencias');
 			} else {
-				$this->load->view('instructor/crear_paq_est', ['estudiantes'=>$estudiantes, 'paquetes'=>$paquetes, 'instructores'=>$instructores, 'sedes'=>$sedes]);
+				$this->load->view('instructor/crear_paq_est', ['logueado'=>$logueado, 'estudiantes'=>$estudiantes, 'paquetes'=>$paquetes, 'instructores'=>$instructores, 'sedes'=>$sedes]);
 			}
+		} else {
+			$this->load->view('instructor/crear_paq_est', ['logueado'=>$logueado, 'estudiantes'=>$estudiantes, 'paquetes'=>$paquetes, 'instructores'=>$instructores, 'sedes'=>$sedes]);
+
 		}
 
-		$this->load->view('instructor/crear_paq_est', ['logueado'=>$logueado, 'estudiantes'=>$estudiantes, 'paquetes'=>$paquetes, 'instructores'=>$instructores, 'sedes'=>$sedes]);
 	}
 
 	// Pagina de gestion de informacion de instructores
