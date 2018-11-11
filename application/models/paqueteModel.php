@@ -25,6 +25,38 @@ class PaqueteModel extends CI_Model {
 		}
 	}
 
+	public function insertar($nombre, $cantClases, $precio)
+	{
+		$query = $this->db->query("INSERT INTO T_PAQUETE VALUES (null, '$nombre', $cantClases, $precio);");
+
+		$error = $this->db->error();
+
+		// return $error['message'] . ' ' . $this->db->last_query() . '<br>';
+
+		if ($error['message'] == '') {
+			return true;
+		} else {
+			return false;
+		}
+
+	}
+
+	public function editar($nombre, $cantClases, $precio, $idPaquete)
+	{
+		$query = $this->db->query("UPDATE T_PAQUETE SET nombre_paquete = '$nombre', cantidad_clases = $cantClases, monto_precio = $precio WHERE id_paquete = $idPaquete;");
+
+		$error = $this->db->error();
+
+		// return $error['message'] . ' ' . $this->db->last_query() . '<br>';
+
+		if ($error['message'] == '') {
+			return true;
+		} else {
+			return false;
+		}
+
+	}
+
 }
 
 /* End of file paqueteModel.php */

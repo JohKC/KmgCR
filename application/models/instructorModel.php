@@ -168,6 +168,18 @@ class InstructorModel extends CI_Model {
 		}
 	}
 
+	// Verificar si hay paquetes no pagados de estudiante
+	public function verificarNoPagados($idEstudiante)
+	{
+		$query = $this->db->query("SELECT * FROM t_estudiante_paquete WHERE es_pagado = 0 AND id_estudiante = $idEstudiante;");
+
+		if ($query->num_rows() > 0) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
 	public function insertar($idIndividuo, $esActivo)
 	{
 		$this->db->query("INSERT INTO T_INSTRUCTOR VALUES (null, NOW(), $esActivo, '$idIndividuo');");

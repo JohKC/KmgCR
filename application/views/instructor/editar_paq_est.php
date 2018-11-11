@@ -1,7 +1,7 @@
 <?php include_once('header.php') ?>
 <div class="container">
 	<h1>Editar paquete de estudiante</h1>
-	<?=form_open(base_url()."instructor/editarPaqueteEstudiante/{$infoActual->id_paquete}/{$infoActual->id_sede}/{$infoActual->id_estudiante}/{$infoActual->id_instructor}/{$infoActual->fecha_inicio}", ['class'=>'form-horizontal']); ?>
+	<?=form_open(base_url()."instructor/editarPaqueteEstudiante/{$infoActual->id_paquete}/{$infoActual->id_sede}/{$infoActual->id_estudiante}/{$infoActual->id_instructor}/{$infoActual->fecha_inicio}/{$infoActual->es_activo}", ['class'=>'form-horizontal']); ?>
 	  <fieldset>
 	  	<input type="hidden" id="idEstudiante" value="<?=$infoActual->id_estudiante ?>">
 	  	<input type="hidden" id="idInstructor" value="<?=$infoActual->id_instructor ?>">

@@ -6,7 +6,7 @@
 			<div class="alert alert-dismissible alert-success">
 				<?=$this->session->flashdata('mensaje') ?>
 			</div>
-		<?php elseif ($mensaje == 'No se pudo editar paquete de estudiante' || $mensaje == 'No se pudo asignar el paquete' || $mensaje == 'Ya existe un paquete activo con el mismo estudiante, sede e instructor'): ?>
+		<?php elseif ($mensaje == 'No se pudo editar paquete de estudiante' || $mensaje == 'No se pudo asignar el paquete' || $mensaje == 'Ya existe un paquete activo con el mismo estudiante, sede e instructor' || $mensaje == 'El estudiante no ha pagado su paquete actual'): ?>
 			<div class="alert alert-dismissible alert-danger">
 				<?=$this->session->flashdata('mensaje') ?>
 			</div>
@@ -78,7 +78,14 @@
 			  <div id="contenido">
 				  <div class="card-header">Identificación: <?=$item->id_individuo ?>
 				  <?php echo anchor("instructor/editarPaqueteEstudiante/{$item->id_paquete}/{$item->id_sede}/{$item->id_estudiante}/{$item->id_instructor}/{$item->fecha_inicio}/1", 'Editar', ['class'=>'btn-sm btn-success', 'style'=>'float:right;']); ?>
-				  <?php echo anchor("instructor/asignarAsistencia/{$item->id_paquete}/{$item->id_sede}/{$item->id_estudiante}/{$item->id_instructor}/{$item->fecha_inicio}", 'Asignar asistencia', ['class'=>'btn-sm btn-warning', 'style'=>'float:right; margin-right: 5px;']); ?>
+				  <?php
+		        	 $estilo = '';
+		        	 if ($item->asistencias == $item->cantidad_clases) {
+		        	 	$estilo = 'display: none';
+		        	 }
+
+		        	?>
+				  <?php echo anchor("instructor/asignarAsistencia/{$item->id_paquete}/{$item->id_sede}/{$item->id_estudiante}/{$item->id_instructor}/{$item->fecha_inicio}", 'Asignar asistencia', ['class'=>"btn-sm btn-warning", 'style'=>"float:right; margin-right: 5px; $estilo"]); ?>
 				  </div>
 				  <div class="card-body">
 				    <h4 class="card-title"><?=$item->nombre . ' ' . $item->apellido1 . ' ' . $item->apellido2 ?></h4>

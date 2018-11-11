@@ -383,11 +383,18 @@ class Instructor extends CI_Controller {
 			$this->form_validation->set_message('required', 'El campo {field} es obligatorio.');
 
 			if ($this->form_validation->run()) {
-				if ($this->instructorModel->crearPaqueteEstudiante($idPaquete, $idSede, $idEstudiante, $idInstructor, $fechaInicio, $esActivo, $esPagado)) {
-					$this->session->set_flashdata('mensaje', 'Paquete asignado correctamente');
+				if ($this->instructorModel->verificarNoPagados($idEstudiante) == FALSE) {
+					if ($this->instructorModel->crearPaqueteEstudiante($idPaquete, $idSede, $idEstudiante, $idInstructor, $fechaInicio, $esActivo, $esPagado)) {
+						$this->session->set_flashdata('mensaje', 'Paquete asignado correctamente');
+					} else {
+						$this->session->set_flashdata('mensaje', 'No se pudo asignar el paquete');
+					}
 				} else {
-					$this->session->set_flashdata('mensaje', 'No se pudo asignar el paquete');
+					$this->session->set_flashdata('mensaje', 'El estudiante no ha pagado su paquete actual');
 				}
+
+
+					
 
 				return redirect('instructor/asistencias');
 			} else {
@@ -452,6 +459,169 @@ class Instructor extends CI_Controller {
 
 		} else {
 			$this->load->view('instructor/editar_instructor', ['usuario'=>$usuario, 'logueado'=>$logueado, 'individuo'=>$individuo, 'instructor'=>$instructor]);
+		}
+	}
+
+	public function paquetes()
+	{
+		if ($this->session->userdata('id_rol') == FALSE || $this->session->userdata('id_rol') != 1) {
+			redirect(base_url().'login');
+		}
+
+		$logueado = $this->individuoModel->obtenerInfo($this->session->userdata('id_usuario'));
+
+		$listaPaquetes = $this->paqueteModel->seleccionar();
+
+		$this->load->view('instructor/lista_paquetes', ['logueado'=>$logueado, 'listaPaquetes'=>$listaPaquetes]);
+	}
+
+	// Inserta un nuevo tipo de paquete
+	public function nuevoPaquete()
+	{
+		if ($this->session->userdata('id_rol') == FALSE || $this->session->userdata('id_rol') != 1) {
+			redirect(base_url().'login');
+		}
+
+		$logueado = $this->individuoModel->obtenerInfo($this->session->userdata('id_usuario'));
+
+		if ($this->input->post()) {
+			$this->form_validation->set_rules('nombre_paquete', 'nombre del paquete', 'required');
+			$this->form_validation->set_rules('cantidad_clases', 'cantidad de clases', 'required');
+			$this->form_validation->set_rules('monto_precio', 'precio', 'required');
+			$this->form_validation->set_message('required', 'El campo {field} es obligatorio.');
+
+			if ($this->form_validation->run()) {
+				$nombre = $this->input->post('nombre_paquete');
+				$cantClases = $this->input->post('cantidad_clases');
+				$precio = $this->input->post('monto_precio');
+
+				if ($this->paqueteModel->insertar($nombre, $cantClases, $precio)) {
+					$this->session->set_flashdata('mensaje', 'Paquete añadido correctamente');
+				} else {
+					$this->session->set_flashdata('mensaje', 'No es posible añadir datos de paquete');
+				}
+
+				return redirect('instructor/paquetes');
+			} else {
+				$this->load->view('instructor/crear_paquete', ['logueado'=>$logueado]);
+			}
+		} else {
+			$this->load->view('instructor/crear_paquete', ['logueado'=>$logueado]);
+		}
+	}
+
+	public function editarPaquete($idPaquete)
+	{
+		if ($this->session->userdata('id_rol') == FALSE || $this->session->userdata('id_rol') != 1) {
+			redirect(base_url().'login');
+		}
+
+		$logueado = $this->individuoModel->obtenerInfo($this->session->userdata('id_usuario'));
+		$paquete = $this->paqueteModel->obtenerInfo($idPaquete);
+
+		if ($this->input->post()) {
+			$this->form_validation->set_rules('nombre_paquete', 'nombre del paquete', 'required');
+			$this->form_validation->set_rules('cantidad_clases', 'cantidad de clases', 'required');
+			$this->form_validation->set_rules('monto_precio', 'precio', 'required');
+			$this->form_validation->set_message('required', 'El campo {field} es obligatorio.');
+
+			if ($this->form_validation->run()) {
+				$nombre = $this->input->post('nombre_paquete');
+				$cantClases = $this->input->post('cantidad_clases');
+				$precio = $this->input->post('monto_precio');
+
+				if ($this->paqueteModel->editar($nombre, $cantClases, $precio, $idPaquete)) {
+					$this->session->set_flashdata('mensaje', 'Paquete editado correctamente');
+				} else {
+					$this->session->set_flashdata('mensaje', 'No es posible editar datos de paquete');
+				}
+
+				return redirect('instructor/paquetes');
+			} else {
+				$this->load->view('instructor/editar_paquete', ['logueado'=>$logueado, 'paquete'=>$paquete]);
+			}
+		} else {
+			$this->load->view('instructor/editar_paquete', ['logueado'=>$logueado, 'paquete'=>$paquete]);
+		}
+	}
+
+	public function sedes()
+	{
+		if ($this->session->userdata('id_rol') == FALSE || $this->session->userdata('id_rol') != 1) {
+			redirect(base_url().'login');
+		}
+
+		$logueado = $this->individuoModel->obtenerInfo($this->session->userdata('id_usuario'));
+
+		$listaSedes = $this->sedeModel->seleccionar();
+
+		$this->load->view('instructor/lista_sedes', ['logueado'=>$logueado, 'listaSedes'=>$listaSedes]);
+	}
+
+	public function nuevaSede()
+	{
+		if ($this->session->userdata('id_rol') == FALSE || $this->session->userdata('id_rol') != 1) {
+			redirect(base_url().'login');
+		}
+
+		$logueado = $this->individuoModel->obtenerInfo($this->session->userdata('id_usuario'));
+
+		if ($this->input->post()) {
+			$this->form_validation->set_rules('nombre_sede', 'nombre de sede', 'required');
+			$this->form_validation->set_rules('ubicacion', 'ubicación', 'required');
+			$this->form_validation->set_message('required', 'El campo {field} es obligatorio.');
+
+			if ($this->form_validation->run()) {
+				$nombre = $this->input->post('nombre_sede');
+				$ubicacion = $this->input->post('ubicacion');
+				$esActivo = $this->input->post('es_activo');
+
+				if ($this->sedeModel->insertar($nombre, $ubicacion, $esActivo)) {
+					$this->session->set_flashdata('mensaje', 'Sede añadida correctamente');
+				} else {
+					$this->session->set_flashdata('mensaje', 'No es posible añadir datos de sede');
+				}
+
+				return redirect('instructor/sedes');
+			} else {
+				$this->load->view('instructor/crear_sede', ['logueado'=>$logueado]);
+			}
+		} else {
+			$this->load->view('instructor/crear_sede', ['logueado'=>$logueado]);
+		}
+	}
+
+	public function editarSede($idSede)
+	{
+		if ($this->session->userdata('id_rol') == FALSE || $this->session->userdata('id_rol') != 1) {
+			redirect(base_url().'login');
+		}
+
+		$logueado = $this->individuoModel->obtenerInfo($this->session->userdata('id_usuario'));
+		$sede = $this->sedeModel->obtenerInfo($idSede);
+
+		if ($this->input->post()) {
+			$this->form_validation->set_rules('nombre_sede', 'nombre de sede', 'required');
+			$this->form_validation->set_rules('ubicacion', 'ubicación', 'required');
+			$this->form_validation->set_message('required', 'El campo {field} es obligatorio.');
+
+			if ($this->form_validation->run()) {
+				$nombre = $this->input->post('nombre_sede');
+				$ubicacion = $this->input->post('ubicacion');
+				$esActivo = $this->input->post('es_activo');
+
+				if ($this->sedeModel->editar($nombre, $ubicacion, $esActivo, $idSede)) {
+					$this->session->set_flashdata('mensaje', 'Sede añadida correctamente');
+				} else {
+					$this->session->set_flashdata('mensaje', 'No es posible añadir datos de Sede');
+				}
+
+				return redirect('instructor/sedes');
+			} else {
+				$this->load->view('instructor/editar_sede', ['logueado'=>$logueado, 'sede'=>$sede]);
+			}
+		} else {
+			$this->load->view('instructor/editar_sede', ['logueado'=>$logueado, 'sede'=>$sede]);
 		}
 	}
 

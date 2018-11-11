@@ -25,6 +25,42 @@ class SedeModel extends CI_Model {
 		}
 	}
 
+	public function insertar($nombre, $ubicacion, $esActivo)
+	{
+		$query = $this->db->query("INSERT INTO T_SEDE VALUES (null, '$nombre', '$ubicacion', $esActivo);");
+
+		$error = $this->db->error();
+
+		// return $error['message'] . ' ' . $this->db->last_query() . '<br>';
+		$log = fopen("logSede.txt", "w") or die("Unable to open file!");
+		$txt = $error['message'] . '<br>' . $this->db->last_query() . '<br>';
+		fwrite($log, $txt);
+		fclose($log);
+
+		if ($error['message'] == '') {
+			return true;
+		} else {
+			return false;
+		}
+
+	}
+
+	public function editar($nombre, $ubicacion, $esActivo, $idSede)
+	{
+		$query = $this->db->query("UPDATE T_SEDE SET nombre_sede = '$nombre', ubicacion = '$ubicacion', es_activo = $esActivo WHERE id_sede = $idSede;");
+
+		$error = $this->db->error();
+
+		// return $error['message'] . ' ' . $this->db->last_query() . '<br>';
+
+		if ($error['message'] == '') {
+			return true;
+		} else {
+			return false;
+		}
+
+	}
+
 }
 
 /* End of file sedeModel.php */
