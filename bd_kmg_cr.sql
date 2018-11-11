@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1:3306
--- Tiempo de generación: 25-10-2018 a las 20:38:16
+-- Tiempo de generación: 11-11-2018 a las 07:39:03
 -- Versión del servidor: 5.7.21
 -- Versión de PHP: 5.6.35
 
@@ -80,14 +80,16 @@ CREATE TABLE IF NOT EXISTS `t_estudiante_paquete` (
 --
 
 INSERT INTO `t_estudiante_paquete` (`id_estudiante`, `id_paquete`, `id_sede`, `id_instructor`, `fecha_inicio`, `dias_restantes`, `asistencias`, `es_activo`, `es_pagado`) VALUES
-(2, 1, 1, 1, '2018-10-17', 2, 15, b'1', b'1'),
-(2, 2, 1, 1, '2018-10-06', 45, 30, b'0', b'1'),
+(2, 1, 1, 1, '2018-10-17', 2, 15, b'0', b'1'),
+(2, 1, 1, 1, '2018-11-02', 45, 0, b'1', b'1'),
+(2, 2, 1, 1, '2018-10-06', 45, 28, b'0', b'1'),
 (2, 2, 1, 1, '2018-10-10', 45, 17, b'0', b'1'),
-(2, 2, 2, 1, '2018-10-27', 45, 31, b'1', b'1'),
+(2, 2, 2, 1, '2018-10-27', 45, 27, b'1', b'1'),
+(5, 1, 1, 1, '2018-11-08', 45, 0, b'1', b'0'),
 (5, 1, 2, 2, '2018-10-18', 45, 0, b'1', b'1'),
-(6, 2, 1, 1, '2018-10-22', 45, 9, b'1', b'1'),
+(6, 2, 1, 1, '2018-10-22', 45, 30, b'1', b'1'),
 (8, 1, 1, 2, '2018-10-21', 45, 6, b'1', b'1'),
-(13, 2, 2, 1, '2018-01-04', 45, 2, b'1', b'1');
+(13, 2, 2, 1, '2018-01-04', 45, 4, b'1', b'1');
 
 -- --------------------------------------------------------
 
@@ -162,7 +164,7 @@ CREATE TABLE IF NOT EXISTS `t_paquete` (
   `cantidad_clases` int(11) NOT NULL,
   `monto_precio` decimal(15,2) NOT NULL,
   PRIMARY KEY (`id_paquete`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
 -- Volcado de datos para la tabla `t_paquete`
@@ -170,7 +172,8 @@ CREATE TABLE IF NOT EXISTS `t_paquete` (
 
 INSERT INTO `t_paquete` (`id_paquete`, `nombre_paquete`, `cantidad_clases`, `monto_precio`) VALUES
 (1, 'Golden', 15, '20000.00'),
-(2, 'Premium', 30, '30000.00');
+(2, 'Premium', 30, '30000.00'),
+(3, 'Oro', 12, '4300.00');
 
 -- --------------------------------------------------------
 
@@ -208,15 +211,17 @@ CREATE TABLE IF NOT EXISTS `t_sede` (
   `ubicacion` text COLLATE utf8_spanish_ci NOT NULL,
   `es_activo` bit(1) NOT NULL,
   PRIMARY KEY (`id_sede`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
 -- Volcado de datos para la tabla `t_sede`
 --
 
 INSERT INTO `t_sede` (`id_sede`, `nombre_sede`, `ubicacion`, `es_activo`) VALUES
-(1, 'San Pablo', '', b'1'),
-(2, 'Llorente', '', b'1');
+(1, 'San Pablo', 'Por La Guacamaya', b'1'),
+(2, 'Moravia', 'Kabac, Los Colegios, Moravia', b'1'),
+(4, '1', 'San Pabloa', b'1'),
+(5, 'Pangeas', 'En Pangea', b'0');
 
 -- --------------------------------------------------------
 

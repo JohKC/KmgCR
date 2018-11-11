@@ -32,10 +32,10 @@ class SedeModel extends CI_Model {
 		$error = $this->db->error();
 
 		// return $error['message'] . ' ' . $this->db->last_query() . '<br>';
-		$log = fopen("logSede.txt", "w") or die("Unable to open file!");
-		$txt = $error['message'] . '<br>' . $this->db->last_query() . '<br>';
-		fwrite($log, $txt);
-		fclose($log);
+		// $log = fopen("logSede.txt", "w") or die("Unable to open file!");
+		// $txt = $error['message'] . '<br>' . $this->db->last_query() . '<br>';
+		// fwrite($log, $txt);
+		// fclose($log);
 
 		if ($error['message'] == '') {
 			return true;
