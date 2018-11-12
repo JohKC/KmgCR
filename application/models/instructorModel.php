@@ -145,9 +145,9 @@ class InstructorModel extends CI_Model {
 	}
 
 	// Asignar un nuevo paquete a un estudiante
-	public function crearPaqueteEstudiante($idPaquete, $idSede, $idEstudiante, $idInstructor, $fechaInicio, $esActivo, $esPagado)
+	public function crearPaqueteEstudiante($idPaquete, $idSede, $idEstudiante, $idInstructor, $fechaInicio, $esActivo, $esPagado, $diasRestantes)
 	{
-		$this->db->query("INSERT INTO T_ESTUDIANTE_PAQUETE VALUES ($idEstudiante, $idPaquete, $idSede, $idInstructor, '$fechaInicio', 45, 0, $esActivo, $esPagado);");
+		$this->db->query("INSERT INTO T_ESTUDIANTE_PAQUETE VALUES ($idEstudiante, $idPaquete, $idSede, $idInstructor, '$fechaInicio', $diasRestantes, 0, $esActivo, $esPagado);");
 
 		$error = $this->db->error();
 

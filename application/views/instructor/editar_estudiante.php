@@ -8,6 +8,7 @@
 	    	<label for="">Identificación: <?=$individuo->id_individuo ?></label>
 	    	<?=form_input(['name'=>'id_individuo', 'class'=>'form-control', 'value'=>$individuo->id_individuo, 'type'=>'hidden']); ?>
 	    	<?=form_input(['name'=>'correo_electronico', 'class'=>'form-control', 'value'=>$usuario->correo_electronico, 'type'=>'hidden']); ?>
+	    	<input type="hidden" id="esActivo" value="<?=$estudiante->es_activo ?>">
 	    </div>
 	    <div class="form-group">
 	      <label for="">Nombre de estudiante: <?=$individuo->nombre . ' ' . $individuo->apellido1 . ' ' . $individuo->apellido2 ?></label>
@@ -38,7 +39,7 @@
 	    </div>
 	    <div class="form-group">
 	    	<label for="">Estudiante activo</label>
-	    	<select name="activo" class="form-control custom-select">
+	    	<select name="activo" class="form-control custom-select" id="activo">
 	    		<option value="1">Sí</option>
 	    		<option value="0">No</option>
 	    	</select>
@@ -51,6 +52,8 @@
 <script>
 	// Selecciona automaticamente el nivel que tenga el estudiante en la lista de niveles
 	var nivelKmg = document.getElementById('nivelKmg').value;
+	var esActivo = document.getElementById('esActivo').value;
 	document.getElementById('listaNiveles').value = nivelKmg;
+	document.getElementById('activo').value = esActivo;
 </script>
 <?php include_once('footer.php') ?>

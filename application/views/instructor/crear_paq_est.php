@@ -41,6 +41,11 @@
 	    	<?=form_error('fecha_inicio', '<div class="text-danger">','</div>'); ?>
 	    </div>
 	    <div class="form-group">
+	    	<label for="">Días restantes</label>
+	    	<?=form_input(['name'=>'dias_restantes', 'class'=>'form-control', 'type'=>'number', 'value'=>30]); ?>
+	    	<?=form_error('dias_restantes', '<div class="text-danger">','</div>'); ?>
+	    </div>
+	    <div class="form-group">
 	    	<label for="">Paquete pagado</label>
 	    	<select name="es_pagado" class="form-control custom-select">
 	    		<option value="1">Sí</option>

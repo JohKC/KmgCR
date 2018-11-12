@@ -389,6 +389,7 @@ class Instructor extends CI_Controller {
 			$idSede = $this->input->post('id_sede');
 			$idInstructor = $this->input->post('id_instructor');
 			$fechaInicio = $this->input->post('fecha_inicio');
+			$diasRestantes = $this->input->post('dias_restantes');
 			$esActivo = $this->input->post('es_activo'); 
 			$esPagado = $this->input->post('es_pagado'); 
 
@@ -397,7 +398,7 @@ class Instructor extends CI_Controller {
 
 			if ($this->form_validation->run()) {
 				if ($this->instructorModel->verificarNoPagados($idEstudiante) == FALSE) {
-					if ($this->instructorModel->crearPaqueteEstudiante($idPaquete, $idSede, $idEstudiante, $idInstructor, $fechaInicio, $esActivo, $esPagado)) {
+					if ($this->instructorModel->crearPaqueteEstudiante($idPaquete, $idSede, $idEstudiante, $idInstructor, $fechaInicio, $esActivo, $esPagado, $diasRestantes)) {
 						$this->session->set_flashdata('mensaje', 'Paquete asignado correctamente');
 					} else {
 						$this->session->set_flashdata('mensaje', 'No se pudo asignar el paquete');

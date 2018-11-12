@@ -8,6 +8,7 @@
 	    	<label for="">Identificación: <?=$individuo->id_individuo ?></label>
 	    	<?=form_input(['name'=>'id_individuo', 'class'=>'form-control', 'value'=>$individuo->id_individuo, 'type'=>'hidden']); ?>
 	    	<?=form_input(['name'=>'correo_electronico', 'class'=>'form-control', 'value'=>$usuario->correo_electronico, 'type'=>'hidden']); ?>
+	    	<input type="hidden" id="esActivo" value="<?=$instructor->es_activo ?>">
 	    </div>
 	    <div class="form-group">
 	      <label for="">Nombre de instructor: <?=$individuo->nombre . ' ' . $individuo->apellido1 . ' ' . $individuo->apellido2 ?></label>
@@ -21,7 +22,7 @@
 	    </div>
 	    <div class="form-group">
 	    	<label for="">Instructor activo</label>
-	    	<select name="es_activo" class="form-control">
+	    	<select name="es_activo" class="form-control" id="activo">
 	    		<option value="1">Sí</option>
 	    		<option value="0">No</option>
 	    	</select>
@@ -32,4 +33,8 @@
 	  </fieldset>
 	<?=form_close(); ?>
 </div>
+<script>
+	var esActivo = document.getElementById('esActivo').value;
+	document.getElementById('activo').value = esActivo;
+</script>
 <?php include_once('footer.php') ?>

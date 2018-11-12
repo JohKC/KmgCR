@@ -7,6 +7,8 @@
 	  	<input type="hidden" id="idInstructor" value="<?=$infoActual->id_instructor ?>">
 	  	<input type="hidden" id="idPaquete" value="<?=$infoActual->id_paquete ?>">
 	  	<input type="hidden" id="idSede" value="<?=$infoActual->id_sede ?>">
+	  	<input type="hidden" id="esPagado" value="<?=$infoActual->es_pagado ?>">
+	  	<input type="hidden" id="esActivo" value="<?=$infoActual->es_activo ?>">
 	    <div class="form-group">
 	    	<label for="">Estudiante</label>
 	    	<select id="listaEstudiantes" name="id_estudiante" class="form-control custom-select">
@@ -56,14 +58,14 @@
 	    </div>
 	    <div class="form-group">
 	    	<label for="">Paquete pagado</label>
-	    	<select name="es_pagado" class="form-control custom-select">
+	    	<select name="es_pagado" class="form-control custom-select" id="pagado">
 	    		<option value="1">Sí</option>
 	    		<option value="0">No</option>
 	    	</select>
 	    </div>
 	    <div class="form-group">
 	    	<label for="">Paquete activo</label>
-	    	<select name="es_activo" class="form-control custom-select">
+	    	<select name="es_activo" class="form-control custom-select" id="activo">
 	    		<option value="1">Sí</option>
 	    		<option value="0">No</option>
 	    	</select>
@@ -79,9 +81,13 @@
 	var idInstructor = document.getElementById('idInstructor').value;
 	var idSede = document.getElementById('idSede').value;
 	var idPaquete = document.getElementById('idPaquete').value;
+	var esPagado = document.getElementById('esPagado').value;
+	var esActivo = document.getElementById('esActivo').value;
 	document.getElementById('listaEstudiantes').value = idEstudiante;
 	document.getElementById('listaPaquetes').value = idPaquete;
 	document.getElementById('listaSedes').value = idSede;
 	document.getElementById('listaInstructores').value = idInstructor;
+	document.getElementById('pagado').value = esPagado;
+	document.getElementById('activo').value = esActivo;
 </script>
 <?php include_once('footer.php') ?>
