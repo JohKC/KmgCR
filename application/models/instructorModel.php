@@ -59,7 +59,8 @@ class InstructorModel extends CI_Model {
 			INNER JOIN t_usuario U ON I.id_usuario = U.id_usuario
 			INNER JOIN t_sede S ON EP.id_sede = S.id_sede
 			WHERE EP.id_instructor = $idInstructor AND EP.es_activo = 1 AND S.es_activo = 1
-            GROUP BY EP.id_estudiante;");
+            GROUP BY EP.id_estudiante
+            ORDER BY E.fecha_inscripcion DESC;");
 
 		$error = $this->db->error();
 
@@ -78,7 +79,8 @@ class InstructorModel extends CI_Model {
 			FROM t_estudiante E
 			INNER JOIN t_individuo I ON E.id_individuo = I.id_individuo
 			INNER JOIN t_usuario U ON I.id_usuario = U.id_usuario
-            GROUP BY E.id_estudiante;");
+            GROUP BY E.id_estudiante
+            ORDER BY E.fecha_inscripcion DESC;");
 
 		return $query->result();
 	}
@@ -120,7 +122,8 @@ class InstructorModel extends CI_Model {
 			INNER JOIN t_sede S ON EP.id_sede = S.id_sede
 			INNER JOIN t_paquete P ON EP.id_paquete = P.id_paquete
 			INNER JOIN t_usuario U ON I.id_usuario = U.id_usuario
-			WHERE EP.id_instructor = $idInstructor AND EP.es_activo = $esActivo AND S.es_activo = 1;");
+			WHERE EP.id_instructor = $idInstructor AND EP.es_activo = $esActivo AND S.es_activo = 1
+			ORDER BY EP.fecha_inicio DESC;");
 
 		return $query->result();
 	}

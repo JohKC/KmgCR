@@ -20,6 +20,17 @@
 
 	<?php echo anchor('instructor/asignarPaquete', 'Asignar nuevo paquete', ['class'=>'btn btn-primary']); ?>
 	<hr>
+	<ul class="nav nav-tabs">
+	  <li class="nav-item">
+	    <a class="nav-link active show" data-toggle="tab" href="#activos">Paquetes activos</a>
+	  </li>
+	  <li class="nav-item">
+	    <a class="nav-link" data-toggle="tab" href="#inactivos">Paquetes inactivos</a>
+	  </li>
+	</ul>
+	<hr>
+	<div id="myTabContent" class="tab-content">
+	  <div class="tab-pane fade active show" id="activos">
 	<!-- TODO: Mostrar los paquetes activos e inactivos en tabs individuales -->
 	<legend>Paquetes activos</legend>
 	<input type="text" id="busqueda" placeholder="Buscar..." class="form-control">
@@ -104,8 +115,9 @@
 		<?php else: ?>
 			<h3>No se encontraron resultados.</h3>
 		<?php endif; ?>
+	</div>
 
-	<hr>
+	  <div class="tab-pane fade" id="inactivos">
 	<!-- Paquetes inactivos -->
 	<legend>Paquetes inactivos</legend>
 	<input type="text" id="busqueda2" placeholder="Buscar..." class="form-control">
@@ -181,6 +193,8 @@
 		<?php else: ?>
 			<h3>No se encontraron resultados.</h3>
 		<?php endif; ?>
+	</div>
+</div>
 </div>
 <script>
 $(document).ready(function(){
