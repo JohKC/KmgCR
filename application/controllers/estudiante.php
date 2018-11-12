@@ -6,6 +6,7 @@ class Estudiante extends CI_Controller {
 	public function __construct()
 	{
 		parent::__construct();
+		$this->load->model('usuarioModel');
 		$this->load->model('estudianteModel');
 		$this->load->model('individuoModel');
 		$this->load->model('instructorModel');
@@ -29,6 +30,7 @@ class Estudiante extends CI_Controller {
 		$this->load->view('estudiante/perfil', ['estudiante'=>$estudiante, 'individuo'=>$individuo, 'infoPaquetes'=>$infoPaquetes]);
 	}
 
+	// Sirve para cambiar de contrasena
 	public function configuracion()
 	{
 		if ($this->session->userdata('id_rol') == FALSE || $this->session->userdata('id_rol') != 2) {
@@ -38,7 +40,39 @@ class Estudiante extends CI_Controller {
 
 		$individuo = $this->individuoModel->obtenerInfo($this->session->userdata('id_usuario'));
 		$estudiante = $this->estudianteModel->obtenerInfo($this->session->userdata('id_usuario'));
-		$this->load->view('estudiante/configuracion', ['estudiante'=>$estudiante, 'individuo'=>$individuo]);
+
+		if ($this->input->post()) {
+			$this->form_validation->set_rules('contrasena', 'contraseña', 'required');
+			$this->form_validation->set_rules('conf_contrasena', 'contraseña confirmada', 'required');
+			$this->form_validation->set_message('required', 'El campo {field} es obligatorio.');
+
+			if ($this->form_validation->run()) {
+				$contrasena = $this->input->post('contrasena');
+				$contrasenaConfirmada = $this->input->post('conf_contrasena');
+				$idUsuario = $this->session->userdata('id_usuario');
+
+				if ($contrasena == $contrasenaConfirmada) {
+					$hash = password_hash($contrasena, PASSWORD_DEFAULT);
+					if ($this->usuarioModel->cambiarContrasena($idUsuario, $hash)) {
+						$this->session->set_flashdata('mensaje', 'Contraseña actualizada exitosamente');
+					} else {
+						$this->session->set_flashdata('mensaje', 'No se pudo actualizar la contraseña');
+					}
+
+					return redirect('estudiante');
+				} else {
+					$this->session->set_flashdata('mensaje', 'La contraseñas no coinciden');
+					return redirect('estudiante/configuracion');
+				}
+
+
+			} else {
+				$this->load->view('estudiante/configuracion', ['estudiante'=>$estudiante, 'individuo'=>$individuo]);
+			}
+
+		} else {
+			$this->load->view('estudiante/configuracion', ['estudiante'=>$estudiante, 'individuo'=>$individuo]);
+		}		
 	}
 
 }

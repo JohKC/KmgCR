@@ -7,7 +7,7 @@
     <?php endif; ?>
   <?php endif; ?>
 <div class="container">
-	<?=form_open(base_url().'estudiante/configuracion', ['class'=>'form-horizontal']); ?>
+	<?=form_open(base_url().'instructor/configuracion', ['class'=>'form-horizontal']); ?>
   <fieldset>
     <legend>Cambiar contraseña</legend>
     <div class="form-group row">

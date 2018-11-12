@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1:3306
--- Tiempo de generación: 11-11-2018 a las 07:39:03
+-- Tiempo de generación: 12-11-2018 a las 16:53:27
 -- Versión del servidor: 5.7.21
 -- Versión de PHP: 5.6.35
 
@@ -37,7 +37,7 @@ CREATE TABLE IF NOT EXISTS `t_estudiante` (
   `id_individuo` varchar(20) COLLATE utf8_spanish_ci NOT NULL,
   PRIMARY KEY (`id_estudiante`),
   KEY `FK_EST_INDIVIDUO` (`id_individuo`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
 -- Volcado de datos para la tabla `t_estudiante`
@@ -50,7 +50,8 @@ INSERT INTO `t_estudiante` (`id_estudiante`, `fecha_inscripcion`, `nivel_kmg`, `
 (8, '2018-10-21', 'G1', b'0', '115530864'),
 (11, '2018-10-24', 'Aspirante', b'1', '23123421'),
 (12, '2018-10-24', 'Aspirante', b'1', '12331341'),
-(13, '2018-10-24', 'G1', b'1', '32432487');
+(13, '2018-10-24', 'G1', b'1', '32432487'),
+(14, '2018-11-11', 'Aspirante', b'1', '324234324');
 
 -- --------------------------------------------------------
 
@@ -80,16 +81,16 @@ CREATE TABLE IF NOT EXISTS `t_estudiante_paquete` (
 --
 
 INSERT INTO `t_estudiante_paquete` (`id_estudiante`, `id_paquete`, `id_sede`, `id_instructor`, `fecha_inicio`, `dias_restantes`, `asistencias`, `es_activo`, `es_pagado`) VALUES
-(2, 1, 1, 1, '2018-10-17', 2, 15, b'0', b'1'),
-(2, 1, 1, 1, '2018-11-02', 45, 0, b'1', b'1'),
-(2, 2, 1, 1, '2018-10-06', 45, 28, b'0', b'1'),
+(2, 1, 1, 1, '2018-10-17', 45, 15, b'1', b'1'),
+(2, 1, 1, 1, '2018-11-02', 45, 0, b'0', b'1'),
+(2, 2, 1, 1, '2018-10-06', 23, 28, b'0', b'1'),
 (2, 2, 1, 1, '2018-10-10', 45, 17, b'0', b'1'),
 (2, 2, 2, 1, '2018-10-27', 45, 27, b'1', b'1'),
-(5, 1, 1, 1, '2018-11-08', 45, 0, b'1', b'0'),
-(5, 1, 2, 2, '2018-10-18', 45, 0, b'1', b'1'),
-(6, 2, 1, 1, '2018-10-22', 45, 30, b'1', b'1'),
-(8, 1, 1, 2, '2018-10-21', 45, 6, b'1', b'1'),
-(13, 2, 2, 1, '2018-01-04', 45, 4, b'1', b'1');
+(5, 1, 1, 1, '2018-11-08', 45, 3, b'1', b'1'),
+(5, 1, 2, 2, '2018-10-18', 3, 0, b'0', b'1'),
+(6, 2, 1, 1, '2018-10-22', 30, 30, b'1', b'1'),
+(8, 1, 1, 2, '2018-10-21', 10, 6, b'0', b'1'),
+(13, 2, 2, 1, '2018-01-04', 23, 4, b'1', b'1');
 
 -- --------------------------------------------------------
 
@@ -116,14 +117,17 @@ CREATE TABLE IF NOT EXISTS `t_individuo` (
 --
 
 INSERT INTO `t_individuo` (`id_individuo`, `nombre`, `apellido1`, `apellido2`, `nacionalidad`, `condicion_medica`, `fecha_nacimiento`, `id_usuario`) VALUES
-('113243021', 'Marcos', 'Santos', 'Santos', 'Costa Rica', '', '1992-10-18', 2),
-('115530864', 'Johan', 'Karlson', 'Carrillo', 'Costa Rica', 'Miope', '1993-10-27', 1),
-('12331341', 'Edgar', 'Morales', '', 'Costa Rica', 'Imbecil', '1982-02-01', 38),
-('12340122', 'Valeria', 'Gonzalez', '', 'Costa Rica', 'Miope', '1993-03-12', 10),
-('12353322', 'Enrique', 'Gomez', 'Santos', 'Costa Rica', '', '1991-02-10', 9),
-('12430103', 'Veronica', 'Ramirez', '', 'Costa Rica', '', '1994-06-01', 11),
-('23123421', 'Maria', 'Morelos', 'Pereira', 'Costa Rica', '', '1992-03-01', 37),
-('32432487', 'Luva', 'Luva', 'Luva', 'Costa Rica', 'Imbecil', '1990-01-01', 39);
+('113243021', 'Marcos', 'Santos', 'Santos', 'CR', '', '1992-10-18', 2),
+('115530864', 'Johan', 'Karlson', 'Carrillo', 'CR', 'Miope', '1993-10-27', 1),
+('12331341', 'Edgar', 'Morales', '', 'CR', 'Imbecil', '1982-02-01', 38),
+('12340122', 'Valeria', 'Gonzalez', '', 'CR', 'Miope', '1993-03-12', 10),
+('123403244', 'Tanya', 'Martinez', '', 'CR', '', '1993-08-15', 42),
+('12353322', 'Enrique', 'Gomez', 'Santos', 'CR', '', '1991-02-10', 9),
+('12430103', 'Veronica', 'Ramirez', '', 'CR', '', '1994-06-01', 11),
+('23123421', 'Maria', 'Morelos', 'Pereira', 'CR', '', '1992-03-01', 37),
+('232441313', 'Paola', 'Matadero', '', 'CR', '', '1992-12-12', 41),
+('324234324', 'Allan', 'Garnier', '', 'CR', '', '1983-04-04', 40),
+('32432487', 'Luva', 'Luva', 'Luva', 'CR', 'Imbecil', '1990-01-01', 39);
 
 -- --------------------------------------------------------
 
@@ -139,7 +143,7 @@ CREATE TABLE IF NOT EXISTS `t_instructor` (
   `id_individuo` varchar(20) COLLATE utf8_spanish_ci NOT NULL,
   PRIMARY KEY (`id_instructor`),
   KEY `FK_INS_INDIVIDUO` (`id_individuo`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
 -- Volcado de datos para la tabla `t_instructor`
@@ -149,7 +153,8 @@ INSERT INTO `t_instructor` (`id_instructor`, `fecha_inicio`, `es_activo`, `id_in
 (1, '2018-10-11', b'1', '115530864'),
 (2, '2018-10-03', b'1', '12430103'),
 (4, '2018-10-24', b'1', '23123421'),
-(5, '2018-10-24', b'1', '12331341');
+(5, '2018-10-24', b'1', '12331341'),
+(6, '2018-11-11', b'0', '324234324');
 
 -- --------------------------------------------------------
 
@@ -164,7 +169,7 @@ CREATE TABLE IF NOT EXISTS `t_paquete` (
   `cantidad_clases` int(11) NOT NULL,
   `monto_precio` decimal(15,2) NOT NULL,
   PRIMARY KEY (`id_paquete`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
 -- Volcado de datos para la tabla `t_paquete`
@@ -220,7 +225,7 @@ CREATE TABLE IF NOT EXISTS `t_sede` (
 INSERT INTO `t_sede` (`id_sede`, `nombre_sede`, `ubicacion`, `es_activo`) VALUES
 (1, 'San Pablo', 'Por La Guacamaya', b'1'),
 (2, 'Moravia', 'Kabac, Los Colegios, Moravia', b'1'),
-(4, '1', 'San Pabloa', b'1'),
+(4, 'San Pablo 2', 'asdsds', b'1'),
 (5, 'Pangeas', 'En Pangea', b'0');
 
 -- --------------------------------------------------------
@@ -233,26 +238,29 @@ DROP TABLE IF EXISTS `t_usuario`;
 CREATE TABLE IF NOT EXISTS `t_usuario` (
   `id_usuario` int(11) NOT NULL AUTO_INCREMENT,
   `correo_electronico` varchar(50) COLLATE utf8_spanish_ci NOT NULL,
-  `contrasena` varchar(12) COLLATE utf8_spanish_ci NOT NULL,
+  `contrasena` varchar(100) COLLATE utf8_spanish_ci NOT NULL,
   `id_rol` int(11) NOT NULL,
   PRIMARY KEY (`id_usuario`),
   UNIQUE KEY `correo_electronico` (`correo_electronico`),
   KEY `FK_ROL` (`id_rol`)
-) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
 -- Volcado de datos para la tabla `t_usuario`
 --
 
 INSERT INTO `t_usuario` (`id_usuario`, `correo_electronico`, `contrasena`, `id_rol`) VALUES
-(1, 'johan@johan.com', '1234', 1),
-(2, 'marcos@marcos.com', '123', 2),
-(9, 'enrique@msn.com', '1234', 2),
-(10, 'vale@hotmail.com', '1234', 2),
-(11, 'vero@msn.com', '1234', 1),
-(37, 'maria@maria.com', '1234', 1),
-(38, 'edgar@edgar.com', '1234', 3),
-(39, 'luva@luva.com', '1234', 3);
+(1, 'johan@johan.com', '$2y$10$Xxz3epXhN9bZQssuknyFu.YNeyyYp20VIsxkhdlSVIZLZZyL53Ij6', 1),
+(2, 'marcos@marcos.com', '$2y$10$gQ8TWQo7Rjoiylb3YNWVNe4r53Y6JG.Ptx5V.8/SkmZkmyVoTNWBu', 2),
+(9, 'enrique@msn.com', '$2y$10$yYzkVuj2od9HHvvLBVCWuuFjkvMXSSy2GmiKjttXyEi1eqAPqLuTS', 3),
+(10, 'vale@hotmail.com', '$2y$10$yYzkVuj2od9HHvvLBVCWuuFjkvMXSSy2GmiKjttXyEi1eqAPqLuTS', 3),
+(11, 'vero@msn.com', '$2y$10$yYzkVuj2od9HHvvLBVCWuuFjkvMXSSy2GmiKjttXyEi1eqAPqLuTS', 3),
+(37, 'maria@maria.com', '$2y$10$yYzkVuj2od9HHvvLBVCWuuFjkvMXSSy2GmiKjttXyEi1eqAPqLuTS', 3),
+(38, 'edgar@edgar.com', '$2y$10$yYzkVuj2od9HHvvLBVCWuuFjkvMXSSy2GmiKjttXyEi1eqAPqLuTS', 3),
+(39, 'luva@luva.com', '$2y$10$yYzkVuj2od9HHvvLBVCWuuFjkvMXSSy2GmiKjttXyEi1eqAPqLuTS', 2),
+(40, 'allan@allan.com', '$2y$10$yYzkVuj2od9HHvvLBVCWuuFjkvMXSSy2GmiKjttXyEi1eqAPqLuTS', 2),
+(41, 'paolas@msn.com', '$2y$10$yYzkVuj2od9HHvvLBVCWuuFjkvMXSSy2GmiKjttXyEi1eqAPqLuTS', 2),
+(42, 'tanya@tanya.com', '$2y$10$yYzkVuj2od9HHvvLBVCWuuFjkvMXSSy2GmiKjttXyEi1eqAPqLuTS', 3);
 
 --
 -- Restricciones para tablas volcadas
@@ -290,6 +298,19 @@ ALTER TABLE `t_instructor`
 --
 ALTER TABLE `t_usuario`
   ADD CONSTRAINT `FK_ROL` FOREIGN KEY (`id_rol`) REFERENCES `t_rol` (`id_rol`);
+
+DELIMITER $$
+--
+-- Eventos
+--
+DROP EVENT `descuentoDias`$$
+CREATE DEFINER=`root`@`localhost` EVENT `descuentoDias` ON SCHEDULE EVERY 24 HOUR STARTS '2018-11-12 00:04:20' ON COMPLETION NOT PRESERVE ENABLE DO BEGIN
+	UPDATE t_estudiante_paquete SET dias_restantes = dias_restantes - 1 WHERE dias_restantes > 0;
+    
+    UPDATE t_estudiante_paquete SET es_activo = 0 WHERE dias_restantes = 0;
+    END$$
+
+DELIMITER ;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

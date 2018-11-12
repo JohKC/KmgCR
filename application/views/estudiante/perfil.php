@@ -1,8 +1,20 @@
 <?php include_once('header.php') ?>
+	<?php if ($mensaje = $this->session->flashdata('mensaje')): ?>
+		<?php if ($mensaje == 'Contraseña actualizada exitosamente'): ?>
+			<div class="alert alert-dismissible alert-success">
+				<?=$this->session->flashdata('mensaje') ?>
+			</div>
+		<?php elseif ($mensaje == 'No se pudo editar paquete de estudiante' || $mensaje == 'No se pudo asignar el paquete' || $mensaje == 'No se pudo actualizar la contraseña'): ?>
+			<div class="alert alert-dismissible alert-danger">
+				<?=$this->session->flashdata('mensaje') ?>
+			</div>
+		<?php endif; ?>
+	<?php endif; ?>
 	<div class="jumbotron">
 	  <h1 class="display-3"><?=$individuo->nombre . ' ' . $individuo->apellido1 ?></h1>
   		<h1>Nivel: <?=$estudiante->nivel_kmg ?></h1>
 	</div>
+	
 	<div class="container">
 		<div class="row">
 			<div class="col-md-12">	

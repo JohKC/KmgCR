@@ -98,7 +98,10 @@ class Instructor extends CI_Controller {
 				$existe = $this->individuoModel->existe($correo, $id);
 
 				if ($existe == FALSE) {
-					$this->usuarioModel->insertar($correo, 3);
+					$contraDefecto = "1234"; // Contrasena por defecto
+					$contraEncriptada = password_hash($contraDefecto, PASSWORD_DEFAULT);
+
+					$this->usuarioModel->insertar($correo, $contraEncriptada, 3);
 					$idUsuario = $this->usuarioModel->obtenerEspecifico($correo)->id_usuario;
 					$this->individuoModel->insertar($id, $nombre, $apellido1, $apellido2, $nacionalidad, $condicion, $fechaNac, $idUsuario);
 					$this->session->set_flashdata('mensaje', 'Usuario añadido correctamente');
@@ -646,6 +649,49 @@ class Instructor extends CI_Controller {
 		} else {
 			$this->load->view('instructor/editar_sede', ['logueado'=>$logueado, 'sede'=>$sede]);
 		}
+	}
+
+	public function configuracion()
+	{
+		if ($this->session->userdata('id_rol') == FALSE || $this->session->userdata('id_rol') != 1) {
+			redirect(base_url().'login');
+		}
+
+
+		$logueado = $this->individuoModel->obtenerInfo($this->session->userdata('id_usuario'));
+
+		if ($this->input->post()) {
+			$this->form_validation->set_rules('contrasena', 'contraseña', 'required');
+			$this->form_validation->set_rules('conf_contrasena', 'contraseña confirmada', 'required');
+			$this->form_validation->set_message('required', 'El campo {field} es obligatorio.');
+
+			if ($this->form_validation->run()) {
+				$contrasena = $this->input->post('contrasena');
+				$contrasenaConfirmada = $this->input->post('conf_contrasena');
+				$idUsuario = $this->session->userdata('id_usuario');
+
+				if ($contrasena == $contrasenaConfirmada) {
+					$hash = password_hash($contrasena, PASSWORD_DEFAULT);
+					if ($this->usuarioModel->cambiarContrasena($idUsuario, $hash)) {
+						$this->session->set_flashdata('mensaje', 'Contraseña actualizada exitosamente');
+					} else {
+						$this->session->set_flashdata('mensaje', 'No se pudo actualizar la contraseña');
+					}
+
+					return redirect('instructor');
+				} else {
+					$this->session->set_flashdata('mensaje', 'La contraseñas no coinciden');
+					return redirect('instructor/configuracion');
+				}
+
+
+			} else {
+				$this->load->view('instructor/configuracion', ['logueado'=>$logueado]);
+			}
+
+		} else {
+			$this->load->view('instructor/configuracion', ['logueado'=>$logueado]);
+		}		
 	}
 
 }
