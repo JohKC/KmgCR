@@ -52,11 +52,6 @@ class Login extends CI_Controller {
 				$contrasena = $this->input->post('contrasena');
 				$verificacion = $this->usuarioModel->iniciarSesion($correo, $contrasena);
 
-				$log1 = fopen("logExiste.txt", "w") or die("Unable to open file!");
-				$txt = $verificacion->contrasena;
-				fwrite($log1, $txt);
-				fclose($log1);
-
 				if ($verificacion == TRUE) {
 					$data = array (
 						'logged_in' => TRUE,
