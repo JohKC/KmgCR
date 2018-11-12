@@ -3,7 +3,6 @@
 	  <h1 class="display-3"><?=$individuo->nombre . ' ' . $individuo->apellido1 ?></h1>
   		<h1>Nivel: <?=$estudiante->nivel_kmg ?></h1>
 	</div>
-	
 	<div class="container">
 		<div class="row">
 			<div class="col-md-12">	

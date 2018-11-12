@@ -12,7 +12,7 @@
 </head>
 <body>
 	<nav class="navbar navbar-expand-lg navbar-light bg-light">
-	  <a class="navbar-brand" href="<?=base_url() ?>">KMG Costa Rica</a>
+	  <a class="navbar-brand" href="<?=base_url() ?>"><img src="<?= base_url('assets/images/KMG-HQ.png');?>" width="100"></a>
 	  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor03" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
 	    <span class="navbar-toggler-icon"></span>
 	  </button>

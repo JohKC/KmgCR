@@ -1,0 +1,12 @@
+SET GLOBAL event_scheduler = ON;
+
+DELIMITER $$
+CREATE EVENT descuentoDias
+  ON SCHEDULE EVERY 24 HOUR    
+DO
+	BEGIN
+	UPDATE t_estudiante_paquete SET dias_restantes = dias_restantes - 1 WHERE dias_restantes > 0;
+    
+    UPDATE t_estudiante_paquete SET es_activo = 0 WHERE dias_restantes = 0;
+    END $$
+DELIMITER ;

@@ -11,8 +11,8 @@
 		$contrasena = array('name'=>'contrasena');
 		$submit = array('name'=>'submit', 'value'=>'Iniciar sesión');
 	?>
-	<nav class="navbar navbar-expand-lg navbar-light bg-light">
-		<h1>Krav Maga Global Costa Rica</h1>
+	<nav class="navbar navbar-expand-lg navbar-light bg-light" style="background-color: none;">
+		<img src="<?= base_url('assets/images/KMG-HQ.png');?>" class="img-fluid rounded mx-auto d-block" width="250">
 	</nav>
 
 	<div class="container">
