@@ -240,12 +240,22 @@ class Instructor extends CI_Controller {
 				$id = $this->input->post('id_individuo');
 				$fechaInsc = $this->input->post('fecha_inscripcion');
 				$nivelKmg = $this->input->post('nivel_kmg');
+				$correo = $this->input->post('correo_electronico');
 				$activo = $this->input->post('activo');
 
 				if ($this->estudianteModel->editar($id, $fechaInsc, $nivelKmg, $activo)) {
+					if ($activo == 0 && $this->instructorModel->existeInstructor($id)) {
+						if ($this->instructorModel->estaActivo($id)) {
+							$this->usuarioModel->editar($idUsuario, $correo, 1);
+						} else {
+							$this->usuarioModel->editar($idUsuario, $correo, 3);
+						}
+					}  else {
+						$this->usuarioModel->editar($idUsuario, $correo, 2);
+					}
 					$this->session->set_flashdata('mensaje', 'Estudiante editado correctamente');
 				} else {
-					$this->session->set_flashdata('mensaje', 'No es posible editar datos de estudiante');
+					$this->session->set_flashdata('mensaje', 'No es posible editar datos de instructor');
 				}
 
 				return redirect('instructor/estudiantes');
@@ -444,9 +454,22 @@ class Instructor extends CI_Controller {
 			if ($this->form_validation->run()) {
 				$id = $this->input->post('id_individuo');
 				$fechaInicio = $this->input->post('fecha_inicio');
+				$correo = $this->input->post('correo_electronico');
 				$activo = $this->input->post('es_activo');
 
 				if ($this->instructorModel->editar($id, $fechaInicio, $activo)) {
+
+					// Si se inactivara al instructor, pero es estudiante, entonces que solo se muestre la interfaz de estudiante
+					if ($activo == 0 && $this->estudianteModel->existeEstudiante($id)) {
+						if ($this->estudianteModel->estaActivo($id)) {
+							$this->usuarioModel->editar($idUsuario, $correo, 2);
+						} else {
+							$this->usuarioModel->editar($idUsuario, $correo, 3);
+						}
+					// Si se inactivara al instructor, y no es estudiante, que se le asigne el rol generico 3
+					}  else {
+						$this->usuarioModel->editar($idUsuario, $correo, 1);
+					}
 					$this->session->set_flashdata('mensaje', 'Instructor editado correctamente');
 				} else {
 					$this->session->set_flashdata('mensaje', 'No es posible editar datos de instructor');

@@ -19,6 +19,22 @@ class EstudianteModel extends CI_Model {
 		}
 	}
 
+	public function estaActivo($idIndividuo)
+	{
+		$query = $this->db->query("SELECT * FROM T_ESTUDIANTE WHERE id_individuo = '$idIndividuo' AND es_activo = 1;");
+
+		// $log1 = fopen("logExiste.txt", "w") or die("Unable to open file!");
+		// $txt = $this->db->last_query();
+		// fwrite($log1, $txt);
+		// fclose($log1);
+
+		if (($query->num_rows() > 0)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
 	public function obtenerInfo($idUsuario)
 	{
 		$query = $this->db->query("SELECT E.id_estudiante, E.fecha_inscripcion, E.nivel_kmg, E.es_activo FROM t_usuario U 

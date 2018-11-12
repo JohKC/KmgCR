@@ -29,6 +29,7 @@ class Login extends CI_Controller {
 			case 3: // si el rol es 3, devolverse a login, pues no se ha asignado un rol de estudiante o instructor
 				$data['token'] = $this->token();
 				$data['titulo'] = 'Inicio de sesion';
+				$this->session->set_flashdata('usuario_incorrecto', 'El usuario o contraseña son incorrectos');
 				$this->load->view('loginView', $data);
 				break;
 			default:

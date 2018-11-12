@@ -33,6 +33,22 @@ class InstructorModel extends CI_Model {
 		}
 	}
 
+	public function estaActivo($idIndividuo)
+	{
+		$query = $this->db->query("SELECT * FROM T_INSTRUCTOR WHERE id_individuo = '$idIndividuo' AND es_activo = 1;");
+
+		// $log1 = fopen("logExiste.txt", "w") or die("Unable to open file!");
+		// $txt = $this->db->last_query();
+		// fwrite($log1, $txt);
+		// fclose($log1);
+
+		if (($query->num_rows() > 0)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
 	// Obtener lista de estudiantes que tienen un paquete con el instructor que esta logueado
 	public function obtenerListaEstudiantes($idInstructor)
 	{

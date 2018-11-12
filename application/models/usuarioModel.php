@@ -12,7 +12,7 @@ class UsuarioModel extends CI_Model {
 		if ($query->num_rows() == 1) {
 			return $query->row();
 		} else {
-			$this->session->set_flashdata('usuario_incorrecto', 'El usuario o contrasena son incorrectos');
+			$this->session->set_flashdata('usuario_incorrecto', 'El usuario o contraseña son incorrectos');
 			redirect(base_url().'login','refresh');
 		}
 	}

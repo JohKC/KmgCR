@@ -7,6 +7,7 @@
 	    <div class="form-group">
 	    	<label for="">Identificación: <?=$individuo->id_individuo ?></label>
 	    	<?=form_input(['name'=>'id_individuo', 'class'=>'form-control', 'value'=>$individuo->id_individuo, 'type'=>'hidden']); ?>
+	    	<?=form_input(['name'=>'correo_electronico', 'class'=>'form-control', 'value'=>$usuario->correo_electronico, 'type'=>'hidden']); ?>
 	    </div>
 	    <div class="form-group">
 	      <label for="">Nombre de estudiante: <?=$individuo->nombre . ' ' . $individuo->apellido1 . ' ' . $individuo->apellido2 ?></label>
