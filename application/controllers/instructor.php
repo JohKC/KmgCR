@@ -156,6 +156,7 @@ class Instructor extends CI_Controller {
 				$condicion = $this->input->post('condicion_medica');
 				$esEstudiante = $this->input->post('es_estudiante');
 				$esInstructor = $this->input->post('es_instructor');
+				$restablecerContra = $this->input->post('restablecerContra');
 
 				$idRol = 3;
 
@@ -169,6 +170,11 @@ class Instructor extends CI_Controller {
 
 
 				if ($this->usuarioModel->editar($idUsuario, $correo, $idRol)) {
+					if ($restablecerContra == 1) {
+						$hash = password_hash("1234", PASSWORD_DEFAULT);
+						$this->usuarioModel->cambiarContrasena($idUsuario, $hash);
+					}
+
 					if ($this->individuoModel->editar($id, $nombre, $apellido1, $apellido2, $nacionalidad, $condicion, $fechaNac)) {
 
 						if ($existeEstudiante == FALSE) {

@@ -281,7 +281,13 @@
 	    	<?=form_input(['name'=>'condicion_medica', 'class'=>'form-control', 'value'=>$individuo->condicion_medica]); ?>
 	    	<?=form_error('condicion_medica', '<div class="text-danger">','</div>'); ?>
 	    </div>
-
+		<div class="form-group">
+    		<label for="">Restablecer contraseña</label>
+		    <select name="restablecerContra" class="form-control">
+		    	<option value="0" selected>No</option>
+		    	<option value="1">Sí</option>
+		    </select>
+    	</div>
 	    <?php if ($existeEstudiante == FALSE && $existeInstructor == FALSE): ?>
 	    	<legend>Información de estudiante e instructor</legend>
 	    	<div class="form-group">
@@ -306,6 +312,8 @@
 			    	<option value="0">No</option>
 			    	<option value="1">Sí</option>
 			    </select>
+			    <!-- Para que no cambie el rol a 3 -->
+			    <input type="hidden" value="1" name="es_instructor">
 	    	</div>
 		<?php elseif ($existeEstudiante == TRUE && $existeInstructor == FALSE): ?>
 			<div class="form-group">
@@ -314,7 +322,12 @@
 			    	<option value="0">No</option>
 			    	<option value="1">Sí</option>
 			    </select>
+			    <!-- Para que no cambie el rol a 3 -->
+			    <input type="hidden" value="1" name="es_estudiante">
 	    	</div>
+	    <?php else: ?>
+	    	<input type="hidden" value="1" name="es_estudiante">
+			<input type="hidden" value="1" name="es_instructor">
 		<?php endif; ?>
 	    <?=form_submit(['name'=>'submit', 'value'=>'Guardar', 'class'=>'btn btn-primary']); ?>
 	  </fieldset>
