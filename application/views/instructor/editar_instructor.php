@@ -9,7 +9,7 @@
 	    	<?=form_input(['name'=>'id_individuo', 'class'=>'form-control', 'value'=>$individuo->id_individuo, 'type'=>'hidden']); ?>
 	    </div>
 	    <div class="form-group">
-	      <label for="">Nombre de estudiante: <?=$individuo->nombre . ' ' . $individuo->apellido1 . ' ' . $individuo->apellido2 ?></label>
+	      <label for="">Nombre de instructor: <?=$individuo->nombre . ' ' . $individuo->apellido1 . ' ' . $individuo->apellido2 ?></label>
 	    </div>
 
 	    <legend>Información de instructor</legend>
@@ -27,7 +27,7 @@
 	    </div>
 
 	    </fieldset>
-	    <?=form_submit(['name'=>'submit', 'value'=>'Insertar', 'class'=>'btn btn-primary']); ?>
+	    <?=form_submit(['name'=>'submit', 'value'=>'Guardar', 'class'=>'btn btn-primary']); ?>
 	  </fieldset>
 	<?=form_close(); ?>
 </div>
