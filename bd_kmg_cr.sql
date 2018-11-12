@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1:3306
--- Tiempo de generación: 12-11-2018 a las 16:53:27
+-- Tiempo de generación: 12-11-2018 a las 18:01:05
 -- Versión del servidor: 5.7.21
 -- Versión de PHP: 5.6.35
 
@@ -37,7 +37,7 @@ CREATE TABLE IF NOT EXISTS `t_estudiante` (
   `id_individuo` varchar(20) COLLATE utf8_spanish_ci NOT NULL,
   PRIMARY KEY (`id_estudiante`),
   KEY `FK_EST_INDIVIDUO` (`id_individuo`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
 -- Volcado de datos para la tabla `t_estudiante`
@@ -51,7 +51,8 @@ INSERT INTO `t_estudiante` (`id_estudiante`, `fecha_inscripcion`, `nivel_kmg`, `
 (11, '2018-10-24', 'Aspirante', b'1', '23123421'),
 (12, '2018-10-24', 'Aspirante', b'1', '12331341'),
 (13, '2018-10-24', 'G1', b'1', '32432487'),
-(14, '2018-11-11', 'Aspirante', b'1', '324234324');
+(14, '2018-11-11', 'Aspirante', b'1', '324234324'),
+(15, '2018-11-12', 'Aspirante', b'1', '123403244');
 
 -- --------------------------------------------------------
 
@@ -90,7 +91,8 @@ INSERT INTO `t_estudiante_paquete` (`id_estudiante`, `id_paquete`, `id_sede`, `i
 (5, 1, 2, 2, '2018-10-18', 3, 0, b'0', b'1'),
 (6, 2, 1, 1, '2018-10-22', 30, 30, b'1', b'1'),
 (8, 1, 1, 2, '2018-10-21', 10, 6, b'0', b'1'),
-(13, 2, 2, 1, '2018-01-04', 23, 4, b'1', b'1');
+(13, 2, 2, 1, '2018-01-04', 23, 4, b'1', b'1'),
+(14, 1, 1, 1, '2018-11-12', 30, 0, b'0', b'0');
 
 -- --------------------------------------------------------
 
@@ -250,17 +252,17 @@ CREATE TABLE IF NOT EXISTS `t_usuario` (
 --
 
 INSERT INTO `t_usuario` (`id_usuario`, `correo_electronico`, `contrasena`, `id_rol`) VALUES
-(1, 'johan@johan.com', '$2y$10$Xxz3epXhN9bZQssuknyFu.YNeyyYp20VIsxkhdlSVIZLZZyL53Ij6', 1),
-(2, 'marcos@marcos.com', '$2y$10$gQ8TWQo7Rjoiylb3YNWVNe4r53Y6JG.Ptx5V.8/SkmZkmyVoTNWBu', 2),
-(9, 'enrique@msn.com', '$2y$10$yYzkVuj2od9HHvvLBVCWuuFjkvMXSSy2GmiKjttXyEi1eqAPqLuTS', 3),
-(10, 'vale@hotmail.com', '$2y$10$yYzkVuj2od9HHvvLBVCWuuFjkvMXSSy2GmiKjttXyEi1eqAPqLuTS', 3),
-(11, 'vero@msn.com', '$2y$10$yYzkVuj2od9HHvvLBVCWuuFjkvMXSSy2GmiKjttXyEi1eqAPqLuTS', 3),
-(37, 'maria@maria.com', '$2y$10$yYzkVuj2od9HHvvLBVCWuuFjkvMXSSy2GmiKjttXyEi1eqAPqLuTS', 3),
-(38, 'edgar@edgar.com', '$2y$10$yYzkVuj2od9HHvvLBVCWuuFjkvMXSSy2GmiKjttXyEi1eqAPqLuTS', 3),
-(39, 'luva@luva.com', '$2y$10$yYzkVuj2od9HHvvLBVCWuuFjkvMXSSy2GmiKjttXyEi1eqAPqLuTS', 2),
-(40, 'allan@allan.com', '$2y$10$yYzkVuj2od9HHvvLBVCWuuFjkvMXSSy2GmiKjttXyEi1eqAPqLuTS', 2),
+(1, 'johan@johan.com', '$2y$10$MUNYNybT5sZY88QjOYe.GeacTBM/9.6IWKLRgWy/kV1UdxX/bm8/.', 1),
+(2, 'marcos@marcos.com', '$2y$10$ZdEHg6jmDH7u8S/4TOKdKuuIJf8HJp9z8hEWG8xzWt6QhDEZ84Jp2', 2),
+(9, 'enrique@msn.com', '$2y$10$7A9OXpAAh4n.eH1xoc7noOEThXIoZhPtt8K4FPPbYs3e.zT08tqp6', 2),
+(10, 'vale@hotmail.com', '$2y$10$1MNkc.3jUVmejvHevFYTj.On4FKJMlvS4l0cnAGv6qLwx9LAdQxGC', 2),
+(11, 'vero@msn.com', '$2y$10$8Ev5o14qLwBc/srMsUA3JukFcK66wHAnhce61JRiI.TO94kIeHvnC', 1),
+(37, 'maria@maria.com', '$2y$10$jjKGEyHuHSGynysQcyYP6euDrfJF13W7I5zJ.RQt/qvKCvu9BvN1m', 1),
+(38, 'edgar@edgar.com', '$2y$10$t6rgS5Zw.0ePvkQAd157yejlTJmbAtFRTgtNTVQdJoW9sgD/RDEJi', 1),
+(39, 'luva@luva.com', '$2y$10$JmkByHst0LCOPkc.0.W0ZeKjNVkeez2ipDpSPv/ZSdLhNRrPyGSqC', 2),
+(40, 'allan@allan.com', '$2y$10$z/UHbehd1NnGU1w21EJ82OQVdpoLd0m1buQ/T5re.eWPhcLrEDSF6', 2),
 (41, 'paolas@msn.com', '$2y$10$yYzkVuj2od9HHvvLBVCWuuFjkvMXSSy2GmiKjttXyEi1eqAPqLuTS', 2),
-(42, 'tanya@tanya.com', '$2y$10$yYzkVuj2od9HHvvLBVCWuuFjkvMXSSy2GmiKjttXyEi1eqAPqLuTS', 3);
+(42, 'tanya@tanya.com', '$2y$10$3zIjJbG3Aue4gVHHdgsFTOaBtpqT9W3qNdD4cnph28uN9pXdtzBIm', 2);
 
 --
 -- Restricciones para tablas volcadas
