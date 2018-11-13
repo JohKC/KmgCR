@@ -685,7 +685,7 @@ class Instructor extends CI_Controller {
 						$this->session->set_flashdata('mensaje', 'No se pudo actualizar la contraseña');
 					}
 
-					return redirect('instructor');
+					return redirect('instructor/configuracion');
 				} else {
 					$this->session->set_flashdata('mensaje', 'La contraseñas no coinciden');
 					return redirect('instructor/configuracion');

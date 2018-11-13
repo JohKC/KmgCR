@@ -1,17 +1,4 @@
 <?php include_once('header.php') ?>
-	<?php if ($mensaje = $this->session->flashdata('mensaje')): ?>
-		<?php if ($mensaje == 'Contraseña actualizada exitosamente'): ?>
-			<div class="alert alert-dismissible alert-success">
-				<?=$this->session->flashdata('mensaje') ?>
-			</div>
-		<?php elseif ($mensaje == 'No se pudo editar paquete de estudiante' || $mensaje == 'No se pudo asignar el paquete' || $mensaje == 'No se pudo actualizar la contraseña'): ?>
-			<div class="alert alert-dismissible alert-danger">
-				<?=$this->session->flashdata('mensaje') ?>
-			</div>
-		<?php endif; ?>
-	<?php endif; ?>
-	
-	
 	<div class="container">
 		<div class="jumbotron" style="background: url('../KmgCR/assets/images/pelea.png') center; background-size: cover;">
 		  <div class="row">
