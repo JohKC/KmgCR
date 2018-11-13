@@ -312,7 +312,7 @@ DELIMITER $$
 --
 -- Eventos
 --
-DROP EVENT [IF EXISTS] `descuentoDias`$$
+DROP EVENT IF EXISTS `descuentoDias`$$
 CREATE DEFINER=`root`@`localhost` EVENT `descuentoDias` ON SCHEDULE EVERY 24 HOUR STARTS '2018-11-12 00:04:20' ON COMPLETION NOT PRESERVE ENABLE DO BEGIN
 	UPDATE t_estudiante_paquete SET dias_restantes = dias_restantes - 1 WHERE dias_restantes > 0;
     
