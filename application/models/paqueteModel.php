@@ -31,8 +31,6 @@ class PaqueteModel extends CI_Model {
 
 		$error = $this->db->error();
 
-		// return $error['message'] . ' ' . $this->db->last_query() . '<br>';
-
 		if ($error['message'] == '') {
 			return true;
 		} else {
@@ -46,8 +44,6 @@ class PaqueteModel extends CI_Model {
 		$query = $this->db->query("UPDATE T_PAQUETE SET nombre_paquete = '$nombre', cantidad_clases = $cantClases, monto_precio = $precio WHERE id_paquete = $idPaquete;");
 
 		$error = $this->db->error();
-
-		// return $error['message'] . ' ' . $this->db->last_query() . '<br>';
 
 		if ($error['message'] == '') {
 			return true;

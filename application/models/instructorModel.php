@@ -3,28 +3,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class InstructorModel extends CI_Model {
 
-	// Verifica si existe el individuo que se pretende insertar
-	// public function existe($correo, $id)
-	// {
-	// 	$query1 = $this->db->query("SELECT * FROM T_USUARIO WHERE correo_electronico = '$correo';");
-	// 	$query2 = $this->db->query("SELECT * FROM T_INDIVIDUO WHERE id_individuo = '$id';");
-
-	// 	if (($query1->num_rows() > 0) || ($query2->num_rows() > 0)) {
-	// 		return true;
-	// 	} else {
-	// 		return false;
-	// 	}
-
-	// }
-
+	// Verifica que exista el instructor
 	public function existeInstructor($idIndividuo)
 	{
 		$query = $this->db->query("SELECT * FROM T_INSTRUCTOR WHERE id_individuo = '$idIndividuo';");
-
-		// $log1 = fopen("logExiste.txt", "w") or die("Unable to open file!");
-		// $txt = $this->db->last_query();
-		// fwrite($log1, $txt);
-		// fclose($log1);
 
 		if (($query->num_rows() > 0)) {
 			return true;
@@ -33,14 +15,10 @@ class InstructorModel extends CI_Model {
 		}
 	}
 
+	// Verifica que el instructor este activo
 	public function estaActivo($idIndividuo)
 	{
 		$query = $this->db->query("SELECT * FROM T_INSTRUCTOR WHERE id_individuo = '$idIndividuo' AND es_activo = 1;");
-
-		// $log1 = fopen("logExiste.txt", "w") or die("Unable to open file!");
-		// $txt = $this->db->last_query();
-		// fwrite($log1, $txt);
-		// fclose($log1);
 
 		if (($query->num_rows() > 0)) {
 			return true;
@@ -63,11 +41,6 @@ class InstructorModel extends CI_Model {
             ORDER BY E.fecha_inscripcion DESC;");
 
 		$error = $this->db->error();
-
-		// $log = fopen("logListaEstudiantes.txt", "w") or die("Unable to open file!");
-		// $txt = $error['message'] . '<br>' . $this->db->last_query() . '<br>';
-		// fwrite($log, $txt);
-		// fclose($log);
 
 		return $query->result();
 	}
@@ -205,8 +178,6 @@ class InstructorModel extends CI_Model {
 
 		$error = $this->db->error();
 
-		// return $error['message'] . ' ' . $this->db->last_query() . '<br>';
-
 		if ($error['message'] == '') {
 			return true;
 		} else {
@@ -219,15 +190,6 @@ class InstructorModel extends CI_Model {
 		$this->db->query("UPDATE T_INSTRUCTOR SET fecha_inicio = '$fechaInicio', es_activo = $activo WHERE id_individuo = '$idIndividuo';");
 
 		$error = $this->db->error();
-
-		$error = $this->db->error();
-
-		// $log = fopen("logInstructor.txt", "w") or die("Unable to open file!");
-		// $txt = $error['message'] . '<br>' . $this->db->last_query() . '<br>';
-		// fwrite($log, $txt);
-		// fclose($log);
-
-		// return $error['message'] . ' ' . $this->db->last_query() . '<br>';
 
 		if ($error['message'] == '') {
 			return true;

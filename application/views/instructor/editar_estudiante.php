@@ -52,7 +52,9 @@
 <script>
 	// Selecciona automaticamente el nivel que tenga el estudiante en la lista de niveles
 	var nivelKmg = document.getElementById('nivelKmg').value;
+	// Selecciona el valor en activo/inactivo del estudiante
 	var esActivo = document.getElementById('esActivo').value;
+	// Asigna esos valores a los select
 	document.getElementById('listaNiveles').value = nivelKmg;
 	document.getElementById('activo').value = esActivo;
 </script>

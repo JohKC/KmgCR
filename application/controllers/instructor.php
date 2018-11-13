@@ -3,6 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Instructor extends CI_Controller {
 
+	// Constructor del controlador, carga modelos y librerías de Codeigniter esenciales
 	public function __construct()
 	{
 		parent::__construct();
@@ -14,18 +15,20 @@ class Instructor extends CI_Controller {
 		$this->load->model('sedeModel');
 		$this->load->library(array('session','form_validation'));
 		$this->load->helper(array('url','form'));
-		$this->load->database('default');
+		$this->load->database('default'); // Carga la base de datos
 	}
 
 
 	// Interfaz de instructor
 	public function index()
 	{
+		// Procura que la sesion este activa con el rol correspondiente
 		if ($this->session->userdata('id_rol') == FALSE || $this->session->userdata('id_rol') != 1) {
 			redirect(base_url().'login');
 		}
 
 
+		// Datos del usuario logueado
 		$logueado = $this->individuoModel->obtenerInfo($this->session->userdata('id_usuario'));
 
 		// Si el instructor es estudiante, se cargara el perfil de estudiante
@@ -35,7 +38,8 @@ class Instructor extends CI_Controller {
 			$estudiante = $this->estudianteModel->obtenerInfo($this->session->userdata('id_usuario'));
 			$infoPaquetes = $this->estudianteModel->obtenerInfoPaquetes($estudiante->id_estudiante);
 
-			if ($logueado != FALSE) {
+			// Si esta logueado, que muestre la pantalla principal de instructor al cargar la pantalla principal
+			if ($logueado != FALSE) { 
 				$this->load->view('instructor/perfil', ['logueado'=>$logueado, 'estudiante'=>$estudiante, 'infoPaquetes'=>$infoPaquetes, 'existeEstudiante'=>$existeEstudiante]);
 
 			} else {
@@ -49,25 +53,27 @@ class Instructor extends CI_Controller {
 			}
 		}
 		
-		// TODO: Si el instructor NO esta activo, mostrar solo un mensaje de que no esta activo
-
-		
 	}
 
 	// Interfaz de usuarios
 	public function usuarios()
 	{
+		// Mantiene la sesion abierta
 		if ($this->session->userdata('id_rol') == FALSE || $this->session->userdata('id_rol') != 1) {
 			redirect(base_url().'login');
 		}
 
+		// Datos del usuario logueado
 		$logueado = $this->individuoModel->obtenerInfo($this->session->userdata('id_usuario'));
 
+		// Carga la lista de todos los usuarios, para mostrarlos en la tabla
 		$listaUsuarios = $this->individuoModel->obtenerListaIndividuos();
 
+		// Carga la vista con todos los datos suministrados
 		$this->load->view('instructor/lista_usuarios', ['logueado'=>$logueado, 'listaUsuarios'=>$listaUsuarios]);
 	}
 
+	// Para crear un nuevo usuario
 	public function nuevoUsuario()
 	{
 		if ($this->session->userdata('id_rol') == FALSE || $this->session->userdata('id_rol') != 1) {
@@ -76,16 +82,22 @@ class Instructor extends CI_Controller {
 
 		$logueado = $this->individuoModel->obtenerInfo($this->session->userdata('id_usuario'));
 
+		// Si se presionó el botón de submit, se hará lo siguiente
 		if ($this->input->post()) {
+
+			// Procura que los campos de texto no estén vacios
 			$this->form_validation->set_rules('correo_electronico', 'correo electronico', 'required');
 			$this->form_validation->set_rules('id_individuo', 'identificacion', 'required');
 			$this->form_validation->set_rules('nombre', 'nombre', 'required');
 			$this->form_validation->set_rules('apellido1', 'primer apellido', 'required');
 			$this->form_validation->set_rules('nacionalidad', 'nacionalidad', 'required');
 			$this->form_validation->set_rules('fecha_nacimiento', 'fecha de nacimiento', 'required');
+			// Mensaje de advertencia, por si no se llena un campo de texto
 			$this->form_validation->set_message('required', 'El campo {field} es obligatorio.');
 
+			// Si se llenaron todos los campos, hacer lo siguiente
 			if ($this->form_validation->run()) {
+				// Capturan los datos de los campos de texto
 				$correo = $this->input->post('correo_electronico');
 				$id = $this->input->post('id_individuo');
 				$nombre = $this->input->post('nombre');
@@ -95,9 +107,10 @@ class Instructor extends CI_Controller {
 				$nacionalidad = $this->input->post('nacionalidad');
 				$condicion = $this->input->post('condicion_medica');
 
+				// Verifica que exista el individuo en la base de datos
 				$existe = $this->individuoModel->existe($correo, $id);
 
-				if ($existe == FALSE) {
+				if ($existe == FALSE) { // Si el individuo no existe, crearlo
 					$contraDefecto = "1234"; // Contrasena por defecto
 					$contraEncriptada = password_hash($contraDefecto, PASSWORD_DEFAULT);
 
@@ -158,7 +171,7 @@ class Instructor extends CI_Controller {
 				$esInstructor = $this->input->post('es_instructor');
 				$restablecerContra = $this->input->post('restablecerContra');
 
-				$idRol = 3;
+				$idRol = 3; // Rol genérico, que impedirá que se inicie sesión
 
 				if ($esInstructor == 1 && $esEstudiante == 1) {
 					$idRol = 1; // Si es instructor y estudiante, tendra el rol 1 para login
@@ -170,6 +183,7 @@ class Instructor extends CI_Controller {
 
 
 				if ($this->usuarioModel->editar($idUsuario, $correo, $idRol)) {
+					// Si se pidio restablecer la contraseña, asignar contraseña por defecto (1234)
 					if ($restablecerContra == 1) {
 						$hash = password_hash("1234", PASSWORD_DEFAULT);
 						$this->usuarioModel->cambiarContrasena($idUsuario, $hash);
@@ -177,6 +191,7 @@ class Instructor extends CI_Controller {
 
 					if ($this->individuoModel->editar($id, $nombre, $apellido1, $apellido2, $nacionalidad, $condicion, $fechaNac)) {
 
+						// Si el usuario no es estudiante, pero lo será
 						if ($existeEstudiante == FALSE) {
 							if ($esEstudiante == 1) {
 								// insertar estudiante
@@ -184,6 +199,7 @@ class Instructor extends CI_Controller {
 							}
 						}
 
+						// Si el usuario no es instructor, pero lo será
 						if ($existeInstructor == FALSE) {
 							if ($esInstructor == 1) {
 								// insertar instructor
@@ -229,7 +245,7 @@ class Instructor extends CI_Controller {
 	}
 
 	// Editar informacion de estudiante, usuario e individuo
-	public function editarEstudiante($idUsuario)
+	public function editarEstudiante($idUsuario) // Se recibe como parametro el id del usuario a editar
 	{
 		if ($this->session->userdata('id_rol') == FALSE || $this->session->userdata('id_rol') != 1) {
 			redirect(base_url().'login');
@@ -253,13 +269,26 @@ class Instructor extends CI_Controller {
 				$activo = $this->input->post('activo');
 
 				if ($this->estudianteModel->editar($id, $fechaInsc, $nivelKmg, $activo)) {
+					// Si el estudiante se inactivará pero es instructor:
 					if ($activo == 0 && $this->instructorModel->existeInstructor($id)) {
 						if ($this->instructorModel->estaActivo($id)) {
+							// Si es instructor activo, quedará con rol de instructor
 							$this->usuarioModel->editar($idUsuario, $correo, 1);
 						} else {
+							// Si no es instructor activo, quedará con rol genérico
 							$this->usuarioModel->editar($idUsuario, $correo, 3);
 						}
-					}  else {
+					}  elseif ($activo == 1 && $this->instructorModel->existeInstructor($id)) {
+						if ($this->instructorModel->estaActivo($id)) {
+							// Si es instructor activo, quedará con rol de instructor
+							$this->usuarioModel->editar($idUsuario, $correo, 1);
+						} else {
+							// Si no es instructor activo, quedará con rol de estudiante
+							$this->usuarioModel->editar($idUsuario, $correo, 2);
+						}
+					} elseif ($activo == 0 && $this->instructorModel->existeInstructor($id) == FALSE) {
+						$this->usuarioModel->editar($idUsuario, $correo, 3);
+					} else {
 						$this->usuarioModel->editar($idUsuario, $correo, 2);
 					}
 					$this->session->set_flashdata('mensaje', 'Estudiante editado correctamente');
@@ -305,6 +334,7 @@ class Instructor extends CI_Controller {
 		$instructor = $this->instructorModel->obtenerInfo($this->session->userdata('id_usuario'));
 		$infoAsistencias = $this->instructorModel->obtenerInfoAsistencias($instructor->id_instructor, 1);
 
+		// Suma una asistencia (asistencia = asistencia + 1)
 		$suma = $this->instructorModel->sumarAsistencia($idPaquete, $idSede, $idEstudiante, $idInstructor, $fechaInicio);
 
 		if ($suma) {
@@ -313,7 +343,7 @@ class Instructor extends CI_Controller {
 			$this->session->set_flashdata('mensaje', 'No se pudo añadir la asistencia');
 		}
 
-		$this->asistencias();
+		$this->asistencias(); // Carga la interfaz de asistencias
 	}
 
 	public function editarPaqueteEstudiante($idPaquete, $idSede, $idEstudiante, $idInstructor, $fechaInicio, $esActivo)
@@ -381,6 +411,7 @@ class Instructor extends CI_Controller {
 
 	}
 
+	// Asisgna un nuevo paquete a estudiante
 	public function asignarPaquete()
 	{
 		$logueado = $this->individuoModel->obtenerInfo($this->session->userdata('id_usuario'));
@@ -403,18 +434,21 @@ class Instructor extends CI_Controller {
 			$this->form_validation->set_message('required', 'El campo {field} es obligatorio.');
 
 			if ($this->form_validation->run()) {
+				// Si existen paquetes no pagados, no podra asignar uno nuevo
 				if ($this->instructorModel->verificarNoPagados($idEstudiante) == FALSE) {
-					if ($this->instructorModel->crearPaqueteEstudiante($idPaquete, $idSede, $idEstudiante, $idInstructor, $fechaInicio, $esActivo, $esPagado, $diasRestantes)) {
-						$this->session->set_flashdata('mensaje', 'Paquete asignado correctamente');
+					// Verifica que no hayan paquetes activos del estudiante
+					if ($this->instructorModel->verificarPaqueteActivo($idInstructor, $idEstudiante, $idSede) == FALSE) {
+						if ($this->instructorModel->crearPaqueteEstudiante($idPaquete, $idSede, $idEstudiante, $idInstructor, $fechaInicio, $esActivo, $esPagado, $diasRestantes)) {
+							$this->session->set_flashdata('mensaje', 'Paquete asignado correctamente');
+						} else {
+							$this->session->set_flashdata('mensaje', 'No se pudo asignar el paquete');
+						}
 					} else {
-						$this->session->set_flashdata('mensaje', 'No se pudo asignar el paquete');
+						$this->session->set_flashdata('mensaje', 'Ya existe un paquete activo con el mismo estudiante, sede e instructor');
 					}
 				} else {
 					$this->session->set_flashdata('mensaje', 'El estudiante no ha pagado su paquete actual');
 				}
-
-
-					
 
 				return redirect('instructor/asistencias');
 			} else {
@@ -469,15 +503,17 @@ class Instructor extends CI_Controller {
 
 				if ($this->instructorModel->editar($id, $fechaInicio, $activo)) {
 
-					// Si se inactivara al instructor, pero es estudiante, entonces que solo se muestre la interfaz de estudiante
 					if ($activo == 0 && $this->estudianteModel->existeEstudiante($id)) {
 						if ($this->estudianteModel->estaActivo($id)) {
+							// Si se inactivara al instructor, pero es estudiante, entonces que solo se muestre la interfaz de estudiante
 							$this->usuarioModel->editar($idUsuario, $correo, 2);
 						} else {
+							// Si se inactivara al instructor, y no es estudiante, que se le asigne el rol generico 3
 							$this->usuarioModel->editar($idUsuario, $correo, 3);
 						}
-					// Si se inactivara al instructor, y no es estudiante, que se le asigne el rol generico 3
-					}  else {
+					} elseif ($activo == 0 && $this->estudianteModel->existeEstudiante($id) == FALSE) {
+						$this->usuarioModel->editar($idUsuario, $correo, 3);
+					} else {
 						$this->usuarioModel->editar($idUsuario, $correo, 1);
 					}
 					$this->session->set_flashdata('mensaje', 'Instructor editado correctamente');
@@ -495,6 +531,7 @@ class Instructor extends CI_Controller {
 		}
 	}
 
+	// Interfaz de paquetes
 	public function paquetes()
 	{
 		if ($this->session->userdata('id_rol') == FALSE || $this->session->userdata('id_rol') != 1) {
@@ -503,6 +540,7 @@ class Instructor extends CI_Controller {
 
 		$logueado = $this->individuoModel->obtenerInfo($this->session->userdata('id_usuario'));
 
+		// Carga la lista de paquetes disponibles
 		$listaPaquetes = $this->paqueteModel->seleccionar();
 
 		$this->load->view('instructor/lista_paquetes', ['logueado'=>$logueado, 'listaPaquetes'=>$listaPaquetes]);
@@ -543,6 +581,7 @@ class Instructor extends CI_Controller {
 		}
 	}
 
+	// Edita informacion de un paquete
 	public function editarPaquete($idPaquete)
 	{
 		if ($this->session->userdata('id_rol') == FALSE || $this->session->userdata('id_rol') != 1) {
@@ -578,6 +617,7 @@ class Instructor extends CI_Controller {
 		}
 	}
 
+	// Interfaz de sedes
 	public function sedes()
 	{
 		if ($this->session->userdata('id_rol') == FALSE || $this->session->userdata('id_rol') != 1) {
@@ -591,6 +631,7 @@ class Instructor extends CI_Controller {
 		$this->load->view('instructor/lista_sedes', ['logueado'=>$logueado, 'listaSedes'=>$listaSedes]);
 	}
 
+	// Crear nueva sede
 	public function nuevaSede()
 	{
 		if ($this->session->userdata('id_rol') == FALSE || $this->session->userdata('id_rol') != 1) {
@@ -624,6 +665,7 @@ class Instructor extends CI_Controller {
 		}
 	}
 
+	// Editar sede
 	public function editarSede($idSede)
 	{
 		if ($this->session->userdata('id_rol') == FALSE || $this->session->userdata('id_rol') != 1) {
@@ -658,6 +700,7 @@ class Instructor extends CI_Controller {
 		}
 	}
 
+	// Para cambiar la contraseña
 	public function configuracion()
 	{
 		if ($this->session->userdata('id_rol') == FALSE || $this->session->userdata('id_rol') != 1) {
@@ -668,6 +711,7 @@ class Instructor extends CI_Controller {
 		$logueado = $this->individuoModel->obtenerInfo($this->session->userdata('id_usuario'));
 
 		if ($this->input->post()) {
+			// El sistema valida que se haya escrito dos veces la contraseña, como medida de seguridad
 			$this->form_validation->set_rules('contrasena', 'contraseña', 'required');
 			$this->form_validation->set_rules('conf_contrasena', 'contraseña confirmada', 'required');
 			$this->form_validation->set_message('required', 'El campo {field} es obligatorio.');
@@ -677,7 +721,9 @@ class Instructor extends CI_Controller {
 				$contrasenaConfirmada = $this->input->post('conf_contrasena');
 				$idUsuario = $this->session->userdata('id_usuario');
 
+				// Si la contraseña es igual en los dos campos de texto, que se proceda al proceso de cambio
 				if ($contrasena == $contrasenaConfirmada) {
+					// Encripta la contraseña
 					$hash = password_hash($contrasena, PASSWORD_DEFAULT);
 					if ($this->usuarioModel->cambiarContrasena($idUsuario, $hash)) {
 						$this->session->set_flashdata('mensaje', 'Contraseña actualizada exitosamente');

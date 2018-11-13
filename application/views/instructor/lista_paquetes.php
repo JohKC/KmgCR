@@ -44,7 +44,7 @@
 		  </tbody>
 		</table> 
 
-		<!-- Tarjetas responsive -->
+		<!-- Tarjetas responsive, se muestran al reducir tamaño de pagina -->
 		<?php if (count($listaPaquetes)): ?>
 			<hr>
 			<?php foreach ($listaPaquetes as $item): ?>
@@ -67,6 +67,7 @@
 			<?php endif; ?>
 </div>
 <script>
+// Permite filtrar los resultados de las tablas, al escribir en el campo de busqueda
 $(document).ready(function(){
   $("#busqueda").on("keyup", function() {
     var value = $(this).val().toLowerCase();

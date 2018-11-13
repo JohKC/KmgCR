@@ -34,6 +34,7 @@
 	<?=form_close(); ?>
 </div>
 <script>
+	// Obtiene el valor de actividad y lo asigna al select
 	var esActivo = document.getElementById('esActivo').value;
 	document.getElementById('activo').value = esActivo;
 </script>

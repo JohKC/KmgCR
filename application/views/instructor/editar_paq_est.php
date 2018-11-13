@@ -53,7 +53,7 @@
 	    </div>
 	    <div class="form-group">
 	    	<label for="">Asistencias</label>
-	    	<?=form_input(['name'=>'asistencias', 'class'=>'form-control', 'type'=>'number', 'value'=>$infoActual->asistencias]); ?>
+	    	<?=form_input(['name'=>'asistencias', 'class'=>'form-control', 'type'=>'number', 'value'=>$infoActual->asistencias, 'min'=>'0']); ?>
 	    	<?=form_error('asistencias', '<div class="text-danger">','</div>'); ?>
 	    </div>
 	    <div class="form-group">
@@ -76,7 +76,7 @@
 	<?=form_close(); ?>
 </div>
 <script>
-	// Selecciona automaticamente los id a las listas
+	// Obtiene los valores actuales y los coloca en los select, para evitar actualizaciones no deseadas
 	var idEstudiante = document.getElementById('idEstudiante').value;
 	var idInstructor = document.getElementById('idInstructor').value;
 	var idSede = document.getElementById('idSede').value;

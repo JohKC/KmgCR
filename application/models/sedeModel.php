@@ -31,12 +31,6 @@ class SedeModel extends CI_Model {
 
 		$error = $this->db->error();
 
-		// return $error['message'] . ' ' . $this->db->last_query() . '<br>';
-		// $log = fopen("logSede.txt", "w") or die("Unable to open file!");
-		// $txt = $error['message'] . '<br>' . $this->db->last_query() . '<br>';
-		// fwrite($log, $txt);
-		// fclose($log);
-
 		if ($error['message'] == '') {
 			return true;
 		} else {
@@ -50,8 +44,6 @@ class SedeModel extends CI_Model {
 		$query = $this->db->query("UPDATE T_SEDE SET nombre_sede = '$nombre', ubicacion = '$ubicacion', es_activo = $esActivo WHERE id_sede = $idSede;");
 
 		$error = $this->db->error();
-
-		// return $error['message'] . ' ' . $this->db->last_query() . '<br>';
 
 		if ($error['message'] == '') {
 			return true;

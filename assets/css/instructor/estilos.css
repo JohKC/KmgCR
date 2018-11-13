@@ -2,6 +2,7 @@
 	display: none;
 }
 
+/* Si la pagina se reduce a cierto tamaño, desaparecen las tablas y se muestran tarjetas */
 @media only screen and (max-width: 1110px) {
 	.tabla_estudiantes {
 		display: none;

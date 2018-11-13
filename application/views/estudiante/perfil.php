@@ -10,7 +10,7 @@
 		  	<div class="col-md-10">
 		  		<h1 class="display-3"><?=$individuo->nombre . ' ' . $individuo->apellido1 ?></h1>
 		  		<p class="lead">Nivel actual: <?=$estudiante->nivel_kmg ?></p>
-	  			<p>Fecha de inicio: <?=$estudiante->fecha_inscripcion ?></p>
+	  			<p>Fecha de inicio: <?=$estudiante->fecha_insc ?></p>
 		  	</div>
 		  </div>
 		</div>

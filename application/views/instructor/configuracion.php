@@ -1,4 +1,5 @@
 <?php include_once('header.php') ?>
+<!-- Muestra mensajes de alerta -->
 <?php if ($mensaje = $this->session->flashdata('mensaje')): ?>
     <?php if ($mensaje == 'Contraseña actualizada exitosamente'): ?>
       <div class="alert alert-dismissible alert-success">

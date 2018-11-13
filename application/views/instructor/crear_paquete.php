@@ -15,7 +15,7 @@
 	    </div>
 	    <div class="form-group">
 	    	<label for="">Precio *</label>
-	    	<?=form_input(['name'=>'monto_precio', 'class'=>'form-control', 'type'=>'number']); ?>
+	    	<?=form_input(['name'=>'monto_precio', 'class'=>'form-control', 'type'=>'number', 'step'=>'.01', 'min'=>'0']); ?>
 	    	<?=form_error('monto_precio', '<div class="text-danger">','</div>'); ?>
 	    </div>
 	    </fieldset>
