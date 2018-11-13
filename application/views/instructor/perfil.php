@@ -14,11 +14,11 @@
 	<hr>
 	<ul class="nav nav-tabs">
 	  <li class="nav-item">
-	    <a class="nav-link active show" data-toggle="tab" href="#instructor">Perfil de instructor</a>
+	    <a class="nav-link active show" data-toggle="tab" href="#instructor">Instructor</a>
 	  </li>
 	  <?php if ($existeEstudiante): ?>
 	  <li class="nav-item">
-	    <a class="nav-link" data-toggle="tab" href="#estudiante">Perfil de estudiante</a>
+	    <a class="nav-link" data-toggle="tab" href="#estudiante">Estudiante</a>
 	  </li>
 	<?php endif; ?>
 	</ul>
@@ -66,9 +66,18 @@
 	  </div>
 	  <?php if ($existeEstudiante): ?>
 	  <div class="tab-pane fade" id="estudiante">
-		<div class="jumbotron">
-		  <h1 class="display-3"><?=$logueado->nombre . ' ' . $logueado->apellido1 ?></h1>
-	  		<h1>Nivel: <?=$estudiante->nivel_kmg ?></h1>
+		<div class="jumbotron" style="background: url('../KmgCR/assets/images/pelea.png') center; background-size: cover;">
+		  <div class="row">
+		  	<div class="col-md-2">
+		  		<img src="<?= base_url('assets/images/'. $estudiante->nivel_kmg .'.png');?>" width="100" class="img-fluid rounded mx-auto d-block">
+
+		  	</div>
+		  	<div class="col-md-10">
+		  		<h1 class="display-3"><?=$logueado->nombre . ' ' . $logueado->apellido1 ?></h1>
+		  		<p class="lead">Nivel actual: <?=$estudiante->nivel_kmg ?></p>
+	  			<p>Fecha de inicio: <?=$estudiante->fecha_inscripcion ?></p>
+		  	</div>
+		  </div>
 		</div>
 		
 		<div class="container">
@@ -94,6 +103,8 @@
 
 								    <small class="text-muted">Lecciones asistidas: <?=$item->asistencias . ' de ' . $item->cantidad_clases  ?></small>
 							  </div>
+							<?php else: ?>
+								<p>No hay paquetes activos.</p>
 						  	<?php endif; ?>
 						<?php endforeach; ?>
 					<?php else: echo "No hay paquetes."; ?>
@@ -123,6 +134,8 @@
 
 								    <small class="text-muted">Lecciones asistidas: <?=$item->asistencias . ' de ' . $item->cantidad_clases  ?></small>
 							  </div>
+							<?php else: ?>
+								<p>No hay paquetes activos.</p>
 						  	<?php endif; ?>
 						<?php endforeach; ?>
 						<?php else: echo "No hay paquetes."; ?>

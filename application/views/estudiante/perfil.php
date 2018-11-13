@@ -10,12 +10,23 @@
 			</div>
 		<?php endif; ?>
 	<?php endif; ?>
-	<div class="jumbotron">
-	  <h1 class="display-3"><?=$individuo->nombre . ' ' . $individuo->apellido1 ?></h1>
-  		<h1>Nivel: <?=$estudiante->nivel_kmg ?></h1>
-	</div>
+	
 	
 	<div class="container">
+		<div class="jumbotron" style="background: url('../KmgCR/assets/images/pelea.png') center; background-size: cover;">
+		  <div class="row">
+		  <?php if ($estudiante->nivel_kmg != 'Aspirante'): ?>
+		  	<div class="col-md-2">
+		  		<img src="<?= base_url('assets/images/'. $estudiante->nivel_kmg .'.png');?>" width="100" class="img-fluid rounded mx-auto d-block">
+		  	</div>
+		  <?php endif; ?>
+		  	<div class="col-md-10">
+		  		<h1 class="display-3"><?=$individuo->nombre . ' ' . $individuo->apellido1 ?></h1>
+		  		<p class="lead">Nivel actual: <?=$estudiante->nivel_kmg ?></p>
+	  			<p>Fecha de inicio: <?=$estudiante->fecha_inscripcion ?></p>
+		  	</div>
+		  </div>
+		</div>
 		<div class="row">
 			<div class="col-md-12">	
 				<h2>Paquetes activos</h2>	

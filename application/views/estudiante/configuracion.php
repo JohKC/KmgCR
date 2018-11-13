@@ -6,7 +6,7 @@
       </div>
     <?php endif; ?>
   <?php endif; ?>
-<div class="container">
+<div class="container" style="min-height:500px;">
 	<?=form_open(base_url().'estudiante/configuracion', ['class'=>'form-horizontal']); ?>
   <fieldset>
     <legend>Cambiar contraseña</legend>

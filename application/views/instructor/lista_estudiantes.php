@@ -22,7 +22,7 @@
 	    <a class="nav-link active show" data-toggle="tab" href="#mis_estudiantes">Mis estudiantes</a>
 	  </li>
 	  <li class="nav-item">
-	    <a class="nav-link" data-toggle="tab" href="#estudiantes_general">Todos los estudiantes</a>
+	    <a class="nav-link" data-toggle="tab" href="#estudiantes_general">Estudiantes</a>
 	  </li>
 	</ul>
 	<hr>

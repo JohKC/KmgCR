@@ -16,16 +16,16 @@
 			</div>
 		<?php endif; ?>
 	<?php endif; ?>
-	<h3>Gestor de asistencias</h3>
+	<h3>Gestor de paquetes de estudiantes</h3>
 
 	<?php echo anchor('instructor/asignarPaquete', 'Asignar nuevo paquete', ['class'=>'btn btn-primary']); ?>
 	<hr>
 	<ul class="nav nav-tabs">
 	  <li class="nav-item">
-	    <a class="nav-link active show" data-toggle="tab" href="#activos">Paquetes activos</a>
+	    <a class="nav-link active show" data-toggle="tab" href="#activos">Activos</a>
 	  </li>
 	  <li class="nav-item">
-	    <a class="nav-link" data-toggle="tab" href="#inactivos">Paquetes inactivos</a>
+	    <a class="nav-link" data-toggle="tab" href="#inactivos">Inactivos</a>
 	  </li>
 	</ul>
 	<hr>
@@ -87,7 +87,7 @@
 		<?php foreach ($infoPaquetesActivos as $item): ?>
 			<div style="border: none;" class="card border-secondary mb-3 info_estudiantes" id="contenido">
 			  <div id="contenido">
-				  <div class="card-header">Identificación: <?=$item->id_individuo ?>
+				  <div class="card-header">ID: <?=$item->id_individuo ?>
 				  <?php echo anchor("instructor/editarPaqueteEstudiante/{$item->id_paquete}/{$item->id_sede}/{$item->id_estudiante}/{$item->id_instructor}/{$item->fecha_inicio}/1", 'Editar', ['class'=>'btn-sm btn-success', 'style'=>'float:right;']); ?>
 				  <?php
 		        	 $estilo = '';
@@ -96,7 +96,7 @@
 		        	 }
 
 		        	?>
-				  <?php echo anchor("instructor/asignarAsistencia/{$item->id_paquete}/{$item->id_sede}/{$item->id_estudiante}/{$item->id_instructor}/{$item->fecha_inicio}", 'Asignar asistencia', ['class'=>"btn-sm btn-warning", 'style'=>"float:right; margin-right: 5px; $estilo"]); ?>
+				  <?php echo anchor("instructor/asignarAsistencia/{$item->id_paquete}/{$item->id_sede}/{$item->id_estudiante}/{$item->id_instructor}/{$item->fecha_inicio}", 'Asistencia', ['class'=>"btn-sm btn-warning", 'style'=>"float:right; margin-right: 5px; $estilo"]); ?>
 				  </div>
 				  <div class="card-body">
 				    <h4 class="card-title"><?=$item->nombre . ' ' . $item->apellido1 . ' ' . $item->apellido2 ?></h4>
