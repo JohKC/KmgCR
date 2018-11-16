@@ -20,7 +20,7 @@ class IndividuoModel extends CI_Model {
 	// Obtener informacion de individuo
 	public function obtenerInfo($idUsuario)
 	{
-		$query = $this->db->query("SELECT I.id_individuo, I.nombre, I.apellido1, I.apellido2, I.nacionalidad, I.condicion_medica, I.fecha_nacimiento FROM t_usuario U 
+		$query = $this->db->query("SELECT U.id_usuario, I.id_individuo, I.nombre, I.apellido1, I.apellido2, I.nacionalidad, I.condicion_medica, I.fecha_nacimiento FROM t_usuario U 
 			INNER JOIN t_individuo I ON U.id_usuario = I.id_usuario
 			WHERE U.id_usuario = $idUsuario;");
 

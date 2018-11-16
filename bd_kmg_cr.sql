@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1:3306
--- Tiempo de generación: 13-11-2018 a las 18:02:45
+-- Tiempo de generación: 16-11-2018 a las 07:14:00
 -- Versión del servidor: 5.7.21
 -- Versión de PHP: 5.6.35
 
@@ -21,6 +21,31 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `bd_kmg_cr`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `t_bitacora`
+--
+
+DROP TABLE IF EXISTS `t_bitacora`;
+CREATE TABLE IF NOT EXISTS `t_bitacora` (
+  `id_bitacora` int(11) NOT NULL AUTO_INCREMENT,
+  `nombre_instructor` varchar(100) COLLATE utf8_spanish_ci NOT NULL,
+  `nombre_estudiante` varchar(100) COLLATE utf8_spanish_ci NOT NULL,
+  `fecha` date NOT NULL,
+  `tipo` varchar(20) COLLATE utf8_spanish_ci NOT NULL,
+  `descripcion` text COLLATE utf8_spanish_ci NOT NULL,
+  PRIMARY KEY (`id_bitacora`)
+) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `t_bitacora`
+--
+
+INSERT INTO `t_bitacora` (`id_bitacora`, `nombre_instructor`, `nombre_estudiante`, `fecha`, `tipo`, `descripcion`) VALUES
+(4, 'Johan Karlson Carrillo', 'Cornelio Ramirez Perez', '2018-11-16', 'Asistencia', 'El instructor Johan Karlson Carrillo asignó una asistencia al estudiante Cornelio Ramirez Perez, correspondiente al paquete Golden, en la sede San Pablo. Asistencias actuales: 9 de 15.'),
+(7, 'Johan Karlson Carrillo', 'Cornelio Ramirez Perez', '2018-11-16', 'Asistencia', 'El instructor Johan Karlson Carrillo modificó las asistencias del estudiante Cornelio Ramirez Perez, correspondiente al paquete Golden, en la sede San Pablo. Asistencias actuales: 5 de 15.');
 
 -- --------------------------------------------------------
 
@@ -94,7 +119,7 @@ INSERT INTO `t_estudiante_paquete` (`id_estudiante`, `id_paquete`, `id_sede`, `i
 (6, 2, 1, 1, '2018-10-22', 30, 30, b'1', b'1'),
 (8, 1, 1, 2, '2018-10-21', 10, 6, b'0', b'1'),
 (14, 1, 1, 1, '2018-11-12', 30, 0, b'0', b'0'),
-(16, 1, 2, 1, '2018-11-16', 30, 0, b'1', b'1');
+(16, 1, 2, 1, '2018-11-16', 30, 5, b'1', b'1');
 
 -- --------------------------------------------------------
 
@@ -225,7 +250,7 @@ CREATE TABLE IF NOT EXISTS `t_sede` (
   `ubicacion` text COLLATE utf8_spanish_ci NOT NULL,
   `es_activo` bit(1) NOT NULL,
   PRIMARY KEY (`id_sede`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
 -- Volcado de datos para la tabla `t_sede`
@@ -257,7 +282,7 @@ CREATE TABLE IF NOT EXISTS `t_usuario` (
 --
 
 INSERT INTO `t_usuario` (`id_usuario`, `correo_electronico`, `contrasena`, `id_rol`) VALUES
-(1, 'johan@johan.com', '$2y$10$Z1xYMqZob..JSrFv2BNfbuUHsxe4/O5tlZRwZfkXpYzbxCnWAJnkm', 1),
+(1, 'johan@johan.com', '$2y$10$lNqwz7R0RjWyCiIY0GTWnuwiHph.Tdzp2mm23g1WRq6DL68CpdbY.', 1),
 (2, 'marcos@marcos.com', '$2y$10$YumISF8C4hWawbIJfJZaVuGiN2.T/vUKj45xCFN4XO9lFmHLYGpPq', 2),
 (9, 'enrique@msn.com', '$2y$10$7A9OXpAAh4n.eH1xoc7noOEThXIoZhPtt8K4FPPbYs3e.zT08tqp6', 2),
 (10, 'vale@hotmail.com', '$2y$10$1MNkc.3jUVmejvHevFYTj.On4FKJMlvS4l0cnAGv6qLwx9LAdQxGC', 2),
@@ -312,7 +337,7 @@ DELIMITER $$
 --
 -- Eventos
 --
-DROP EVENT IF EXISTS `descuentoDias`$$
+DROP EVENT `descuentoDias` IF EXISTS $$
 CREATE DEFINER=`root`@`localhost` EVENT `descuentoDias` ON SCHEDULE EVERY 24 HOUR STARTS '2018-11-12 00:04:20' ON COMPLETION NOT PRESERVE ENABLE DO BEGIN
 	UPDATE t_estudiante_paquete SET dias_restantes = dias_restantes - 1 WHERE dias_restantes > 0;
     

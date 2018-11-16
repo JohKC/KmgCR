@@ -1,7 +1,7 @@
 <?php include_once('header.php') ?>
 <div class="container">
 	<h1>Editar paquete de estudiante</h1>
-	<?=form_open(base_url()."instructor/editarPaqueteEstudiante/{$infoActual->id_paquete}/{$infoActual->id_sede}/{$infoActual->id_estudiante}/{$infoActual->id_instructor}/{$infoActual->fecha_inicio}/{$infoActual->es_activo}", ['class'=>'form-horizontal']); ?>
+	<?=form_open(base_url()."instructor/editarPaqueteEstudiante/{$infoActual->id_paquete}/{$infoActual->id_sede}/{$infoActual->id_estudiante}/{$infoActual->id_instructor}/{$infoActual->fecha_inicio}/{$infoActual->es_activo}/$estudiante->id_usuario", ['class'=>'form-horizontal']); ?>
 	  <fieldset>
 	  	<input type="hidden" id="idEstudiante" value="<?=$infoActual->id_estudiante ?>">
 	  	<input type="hidden" id="idInstructor" value="<?=$infoActual->id_instructor ?>">
@@ -53,9 +53,11 @@
 	    </div>
 	    <div class="form-group">
 	    	<label for="">Asistencias</label>
-	    	<?=form_input(['name'=>'asistencias', 'class'=>'form-control', 'type'=>'number', 'value'=>$infoActual->asistencias, 'min'=>'0']); ?>
+	    	<?=form_input(['name'=>'asistencias', 'class'=>'form-control', 'type'=>'number', 'value'=>$infoActual->asistencias, 'min'=>'0', 'id'=>'asistencias']); ?>
 	    	<?=form_error('asistencias', '<div class="text-danger">','</div>'); ?>
 	    </div>
+	    <!-- Si el valor cambia a 1, se añadira a bitacora un cambio en asistencias -->
+	    <input type="text" value="0" id="cambioAsistencia" name="cambio_asistencia">
 	    <div class="form-group">
 	    	<label for="">Paquete pagado</label>
 	    	<select name="es_pagado" class="form-control custom-select" id="pagado">
@@ -89,5 +91,10 @@
 	document.getElementById('listaInstructores').value = idInstructor;
 	document.getElementById('pagado').value = esPagado;
 	document.getElementById('activo').value = esActivo;
+
+	// Verifica si el select de asistencias cambio, para añadir a la bitacora una modificacion de asistencias
+	 $("#asistencias").on("change paste keyup", function() {
+	   document.getElementById('cambioAsistencia').value = 1;
+	});
 </script>
 <?php include_once('footer.php') ?>

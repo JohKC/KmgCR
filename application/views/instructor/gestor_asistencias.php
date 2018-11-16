@@ -71,8 +71,8 @@
 		        	 }
 
 		        	?>
-		      	<?php echo anchor("instructor/editarPaqueteEstudiante/{$item->id_paquete}/{$item->id_sede}/{$item->id_estudiante}/{$item->id_instructor}/{$item->fecha_inicio}/1", 'Editar', ['class'=>"btn btn-success"]); ?>
-		      	<?php echo anchor("instructor/asignarAsistencia/{$item->id_paquete}/{$item->id_sede}/{$item->id_estudiante}/{$item->id_instructor}/{$item->fecha_inicio}", 'Asistencia', ['class'=>"btn btn-warning $clase"]); ?>
+		      	<?php echo anchor("instructor/editarPaqueteEstudiante/{$item->id_paquete}/{$item->id_sede}/{$item->id_estudiante}/{$item->id_instructor}/{$item->fecha_inicio}/1/{$item->id_usuario}", 'Editar', ['class'=>"btn btn-success"]); ?>
+		      	<?php echo anchor("instructor/asignarAsistencia/{$item->id_paquete}/{$item->id_sede}/{$item->id_estudiante}/{$item->id_instructor}/{$item->fecha_inicio}/{$item->id_usuario}/{$item->asistencias}/{$item->cantidad_clases}", 'Asistencia', ['class'=>"btn btn-warning $clase"]); ?>
 		      </td>
 
 		    </tr>
