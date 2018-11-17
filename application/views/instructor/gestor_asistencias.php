@@ -19,6 +19,7 @@
 	<h3>Gestor de paquetes de estudiantes</h3>
 
 	<?php echo anchor('instructor/asignarPaquete', 'Asignar nuevo paquete', ['class'=>'btn btn-primary']); ?>
+	<?php echo anchor('instructor/bitacora', 'Bitácora', ['class'=>'btn btn-secondary']); ?>
 	<hr>
 	<ul class="nav nav-tabs">
 	  <li class="nav-item">

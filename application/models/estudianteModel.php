@@ -41,6 +41,18 @@ class EstudianteModel extends CI_Model {
 		}
 	}
 
+	// Obtiene nombre de estudiante para añadirlo a la bitacora, en la asignacion de un paquete
+	public function obtenerNombre($idEstudiante)
+	{
+		$query = $this->db->query("SELECT I.nombre, I.apellido1, I.apellido2 FROM T_ESTUDIANTE E INNER JOIN T_INDIVIDUO I ON I.id_individuo = E.id_individuo AND E.id_estudiante = $idEstudiante;");
+
+		if ($query->num_rows() == 1) {
+			return $query->row();
+		} else {
+			return false;
+		}
+	}
+
 	// Obtener informacion de paquetes de estudiante
 	public function obtenerInfoPaquetes($idEstudiante)
 	{

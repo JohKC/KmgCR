@@ -16,7 +16,12 @@
 
 	<?php echo anchor('instructor/nuevoUsuario', 'Agregar nuevo usuario', ['class'=>'btn btn-primary']); ?>
 	<hr>
-		<input type="text" id="busqueda" placeholder="Buscar..." class="form-control">
+		<div class="row">
+			<div class="col-md-5">
+				<input type="text" id="busqueda" placeholder="Buscar..." class="form-control">
+			</div>
+		</div>
+		<hr>
 		<table class="table table-hover tabla_estudiantes small" id="tabla">
 		  <thead>
 		    <tr>
@@ -56,7 +61,7 @@
 			<?php foreach ($listaUsuarios as $item): ?>
 				<div style="border: none;" class="card border-secondary mb-3 info_estudiantes" id="contenido">
 				  <div id="contenido">
-						<div class="card-header" id="">Identificación: <?=$item->id_individuo ?>
+						<div class="card-header" id="">ID: <?=$item->id_individuo ?>
 					  	<?php echo anchor("instructor/editarUsuario/{$item->id_usuario}", 'Editar', ['class'=>'btn-sm btn-success', 'style'=>'float:right;']); ?>
 					  </div>
 					  <div class="card-body" id="">

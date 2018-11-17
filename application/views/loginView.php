@@ -14,9 +14,12 @@
 	<nav class="navbar navbar-expand-lg navbar-light bg-light" style="background-color: none;">
 		<img src="<?= base_url('assets/images/KMG-HQ.png');?>" class="img-fluid rounded mx-auto d-block" width="250">
 	</nav>
-
+	<hr>
 	<div class="container">
-		<?php if ($mensaje = $this->session->flashdata('usuario_incorrecto')): ?>
+		<div class="row">
+			<div class="col-md-4"></div>
+			<div class="col-md-4 card border-secondary mb-3" style="padding: 20px;">
+				<?php if ($mensaje = $this->session->flashdata('usuario_incorrecto')): ?>
 			<div class="alert alert-dismissible alert-danger">
 				<?=$mensaje; ?>
 			</div>
@@ -38,6 +41,9 @@
 		    <?=form_submit(['name'=>'submit', 'value'=>'Iniciar sesión', 'class'=>'btn btn-primary']); ?>
 		  </fieldset>
 		<?=form_close(); ?>
+			</div>
+			<div class="col-md-4"></div>
+		</div>
 	</div>
 </body>
 </html>

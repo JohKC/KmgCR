@@ -16,6 +16,16 @@ class BitacoraModel extends CI_Model {
 		}
 	}
 
+	public function seleccionar()
+	{
+		$query = $this->db->query("SELECT id_bitacora, DATE_FORMAT(fecha, '%d/%m/%Y') AS fecha, descripcion FROM T_BITACORA ORDER BY id_bitacora DESC;");
+
+		if ($query->num_rows() > 0) {
+			return $query->result();
+		} else {
+			return false;
+		}
+	}
 }
 
 /* End of file bitacoraModel.php */

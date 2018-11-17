@@ -81,18 +81,19 @@
 					  	<?php foreach ($infoPaquetes as $item): ?>
 						  	<?php if ($item->es_activo == 1): ?>
 						  		<div href="#" class="list-group-item list-group-item-action flex-column align-items-start">
-								  	<div class="d-flex w-100 justify-content-between">
-								      <h5 class="mb-1">Tipo de paquete: <?=$item->nombre_paquete ?></h5>
-								      <h5 class="mb-1">Instructor: <?=$item->nombre . ' ' . $item->apellido1 ?></h5>
-								      <small>Fecha de inicio: <?= $item->fecha_ini ?></small>
-								    </div>
-								    <div class="d-flex w-100 justify-content-between">
-								      <h5 class="mb-1">Sede: <?=$item->nombre_sede ?></h5>
-								    </div>
-								    <div class="d-flex w-100 justify-content-between">
-								      <h5 class="mb-1">Días restantes: <?=$item->dias_restantes ?></h5>
-								    </div>
-
+									<div class="row">
+										<div class="col-md-4">
+								      		<h5 class="mb-1">Tipo de paquete: <?=$item->nombre_paquete ?></h5>
+								      		<h5 class="mb-1">Sede: <?=$item->nombre_sede ?></h5>
+								      		<h5 class="mb-1">Días restantes: <?=$item->dias_restantes ?></h5>
+										</div>
+										<div class="col-md-6">
+								      		<h5 class="mb-1">Instructor: <?=$item->nombre . ' ' . $item->apellido1 ?></h5>
+										</div>
+										<div class="col-md-2">
+								      		<small>Fecha de inicio: <?= $item->fecha_ini ?></small>
+										</div>
+									</div>
 								    <small class="text-muted">Lecciones asistidas: <?=$item->asistencias . ' de ' . $item->cantidad_clases  ?></small>
 							  </div>
 							<?php else: ?>
@@ -112,18 +113,19 @@
 					  	<?php foreach ($infoPaquetes as $item): ?>
 						  	<?php if ($item->es_activo == 0): ?>
 						  		<div href="#" class="list-group-item list-group-item-action flex-column align-items-start">
-								  	<div class="d-flex w-100 justify-content-between">
-								      <h5 class="mb-1">Tipo de paquete: <?=$item->nombre_paquete ?></h5>
-								      <h5 class="mb-1">Instructor: <?=$item->nombre . ' ' . $item->apellido1 ?></h5>
-								      <small>Fecha de inicio: <?= $item->fecha_ini ?></small>
-								    </div>
-								    <div class="d-flex w-100 justify-content-between">
-								      <h5 class="mb-1">Sede: <?=$item->nombre_sede ?></h5>
-								    </div>
-								    <div class="d-flex w-100 justify-content-between">
-								      <h5 class="mb-1">Días restantes: <?=$item->dias_restantes ?></h5>
-								    </div>
-
+									<div class="row">
+										<div class="col-md-4">
+								      		<h5 class="mb-1">Tipo de paquete: <?=$item->nombre_paquete ?></h5>
+								      		<h5 class="mb-1">Sede: <?=$item->nombre_sede ?></h5>
+								      		<h5 class="mb-1">Días restantes: <?=$item->dias_restantes ?></h5>
+										</div>
+										<div class="col-md-6">
+								      		<h5 class="mb-1">Instructor: <?=$item->nombre . ' ' . $item->apellido1 ?></h5>
+										</div>
+										<div class="col-md-2">
+								      		<small>Fecha de inicio: <?= $item->fecha_ini ?></small>
+										</div>
+									</div>
 								    <small class="text-muted">Lecciones asistidas: <?=$item->asistencias . ' de ' . $item->cantidad_clases  ?></small>
 							  </div>
 							<?php else: ?>

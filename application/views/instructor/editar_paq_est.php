@@ -57,7 +57,7 @@
 	    	<?=form_error('asistencias', '<div class="text-danger">','</div>'); ?>
 	    </div>
 	    <!-- Si el valor cambia a 1, se añadira a bitacora un cambio en asistencias -->
-	    <input type="text" value="0" id="cambioAsistencia" name="cambio_asistencia">
+	    <input type="hidden" value="0" id="cambioAsistencia" name="cambio_asistencia">
 	    <div class="form-group">
 	    	<label for="">Paquete pagado</label>
 	    	<select name="es_pagado" class="form-control custom-select" id="pagado">
@@ -65,6 +65,8 @@
 	    		<option value="0">No</option>
 	    	</select>
 	    </div>
+	    <!-- Si el valor cambia a 1, se añadira a bitacora un cambio en estado del pago -->
+	    <input type="hidden" value="0" id="cambioPago" name="cambio_pago">
 	    <div class="form-group">
 	    	<label for="">Paquete activo</label>
 	    	<select name="es_activo" class="form-control custom-select" id="activo">
@@ -95,6 +97,12 @@
 	// Verifica si el select de asistencias cambio, para añadir a la bitacora una modificacion de asistencias
 	 $("#asistencias").on("change paste keyup", function() {
 	   document.getElementById('cambioAsistencia').value = 1;
+	});
+
+	 // Verifica si el select de pagos cambio, para añadir a la bitacora una modificacion de estado de pago
+	 $("#pagado").on("change paste keyup", function() {
+	   document.getElementById('cambioPago').value = 1;
+	   alert('hola');
 	});
 </script>
 <?php include_once('footer.php') ?>

@@ -16,7 +16,12 @@
 
 	<?php echo anchor('instructor/nuevaSede', 'Agregar nueva sede', ['class'=>'btn btn-primary']); ?>
 	<hr>
-		<input type="text" id="busqueda" placeholder="Buscar..." class="form-control">
+		<div class="row">
+			<div class="col-md-5">
+				<input type="text" id="busqueda" placeholder="Buscar..." class="form-control">
+			</div>
+		</div>
+		<hr>
 		<table class="table table-hover tabla_estudiantes" id="tabla">
 		  <thead>
 		    <tr>

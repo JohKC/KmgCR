@@ -26,8 +26,11 @@
 	  </li>
 	</ul>
 	<hr>
-	<input type="text" id="busqueda" placeholder="Buscar..." class="form-control">
-
+	<div class="row">
+		<div class="col-md-5">
+			<input type="text" id="busqueda" placeholder="Buscar..." class="form-control">
+		</div>
+	</div>
 
 	<div id="myTabContent" class="tab-content">
 	  <div class="tab-pane fade active show" id="mis_estudiantes">
@@ -76,7 +79,7 @@
 			<?php foreach ($listaEstudiantes as $item): ?>
 				<div style="border: none;" class="card border-secondary mb-3 info_estudiantes" id="contenido">
 				  <div id="contenido">
-					  <div class="card-header">Identificación: <?=$item->id_individuo ?>
+					  <div class="card-header">ID: <?=$item->id_individuo ?>
 					  <?php echo anchor("instructor/editarEstudiante/{$item->id_usuario}", 'Editar', ['class'=>'btn-sm btn-success', 'style'=>'float:right;']); ?>
 					  </div>
 					  <div class="card-body">
@@ -138,7 +141,7 @@
 			<?php foreach ($listaEstudiantesGeneral as $item): ?>
 				<div style="border: none;" class="card border-secondary mb-3 info_estudiantes" id="contenido">
 				  <div id="contenido">
-				  	  <div class="card-header">Identificación: <?=$item->id_individuo ?>
+				  	  <div class="card-header">ID: <?=$item->id_individuo ?>
 				  	  <?php echo anchor("instructor/editarEstudiante/{$item->id_usuario}", 'Editar', ['class'=>'btn-sm btn-success', 'style'=>'float:right;']); ?>
 					  </div>
 					  <div class="card-body">

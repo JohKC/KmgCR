@@ -13,7 +13,12 @@
 		<?php endif; ?>
 	<?php endif; ?>
 	<h3>Lista de instructores</h3>
-	<input type="text" id="busqueda" placeholder="Buscar..." class="form-control">
+	<hr>
+	<div class="row">
+		<div class="col-md-5">
+			<input type="text" id="busqueda" placeholder="Buscar..." class="form-control">
+		</div>
+	</div>
 
 	<hr>
 		<table class="table table-hover tabla_estudiantes small" id="tabla">
@@ -55,7 +60,7 @@
 			<?php foreach ($listaInstructores as $item): ?>
 				<div style="border: none;" class="card border-secondary mb-3 info_estudiantes" id="contenido">
 				  <div id="contenido">
-					  <div class="card-header">Identificación: <?=$item->id_individuo ?>
+					  <div class="card-header">ID: <?=$item->id_individuo ?>
 					  <?php echo anchor("instructor/editarInstructor/{$item->id_usuario}", 'Editar', ['class'=>'btn-sm btn-success', 'style'=>'float:right;']); ?>
 					  </div>
 					  <div class="card-body">
