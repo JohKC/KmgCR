@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1:3306
--- Tiempo de generación: 16-11-2018 a las 07:14:00
+-- Tiempo de generación: 17-11-2018 a las 06:28:38
 -- Versión del servidor: 5.7.21
 -- Versión de PHP: 5.6.35
 
@@ -33,19 +33,29 @@ CREATE TABLE IF NOT EXISTS `t_bitacora` (
   `id_bitacora` int(11) NOT NULL AUTO_INCREMENT,
   `nombre_instructor` varchar(100) COLLATE utf8_spanish_ci NOT NULL,
   `nombre_estudiante` varchar(100) COLLATE utf8_spanish_ci NOT NULL,
+  `nombre_sede` varchar(50) COLLATE utf8_spanish_ci NOT NULL,
+  `nombre_paquete` varchar(50) COLLATE utf8_spanish_ci NOT NULL,
+  `fecha_inicio` date NOT NULL,
   `fecha` date NOT NULL,
-  `tipo` varchar(20) COLLATE utf8_spanish_ci NOT NULL,
   `descripcion` text COLLATE utf8_spanish_ci NOT NULL,
   PRIMARY KEY (`id_bitacora`)
-) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=32 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
 -- Volcado de datos para la tabla `t_bitacora`
 --
 
-INSERT INTO `t_bitacora` (`id_bitacora`, `nombre_instructor`, `nombre_estudiante`, `fecha`, `tipo`, `descripcion`) VALUES
-(4, 'Johan Karlson Carrillo', 'Cornelio Ramirez Perez', '2018-11-16', 'Asistencia', 'El instructor Johan Karlson Carrillo asignó una asistencia al estudiante Cornelio Ramirez Perez, correspondiente al paquete Golden, en la sede San Pablo. Asistencias actuales: 9 de 15.'),
-(7, 'Johan Karlson Carrillo', 'Cornelio Ramirez Perez', '2018-11-16', 'Asistencia', 'El instructor Johan Karlson Carrillo modificó las asistencias del estudiante Cornelio Ramirez Perez, correspondiente al paquete Golden, en la sede San Pablo. Asistencias actuales: 5 de 15.');
+INSERT INTO `t_bitacora` (`id_bitacora`, `nombre_instructor`, `nombre_estudiante`, `nombre_sede`, `nombre_paquete`, `fecha_inicio`, `fecha`, `descripcion`) VALUES
+(1, 'Johan Karlson Carrillo', 'Tanya Martinez ', 'San Pablo', 'Bronce', '2018-11-17', '2018-11-16', 'El instructor Johan Karlson Carrillo asignó una asistencia al estudiante Tanya Martinez , correspondiente al paquete Bronce, en la sede San Pablo. Asistencias actuales: 1 de 10.'),
+(5, 'Johan Karlson Carrillo', 'Tanya Martinez ', 'San Pablo', 'Bronce', '2018-11-17', '2018-11-16', 'El instructor Johan Karlson Carrillo modificó las asistencias del estudiante Tanya Martinez , correspondiente al paquete Bronce, en la sede San Pablo. Asistencias actuales: 4 de 10.'),
+(6, 'Johan Karlson Carrillo', 'Tanya Martinez ', 'San Pablo', 'Bronce', '2018-11-17', '2018-11-16', 'El instructor Johan Karlson Carrillo modificó las asistencias del estudiante Tanya Martinez , correspondiente al paquete Bronce, en la sede San Pablo. Asistencias actuales: 3 de 10.'),
+(7, 'Johan Karlson Carrillo', 'Tanya Martinez ', 'San Pablo', 'Bronce', '2018-11-17', '2018-11-16', 'El instructor Johan Karlson Carrillo modificó las asistencias del estudiante Tanya Martinez , correspondiente al paquete Bronce, en la sede San Pablo. Asistencias actuales: 5 de 10.'),
+(26, 'Johan Karlson Carrillo', 'Cornelio Ramirez Perez', 'Moravia', 'Golden', '2018-11-16', '2018-11-17', 'El instructor Johan Karlson Carrillo asignó una asistencia al estudiante Cornelio Ramirez Perez, correspondiente al paquete Golden, en la sede Moravia. Asistencias actuales: 9 de 15.'),
+(27, 'Veronica Ramirez ', 'Valeria Gonzalez ', 'San Pablo', 'Golden', '2018-11-18', '2018-11-17', 'El instructor Veronica Ramirez  asignó una asistencia al estudiante Valeria Gonzalez , correspondiente al paquete Golden, en la sede San Pablo. Asistencias actuales: 1 de 15.'),
+(28, 'Johan Karlson Carrillo', 'Tanya Martinez ', 'San Pablo', 'Bronce', '2018-11-17', '2018-11-17', 'El instructor Johan Karlson Carrillo modificó las asistencias del estudiante Tanya Martinez , correspondiente al paquete Bronce, en la sede San Pablo. Asistencias actuales: 6 de 10.'),
+(29, 'Johan Karlson Carrillo', 'Cornelio Ramirez Perez', 'Moravia', 'Golden', '2018-11-16', '2018-11-17', 'El instructor Johan Karlson Carrillo asignó una asistencia al estudiante Cornelio Ramirez Perez, correspondiente al paquete Golden, en la sede Moravia. Asistencias actuales: 10 de 15.'),
+(30, 'Johan Karlson Carrillo', 'Cornelio Ramirez Perez', 'Moravia', 'Golden', '2018-11-16', '2018-11-17', 'El instructor Johan Karlson Carrillo asignó una asistencia al estudiante Cornelio Ramirez Perez, correspondiente al paquete Golden, en la sede Moravia. Asistencias actuales: 11 de 15.'),
+(31, 'Johan Karlson Carrillo', 'Cornelio Ramirez Perez', 'Moravia', 'Golden', '2018-11-16', '2018-11-17', 'El instructor Johan Karlson Carrillo modificó las asistencias del estudiante Cornelio Ramirez Perez, correspondiente al paquete Golden, en la sede Moravia. Asistencias actuales: 10 de 15.');
 
 -- --------------------------------------------------------
 
@@ -112,14 +122,20 @@ INSERT INTO `t_estudiante_paquete` (`id_estudiante`, `id_paquete`, `id_sede`, `i
 (2, 1, 1, 1, '2018-11-02', 45, 0, b'0', b'1'),
 (2, 2, 1, 1, '2018-10-06', 23, 28, b'0', b'1'),
 (2, 2, 1, 1, '2018-10-10', 45, 17, b'0', b'1'),
-(2, 2, 2, 1, '2018-10-27', 45, 27, b'1', b'1'),
-(5, 1, 1, 1, '2018-11-08', 45, 3, b'1', b'1'),
+(2, 2, 2, 1, '2018-10-27', 45, 34, b'1', b'1'),
+(5, 1, 1, 1, '2018-11-08', 45, 11, b'1', b'1'),
 (5, 1, 2, 2, '2018-10-18', 3, 0, b'0', b'1'),
-(5, 2, 2, 1, '2018-01-04', 23, 4, b'1', b'1'),
+(5, 1, 2, 8, '2018-11-23', 30, 0, b'1', b'0'),
+(5, 2, 2, 1, '2018-01-04', 23, 5, b'1', b'1'),
+(6, 1, 1, 2, '2018-11-18', 30, 1, b'1', b'1'),
 (6, 2, 1, 1, '2018-10-22', 30, 30, b'1', b'1'),
+(6, 4, 2, 6, '2018-11-17', 30, 0, b'1', b'1'),
 (8, 1, 1, 2, '2018-10-21', 10, 6, b'0', b'1'),
+(11, 4, 2, 2, '2018-11-16', 30, 12, b'1', b'1'),
+(13, 2, 2, 2, '2018-11-08', 30, 5, b'1', b'0'),
 (14, 1, 1, 1, '2018-11-12', 30, 0, b'0', b'0'),
-(16, 1, 2, 1, '2018-11-16', 30, 5, b'1', b'1');
+(15, 3, 1, 1, '2018-11-17', 30, 6, b'1', b'1'),
+(16, 1, 2, 1, '2018-11-16', 30, 10, b'1', b'1');
 
 -- --------------------------------------------------------
 
@@ -158,7 +174,7 @@ INSERT INTO `t_individuo` (`id_individuo`, `nombre`, `apellido1`, `apellido2`, `
 ('23123421', 'Maria', 'Morelos', 'Pereira', 'CR', '', '1992-03-01', 37),
 ('232441313', 'Paola', 'Matadero', '', 'CR', '', '1992-12-12', 41),
 ('324234324', 'Allan', 'Garnier', '', 'CR', '', '1983-04-04', 40),
-('32432487', 'Luva', 'Luva', 'Luva', 'CR', 'Imbecil', '1990-01-01', 39);
+('32432487', 'Luva', 'Luva', 'Luva', 'CR', '', '1990-01-01', 39);
 
 -- --------------------------------------------------------
 
@@ -283,7 +299,7 @@ CREATE TABLE IF NOT EXISTS `t_usuario` (
 
 INSERT INTO `t_usuario` (`id_usuario`, `correo_electronico`, `contrasena`, `id_rol`) VALUES
 (1, 'johan@johan.com', '$2y$10$lNqwz7R0RjWyCiIY0GTWnuwiHph.Tdzp2mm23g1WRq6DL68CpdbY.', 1),
-(2, 'marcos@marcos.com', '$2y$10$YumISF8C4hWawbIJfJZaVuGiN2.T/vUKj45xCFN4XO9lFmHLYGpPq', 2),
+(2, 'marcos@marcos.com', '$2y$10$evEMnh1zz6TMj0y0jvM64O7unD.kOfdzt1Mj4bH8jGPE92WiWf7p6', 2),
 (9, 'enrique@msn.com', '$2y$10$7A9OXpAAh4n.eH1xoc7noOEThXIoZhPtt8K4FPPbYs3e.zT08tqp6', 2),
 (10, 'vale@hotmail.com', '$2y$10$1MNkc.3jUVmejvHevFYTj.On4FKJMlvS4l0cnAGv6qLwx9LAdQxGC', 2),
 (11, 'vero@msn.com', '$2y$10$8Ev5o14qLwBc/srMsUA3JukFcK66wHAnhce61JRiI.TO94kIeHvnC', 1),
@@ -337,7 +353,7 @@ DELIMITER $$
 --
 -- Eventos
 --
-DROP EVENT `descuentoDias` IF EXISTS $$
+DROP EVENT IF EXISTS `descuentoDias`$$
 CREATE DEFINER=`root`@`localhost` EVENT `descuentoDias` ON SCHEDULE EVERY 24 HOUR STARTS '2018-11-12 00:04:20' ON COMPLETION NOT PRESERVE ENABLE DO BEGIN
 	UPDATE t_estudiante_paquete SET dias_restantes = dias_restantes - 1 WHERE dias_restantes > 0;
     

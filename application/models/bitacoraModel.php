@@ -20,11 +20,6 @@ class BitacoraModel extends CI_Model {
 	{
 		$query = $this->db->query("SELECT id_bitacora, nombre_instructor, nombre_estudiante, nombre_sede, nombre_paquete, DATE_FORMAT(fecha_inicio, '%d/%m/%Y') AS fecha_inicio, DATE_FORMAT(fecha, '%d/%m/%Y') AS fecha, descripcion FROM T_BITACORA WHERE nombre_instructor = '$nombreInstructor' AND nombre_estudiante = '$nombreEstudiante' AND nombre_sede = '$nombreSede' AND nombre_paquete = '$nombrePaquete' AND fecha_inicio = '$fechaInicio' ORDER BY id_bitacora DESC;");
 
-		$log1 = fopen("logExiste.txt", "w") or die("Unable to open file!");
-		$txt = $this->db->last_query();
-		fwrite($log1, $txt);
-		fclose($log1);
-
 		return $query->result();
 	}
 }
