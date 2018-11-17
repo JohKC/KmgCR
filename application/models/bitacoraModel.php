@@ -3,9 +3,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class BitacoraModel extends CI_Model {
 
-	public function insertar($nombreInstructor, $nombreEstudiante, $mensaje)
+	public function insertar($nombreInstructor, $nombreEstudiante, $nombreSede, $nombrePaquete, $fechaInicio, $mensaje)
 	{
-		$this->db->query("INSERT INTO t_bitacora VALUES (null, '$nombreInstructor', '$nombreEstudiante', NOW(), 'Asistencia', '$mensaje');");
+		$this->db->query("INSERT INTO t_bitacora VALUES (null, '$nombreInstructor', '$nombreEstudiante', '$nombreSede', '$nombrePaquete', '$fechaInicio', NOW(), '$mensaje');");
 
 		$error = $this->db->error();
 
@@ -16,15 +16,16 @@ class BitacoraModel extends CI_Model {
 		}
 	}
 
-	public function seleccionar()
+	public function seleccionarEspecifico($nombreInstructor, $nombreEstudiante, $nombreSede, $nombrePaquete, $fechaInicio)
 	{
-		$query = $this->db->query("SELECT id_bitacora, DATE_FORMAT(fecha, '%d/%m/%Y') AS fecha, descripcion FROM T_BITACORA ORDER BY id_bitacora DESC;");
+		$query = $this->db->query("SELECT id_bitacora, nombre_instructor, nombre_estudiante, nombre_sede, nombre_paquete, DATE_FORMAT(fecha_inicio, '%d/%m/%Y') AS fecha_inicio, DATE_FORMAT(fecha, '%d/%m/%Y') AS fecha, descripcion FROM T_BITACORA WHERE nombre_instructor = '$nombreInstructor' AND nombre_estudiante = '$nombreEstudiante' AND nombre_sede = '$nombreSede' AND nombre_paquete = '$nombrePaquete' AND fecha_inicio = '$fechaInicio' ORDER BY id_bitacora DESC;");
 
-		if ($query->num_rows() > 0) {
-			return $query->result();
-		} else {
-			return false;
-		}
+		$log1 = fopen("logExiste.txt", "w") or die("Unable to open file!");
+		$txt = $this->db->last_query();
+		fwrite($log1, $txt);
+		fclose($log1);
+
+		return $query->result();
 	}
 }
 

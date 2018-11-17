@@ -341,21 +341,20 @@ class Instructor extends CI_Controller {
 		if ($suma) {
 			// Bitacora ON
 			$asistenciaNueva = $asistencias + 1;
-			$instructorNombre = "$logueado->nombre $logueado->apellido1";
 			$estudiante = $this->individuoModel->obtenerInfo($idUsuario);
 			$nombreEstudiante = "$estudiante->nombre $estudiante->apellido1 $estudiante->apellido2";
 			$nombreInstructor = "$logueado->nombre $logueado->apellido1 $logueado->apellido2";
 			$nombrePaquete = $this->paqueteModel->obtenerInfo($idPaquete)->nombre_paquete;
 			$nombreSede = $this->sedeModel->obtenerInfo($idSede)->nombre_sede;
 			$mensaje = "El instructor $nombreInstructor asignó una asistencia al estudiante $nombreEstudiante, correspondiente al paquete $nombrePaquete, en la sede $nombreSede. Asistencias actuales: $asistenciaNueva de $totalAsistencias.";
-			$this->bitacoraModel->insertar($nombreInstructor, $nombreEstudiante, $mensaje);
+			$this->bitacoraModel->insertar($nombreInstructor, $nombreEstudiante, $nombreSede, $nombrePaquete, $fechaInicio, $mensaje);
 			// Bitacora OFF
 			$this->session->set_flashdata('mensaje', 'Asistencia añadida');
 		} else {
 			$this->session->set_flashdata('mensaje', 'No se pudo añadir la asistencia');
 		}
 
-		$this->asistencias(); // Carga la interfaz de asistencias
+		return redirect('instructor/asistencias');
 	}
 
 	public function editarPaqueteEstudiante($idPaquete, $idSede, $idEstudiante, $idInstructor, $fechaInicio, $esActivo, $idUsuario)
@@ -401,36 +400,13 @@ class Instructor extends CI_Controller {
 
 							if ($cambioAsistencia == 1) {
 								// Bitacora ON
-								$instructorNombre = "$logueado->nombre $logueado->apellido1";
 								$nombreEstudiante = "$estudiante->nombre $estudiante->apellido1 $estudiante->apellido2";
 								$nombreInstructor = "$logueado->nombre $logueado->apellido1 $logueado->apellido2";
 								$nombrePaquete = $this->paqueteModel->obtenerInfo($idPaquete)->nombre_paquete;
-								$nombreSede = $this->sedeModel->obtenerInfo($idPaquete)->nombre_sede;
+								$nombreSede = $this->sedeModel->obtenerInfo($idSede)->nombre_sede;
 								$totalAsistencias = $this->paqueteModel->obtenerInfo($idPaquete)->cantidad_clases;
 								$mensaje = "El instructor $nombreInstructor modificó las asistencias del estudiante $nombreEstudiante, correspondiente al paquete $nombrePaquete, en la sede $nombreSede. Asistencias actuales: $infoActual->asistencias de $totalAsistencias.";
-								$this->bitacoraModel->insertar($nombreInstructor, $nombreEstudiante, $mensaje);
-								// Bitacora OFF
-							}
-
-							if ($cambioPago == 1) {
-								// Bitacora ON
-								$instructorNombre = "$logueado->nombre $logueado->apellido1";
-								$nombreEstudiante = "$estudiante->nombre $estudiante->apellido1 $estudiante->apellido2";
-								$nombreInstructor = "$logueado->nombre $logueado->apellido1 $logueado->apellido2";
-								$nombrePaquete = $this->paqueteModel->obtenerInfo($idPaquete)->nombre_paquete;
-								$nombreSede = $this->sedeModel->obtenerInfo($idPaquete)->nombre_sede;
-								$totalAsistencias = $this->paqueteModel->obtenerInfo($idPaquete)->cantidad_clases;
-
-								$estadoPago = '';
-
-								if ($esPagado == 1) {
-									$estadoPago = 'PAGADO';
-								} else {
-									$estadoPago = 'NO PAGADO';
-								}
-
-								$mensaje = "El instructor $nombreInstructor modificó el estado del paquete [Paquete: $nombrePaquete, Sede: $nombreSede, Estudiante: $nombreEstudiante] a $estadoPago.";
-								$this->bitacoraModel->insertar($nombreInstructor, $nombreEstudiante, $mensaje);
+								$this->bitacoraModel->insertar($nombreInstructor, $nombreEstudiante, $nombreSede, $nombrePaquete, $fechaInicio, $mensaje);
 								// Bitacora OFF
 							}
 
@@ -448,37 +424,14 @@ class Instructor extends CI_Controller {
 
 						if ($cambioAsistencia == 1) {
 							// Bitacora ON
-							$instructorNombre = "$logueado->nombre $logueado->apellido1";
 							$nombreEstudiante = "$estudiante->nombre $estudiante->apellido1 $estudiante->apellido2";
 							$nombreInstructor = "$logueado->nombre $logueado->apellido1 $logueado->apellido2";
 							$nombrePaquete = $this->paqueteModel->obtenerInfo($idPaquete)->nombre_paquete;
-							$nombreSede = $this->sedeModel->obtenerInfo($idPaquete)->nombre_sede;
+							$nombreSede = $this->sedeModel->obtenerInfo($idSede)->nombre_sede;
 							$totalAsistencias = $this->paqueteModel->obtenerInfo($idPaquete)->cantidad_clases;
 							$mensaje = "El instructor $nombreInstructor modificó las asistencias del estudiante $nombreEstudiante, correspondiente al paquete $nombrePaquete, en la sede $nombreSede. Asistencias actuales: $asistencias de $totalAsistencias.";
-							$this->bitacoraModel->insertar($nombreInstructor, $nombreEstudiante, $mensaje);
+							$this->bitacoraModel->insertar($nombreInstructor, $nombreEstudiante, $nombreSede, $nombrePaquete, $fechaInicio, $mensaje);
 							// Bitacora OFF
-						}
-
-						if ($cambioPago == 1) {
-								// Bitacora ON
-								$instructorNombre = "$logueado->nombre $logueado->apellido1";
-								$nombreEstudiante = "$estudiante->nombre $estudiante->apellido1 $estudiante->apellido2";
-								$nombreInstructor = "$logueado->nombre $logueado->apellido1 $logueado->apellido2";
-								$nombrePaquete = $this->paqueteModel->obtenerInfo($idPaquete)->nombre_paquete;
-								$nombreSede = $this->sedeModel->obtenerInfo($idPaquete)->nombre_sede;
-								$totalAsistencias = $this->paqueteModel->obtenerInfo($idPaquete)->cantidad_clases;
-
-								$estadoPago = '';
-
-								if ($esPagado == 1) {
-									$estadoPago = 'PAGADO';
-								} else {
-									$estadoPago = 'NO PAGADO';
-								}
-
-								$mensaje = "El instructor $nombreInstructor modificó el estado del paquete [Paquete: $nombrePaquete, Sede: $nombreSede, Estudiante: $nombreEstudiante] a $estadoPago.";
-								$this->bitacoraModel->insertar($nombreInstructor, $nombreEstudiante, $mensaje);
-								// Bitacora OFF
 							}
 
 						$this->session->set_flashdata('mensaje', 'Paquete de estudiante editado correctamente');
@@ -529,23 +482,6 @@ class Instructor extends CI_Controller {
 					// Verifica que no hayan paquetes activos del estudiante
 					if ($this->instructorModel->verificarPaqueteActivo($idInstructor, $idEstudiante, $idSede) == FALSE) {
 						if ($this->instructorModel->crearPaqueteEstudiante($idPaquete, $idSede, $idEstudiante, $idInstructor, $fechaInicio, $esActivo, $esPagado, $diasRestantes)) {
-							// Bitacora ON
-							$nombreInstructor = "$logueado->nombre $logueado->apellido1";
-							$estudiante = $this->estudianteModel->obtenerNombre($idEstudiante);
-							$instructorPaq = $this->instructorModel->obtenerNombre($idInstructor);
-							$nombrePaquete = $this->paqueteModel->obtenerInfo($idPaquete)->nombre_paquete;
-							$nombreSede = $this->sedeModel->obtenerInfo($idSede)->nombre_sede;
-							$estadoPago = '';
-
-							if ($esPagado == 1) {
-								$estadoPago = 'PAGADO';
-							} else {
-								$estadoPago = 'NO PAGADO';
-							}
-
-							$mensaje = "El instructor $nombreInstructor asignó un paquete con las siguientes características: [Paquete: $nombrePaquete, Sede: $nombreSede, Instructor: $instructorPaq->nombre $instructorPaq->apellido1 $instructorPaq->apellido2, Estudiante: $estudiante->nombre $estudiante->apellido1 $estudiante->apellido2, $estadoPago].";
-							$this->bitacoraModel->insertar($nombreInstructor, $nombreEstudiante, $mensaje);
-							// Bitacora OFF
 							$this->session->set_flashdata('mensaje', 'Paquete asignado correctamente');
 						} else {
 							$this->session->set_flashdata('mensaje', 'No se pudo asignar el paquete');
@@ -854,7 +790,7 @@ class Instructor extends CI_Controller {
 		}		
 	}
 
-	public function bitacora()
+	public function bitacora($nombreInstructor, $nombreEstudiante, $nombreSede, $nombrePaquete, $fechaInicio)
 	{
 		if ($this->session->userdata('id_rol') == FALSE || $this->session->userdata('id_rol') != 1) {
 			redirect(base_url().'login');
@@ -862,10 +798,17 @@ class Instructor extends CI_Controller {
 
 
 		$logueado = $this->individuoModel->obtenerInfo($this->session->userdata('id_usuario'));
-		$instructores = $this->instructorModel->obtenerListaInstructores();
-		$bitacora = $this->bitacoraModel->seleccionar();
 
-		$this->load->view('instructor/bitacora', ['logueado'=>$logueado, 'bitacora'=>$bitacora, 'instructores'=>$instructores]);
+		// Reemplaza los caracteres %20 por un espacio en blanco
+		$nombreInstructor = str_replace("%20"," ",$nombreInstructor);
+		$nombreEstudiante = str_replace("%20"," ",$nombreEstudiante);
+		// Elimina espacios, en caso de no haber segundo apellido
+		$nombreSede = str_replace("%20"," ",$nombreSede);
+		$nombrePaquete = str_replace("%20"," ",$nombrePaquete);
+
+		$bitacora = $this->bitacoraModel->seleccionarEspecifico($nombreInstructor, $nombreEstudiante, $nombreSede, $nombrePaquete, $fechaInicio);
+
+		$this->load->view('instructor/bitacora', ['logueado'=>$logueado, 'bitacora'=>$bitacora, 'nombre_instructor'=>$nombreInstructor, 'nombre_estudiante'=>$nombreEstudiante, 'nombre_sede'=>$nombreSede, 'nombre_paquete'=>$nombrePaquete]);
 
 	}
 

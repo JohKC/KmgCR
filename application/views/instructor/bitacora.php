@@ -1,8 +1,11 @@
 <?php include_once('header.php') ?>
 <div class="container">
 	<hr>
-	<h3>Bitácora</h3>
-
+	<h3>Bitácora:</h3>
+	<h5><?="Paquete: $nombre_paquete"; ?></h5>
+	<h5><?="Sede: $nombre_sede"; ?></h5>
+	<h5><?="Instructor: $nombre_instructor"; ?></h5>
+	<h5><?="Estudiante: $nombre_estudiante"; ?></h5>
 	<hr>
 		<div class="row">
 			<div class="col-md-5">
@@ -13,7 +16,6 @@
 		<table class="table table-hover tabla_estudiantes" id="tabla">
 		  <thead>
 		    <tr>
-		      <th scope="col">ID</th>
 		      <th scope="col">Fecha</th>
 		      <th scope="col">Descripción</th>
 		      <th style="display: none;" scope="col">Descripción</th>
@@ -23,7 +25,6 @@
 		  	<?php if (count($bitacora)): ?>
 		  		<?php foreach ($bitacora as $item): ?>
 			    <tr class="table-light">
-			    	<td><?=$item->id_bitacora ?></td>
 			      	<td><?=$item->fecha?></td>
 			      	<td><?=$item->descripcion ?></td>
 			      	<td style="display: none;"><?="$item->nombre $item->apellido1 $item->apellido2"; ?></td>
@@ -39,10 +40,9 @@
 			<?php foreach ($bitacora as $item): ?>
 				<div style="border: none;" class="card border-secondary mb-3 info_estudiantes" id="contenido">
 				  <div id="contenido">
-						<div class="card-header">ID: <?=$item->id_bitacora ?>
+						<div class="card-header">Fecha: <?=$item->fecha ?>
 					  </div>
 					  <div class="card-body" id="">
-					    <h4 class="card-title">Fecha: <?=$item->fecha ?></h4>
 					    Descripción: <?=$item->descripcion ?><br>
 					  </div>
 				  </div>

@@ -19,7 +19,6 @@
 	<h3>Gestor de paquetes de estudiantes</h3>
 
 	<?php echo anchor('instructor/asignarPaquete', 'Asignar nuevo paquete', ['class'=>'btn btn-primary']); ?>
-	<?php echo anchor('instructor/bitacora', 'Bitácora', ['class'=>'btn btn-secondary']); ?>
 	<hr>
 	<ul class="nav nav-tabs">
 	  <li class="nav-item">
@@ -34,7 +33,12 @@
 	  <div class="tab-pane fade active show" id="activos">
 	<!-- TODO: Mostrar los paquetes activos e inactivos en tabs individuales -->
 	<legend>Paquetes activos</legend>
-	<input type="text" id="busqueda" placeholder="Buscar..." class="form-control">
+	<div class="row">
+		<div class="col-md-5">
+			<input type="text" id="busqueda" placeholder="Buscar..." class="form-control">
+		</div>
+	</div>
+	<br>
 	<!-- Tabla  -->
 	<table class="table table-hover tabla_estudiantes small" id="tabla">
 	  <thead>
@@ -59,7 +63,12 @@
 		      	<td><?=$item->nombre . ' ' . $item->apellido1 . ' ' . $item->apellido2 ?></td>
 		      	<td><?=$item->nombre_paquete?></td>
 		      	<td><?=$item->nombre_sede ?></td>
-		      	<td><?=$item->asistencias ?> de <?=$item->cantidad_clases ?></td>
+		      	<?php 
+		      	// Quita espacios, en caso de no existir segundo apellido
+		      	$nombreInstructor = trim("$logueado->nombre $logueado->apellido1 $logueado->apellido2");
+				$nombreEstudiante = trim("$item->nombre $item->apellido1 $item->apellido2");
+		      	 ?>
+		      	<td><?=anchor("instructor/bitacora/{$nombreInstructor}/{$nombreEstudiante}/{$item->nombre_sede}/{$item->nombre_paquete}/{$item->fecha_inicio}", "$item->asistencias de $item->cantidad_clases", 'attributes'); ?></td>
 		      	<td><?=$item->dias_restantes ?></td>
 		      	<td><?=$item->fecha_inicio ?></td>
 		      	<td><?=$item->fecha_venc ?></td>
@@ -89,7 +98,7 @@
 			<div style="border: none;" class="card border-secondary mb-3 info_estudiantes" id="contenido">
 			  <div id="contenido">
 				  <div class="card-header">ID: <?=$item->id_individuo ?>
-				  <?php echo anchor("instructor/editarPaqueteEstudiante/{$item->id_paquete}/{$item->id_sede}/{$item->id_estudiante}/{$item->id_instructor}/{$item->fecha_inicio}/1", 'Editar', ['class'=>'btn-sm btn-success', 'style'=>'float:right;']); ?>
+				  <?php echo anchor("instructor/editarPaqueteEstudiante/{$item->id_paquete}/{$item->id_sede}/{$item->id_estudiante}/{$item->id_instructor}/{$item->fecha_inicio}/1/{$item->id_usuario}", 'Editar', ['class'=>'btn-sm btn-success', 'style'=>'float:right;']); ?>
 				  <?php
 		        	 $estilo = '';
 		        	 if ($item->asistencias == $item->cantidad_clases) {
@@ -104,7 +113,12 @@
 				    Identificación: <?=$item->id_individuo ?><br>
 				    Paquete: <?=$item->nombre_paquete ?><br>
 				    Sede: <?=$item->nombre_sede ?><br>
-				    Asistencias: <?=$item->asistencias ?> de <?=$item->cantidad_clases ?><br>
+			      	<?php 
+			      	// Quita espacios, en caso de no existir segundo apellido
+			      	$nombreInstructor = trim("$logueado->nombre $logueado->apellido1 $logueado->apellido2");
+					$nombreEstudiante = trim("$item->nombre $item->apellido1 $item->apellido2");
+			      	 ?>
+				    Asistencias: <?=anchor("instructor/bitacora/{$nombreInstructor}/{$nombreEstudiante}/{$item->nombre_sede}/{$item->nombre_paquete}/{$item->fecha_inicio}", "$item->asistencias de $item->cantidad_clases", 'attributes'); ?><br>
 				    Días restantes: <?=$item->dias_restantes ?><br>
 				    Inicio: <?=$item->fecha_inicio ?><br>
 				    Vencimiento: <?=$item->fecha_venc ?><br>
@@ -121,7 +135,12 @@
 	  <div class="tab-pane fade" id="inactivos">
 	<!-- Paquetes inactivos -->
 	<legend>Paquetes inactivos</legend>
-	<input type="text" id="busqueda2" placeholder="Buscar..." class="form-control">
+	<div class="row">
+		<div class="col-md-5">
+			<input type="text" id="busqueda2" placeholder="Buscar..." class="form-control">
+		</div>
+	</div>
+	<br>
 	<!-- Tabla  -->
 	<table class="table table-hover tabla_estudiantes small" id="tabla2">
 	  <thead>
@@ -147,7 +166,12 @@
 		      	<td><?=$item->nombre . ' ' . $item->apellido1 . ' ' . $item->apellido2 ?></td>
 		      	<td><?=$item->nombre_paquete?></td>
 		      	<td><?=$item->nombre_sede ?></td>
-		      	<td><?=$item->asistencias ?> de <?=$item->cantidad_clases ?></td>
+		      	<?php 
+		      	// Quita espacios, en caso de no existir segundo apellido
+		      	$nombreInstructor = trim("$logueado->nombre $logueado->apellido1 $logueado->apellido2");
+				$nombreEstudiante = trim("$item->nombre $item->apellido1 $item->apellido2");
+		      	 ?>
+		      	<td><?=anchor("instructor/bitacora/{$nombreInstructor}/{$nombreEstudiante}/{$item->nombre_sede}/{$item->nombre_paquete}/{$item->fecha_inicio}", "$item->asistencias de $item->cantidad_clases", 'attributes'); ?></td>
 		      	<td><?=$item->dias_restantes ?></td>
 		      	<td><?=$item->fecha_inicio ?></td>
 		      	<td><?=$item->fecha_venc ?></td>
@@ -160,7 +184,7 @@
 		        	 }
 
 		        	?>
-		      	<?php echo anchor("instructor/editarPaqueteEstudiante/{$item->id_paquete}/{$item->id_sede}/{$item->id_estudiante}/{$item->id_instructor}/{$item->fecha_inicio}/0", 'Editar', ['class'=>"btn btn-success"]); ?>
+		      	<?php echo anchor("instructor/editarPaqueteEstudiante/{$item->id_paquete}/{$item->id_sede}/{$item->id_estudiante}/{$item->id_instructor}/{$item->fecha_inicio}/0/{$item->id_usuario}", 'Editar', ['class'=>"btn btn-success"]); ?>
 		      </td>
 
 		    </tr>
@@ -175,14 +199,19 @@
 			<div style="border: none;" class="card border-secondary mb-3 info_estudiantes" id="contenido2">
 			  <div id="contenido2">
 				  <div class="card-header">Identificación: <?=$item->id_individuo ?>
-				  <?php echo anchor("instructor/editarPaqueteEstudiante/{$item->id_paquete}/{$item->id_sede}/{$item->id_estudiante}/{$item->id_instructor}/{$item->fecha_inicio}/0", 'Editar', ['class'=>'btn-sm btn-success', 'style'=>'float:right;']); ?>
+				  <?php echo anchor("instructor/editarPaqueteEstudiante/{$item->id_paquete}/{$item->id_sede}/{$item->id_estudiante}/{$item->id_instructor}/{$item->fecha_inicio}/0/{$item->id_usuario}", 'Editar', ['class'=>'btn-sm btn-success', 'style'=>'float:right;']); ?>
 				  </div>
 				  <div class="card-body">
 				    <h4 class="card-title"><?=$item->nombre . ' ' . $item->apellido1 . ' ' . $item->apellido2 ?></h4>
 				    Identificación: <?=$item->id_individuo ?><br>
 				    Paquete: <?=$item->nombre_paquete ?><br>
 				    Sede: <?=$item->nombre_sede ?><br>
-				    Asistencias: <?=$item->asistencias ?> de <?=$item->cantidad_clases ?><br>
+				    <?php 
+			      	// Quita espacios, en caso de no existir segundo apellido
+			      	$nombreInstructor = trim("$logueado->nombre $logueado->apellido1 $logueado->apellido2");
+					$nombreEstudiante = trim("$item->nombre $item->apellido1 $item->apellido2");
+			      	 ?>
+				    Asistencias: <?=anchor("instructor/bitacora/{$nombreInstructor}/{$nombreEstudiante}/{$item->nombre_sede}/{$item->nombre_paquete}/{$item->fecha_inicio}", "$item->asistencias de $item->cantidad_clases", 'attributes'); ?><br>
 				    Días restantes: <?=$item->dias_restantes ?><br>
 				    Inicio: <?=$item->fecha_inicio ?><br>
 				    Vencimiento: <?=$item->fecha_venc ?><br>

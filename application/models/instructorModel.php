@@ -85,18 +85,6 @@ class InstructorModel extends CI_Model {
 		}
 	}
 
-	// Obtiene nombre de estudiante para añadirlo a la bitacora, en la asignacion de un paquete
-	public function obtenerNombre($idInstructor)
-	{
-		$query = $this->db->query("SELECT I.nombre, I.apellido1, I.apellido2 FROM T_INSTRUCTOR INS INNER JOIN T_INDIVIDUO I ON I.id_individuo = INS.id_individuo AND INS.id_instructor = $idInstructor;");
-
-		if ($query->num_rows() == 1) {
-			return $query->row();
-		} else {
-			return false;
-		}
-	}
-
 	// Obtener informacion de paquetes y asistencias
 	public function obtenerInfoAsistencias($idInstructor, $esActivo)
 	{
